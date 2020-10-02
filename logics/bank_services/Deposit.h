@@ -16,6 +16,8 @@ public:
 
 	Deposit(uint id, double interest, QDate startDate, QDate period, double initialBalance = 0);
 
+	Deposit(const Deposit&);
+
 	void replenish(double amount);
 
 	[[nodiscard]] double sum() const;
@@ -23,6 +25,8 @@ public:
 	[[nodiscard]] double earnings() const;
 
 	[[nodiscard]] QDate timeRemaining() const;
+
+	Deposit& operator=(const Deposit&) = delete;
 
 private:
 	double _sum;

@@ -10,17 +10,23 @@
 
 class Credit {
 public:
+	static double creditLimitOfIncome;
+
 	const uint _id;
 
 	const double _interest;
 
 	Credit(uint id, double creditBody, double interest, QDateTime&);
 
+	Credit(const Credit&);
+
 	void replenish(double amount);
 
 	[[nodiscard]] double creditBody() const;
 
 	[[nodiscard]] double debt() const;
+
+	Credit& operator=(const Credit&) = delete;
 
 private:
 	double _creditBody;

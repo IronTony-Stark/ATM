@@ -18,6 +18,8 @@ public:
 
 	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, double balance = 0);
 
+	Card(const Card&);
+
 	[[nodiscard]] double balance() const;
 
 	/**
@@ -30,6 +32,7 @@ public:
 
 	double transfer(unsigned long int recipient, double amount);
 
+	Card& operator=(const Card&) = delete;
 
 private:
 	QString _pin;

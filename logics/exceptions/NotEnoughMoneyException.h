@@ -22,8 +22,7 @@ private:
 	double _requested;
 };
 
-std::ostream&
-operator<<(std::ostream& os, const NotEnoughMoneyException& ex); // const NotEnoughMoneyException&, std::ostream&
+std::ostream& operator<<(std::ostream&, const NotEnoughMoneyException&);
 
 
 #endif //ATM_NOTENOUGHMONEYEXCEPTION_H
