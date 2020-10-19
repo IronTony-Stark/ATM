@@ -7,19 +7,20 @@
 
 
 #include <stdexcept>
+#include <logics/utils/Money.h>
 
 class NotEnoughMoneyException : std::exception {
 public:
-	NotEnoughMoneyException(double available, double requested);
+	NotEnoughMoneyException(Money available, Money requested);
 
-	[[nodiscard]] double available() const;
+	[[nodiscard]] Money available() const;
 
-	[[nodiscard]] double requested() const;
+	[[nodiscard]] Money requested() const;
 
 private:
 
-	double _available;
-	double _requested;
+	Money _available;
+	Money _requested;
 };
 
 std::ostream& operator<<(std::ostream&, const NotEnoughMoneyException&);

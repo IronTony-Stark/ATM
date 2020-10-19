@@ -5,15 +5,15 @@
 #include "NotEnoughMoneyException.h"
 #include <ostream>
 
-NotEnoughMoneyException::NotEnoughMoneyException(double available, double requested) :
+NotEnoughMoneyException::NotEnoughMoneyException(Money available, Money requested) :
 		_available(available), _requested(requested) {
 }
 
-double NotEnoughMoneyException::available() const {
+Money NotEnoughMoneyException::available() const {
 	return _available;
 }
 
-double NotEnoughMoneyException::requested() const {
+Money NotEnoughMoneyException::requested() const {
 	return _requested;
 }
 

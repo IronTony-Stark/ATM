@@ -52,6 +52,12 @@ Money& Money::operator*=(double koef) {
 	return *this;
 }
 
+Money& Money::operator/=(double koef) {
+	_intPart /= koef;
+	_decPart /= koef;
+	return *this;
+}
+
 Money Money::flipSign() const {
 	return Money(-_intPart, -_decPart);
 }
@@ -71,12 +77,33 @@ Money operator*(const Money& m, double koef) {
 	return res *= koef;
 }
 
+Money operator/(const Money& m, double koef) {
+	return Money(m) /= koef;
+}
+
 bool operator==(const Money& m1, const Money& m2) {
 	return m1._intPart == m2._intPart && m1._decPart == m2._decPart;
 }
 
 bool operator!=(const Money& m1, const Money& m2) {
 	return !(m1 == m2);
+}
+
+bool operator>(const Money& m1, const Money& m2) {
+	if (m1._intPart > m2._intPart) return true;
+	return m1._intPart == m2._intPart && m1._decPart > m2._decPart;
+}
+
+bool operator>=(const Money& m1, const Money& m2) {
+	return m1 > m2 || m1 == m2;
+}
+
+bool operator<(const Money& m1, const Money& m2) {
+	return !(m1 >= m2);
+}
+
+bool operator<=(const Money& m1, const Money& m2) {
+	return !(m1 > m2);
 }
 
 std::ostream& operator<<(std::ostream& os, const Money& m) {

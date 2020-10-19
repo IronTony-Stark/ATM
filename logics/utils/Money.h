@@ -15,9 +15,9 @@ struct Money {
 
 	[[nodiscard]] int sign() const;
 
-	explicit Money(int);
+	Money(int);
 
-	explicit Money(double);
+	Money(double);
 
 	Money(int, int);
 
@@ -29,6 +29,8 @@ struct Money {
 
 	Money& operator*=(double);
 
+	Money& operator/=(double);
+
 private:
 	[[nodiscard]] Money flipSign() const;
 };
@@ -39,9 +41,19 @@ Money operator-(const Money&, const Money&);
 
 Money operator*(const Money&, double);
 
+Money operator/(const Money&, double);
+
 bool operator==(const Money&, const Money&);
 
 bool operator!=(const Money&, const Money&);
+
+bool operator>(const Money&, const Money&);
+
+bool operator>=(const Money&, const Money&);
+
+bool operator<(const Money&, const Money&);
+
+bool operator<=(const Money&, const Money&);
 
 std::ostream& operator<<(std::ostream&, const Money&);
 

@@ -7,31 +7,34 @@
 
 
 #include <QtCore/QDateTime>
+#include <logics/utils/Money.h>
 
 class Deposit {
 public:
-	const uint _id;
-	const double _interest;
-	const QDate _endDate;
+	static const Money maxDepoSum;
 
-	Deposit(uint id, double interest, QDate startDate, QDate period, double initialBalance = 0);
+	const uint _id;
+
+	Deposit(uint id, QDate startDate, QDate endDate, Money initialBalance, double interest);
 
 	Deposit(const Deposit&);
 
-	void replenish(double amount);
+	void replenish(Money amount);
 
-	[[nodiscard]] double sum() const;
+	[[nodiscard]] Money sum() const;
 
-	[[nodiscard]] double earnings() const;
+	[[nodiscard]] Money earnings() const;
 
 	[[nodiscard]] QDate timeRemaining() const;
 
 	Deposit& operator=(const Deposit&) = delete;
 
 private:
-	double _sum;
-	double _earnings = 0;
-	QDate _startDate;
+	double _interest;
+	Money _sum;
+	Money _earnings = 0;
+	const QDate _startDate;
+	const QDate _endDate;
 };
 
 

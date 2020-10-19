@@ -53,7 +53,7 @@ private:
 	Money _revenue;
 	Money _creditLimit;
 	QList<Card*> _cards;
-	QList<Credit*> _credits;
+	QList<Credit*> _credits; // sum is under 45% of income
 	QList<Deposit*> _deposits; // sum is up to 50 * 10^6 UAH
 
 	template<typename Identifiable>

@@ -6,15 +6,17 @@
 
 double Credit::creditLimitOfIncome = 0.45;
 
-Credit::Credit(uint id, double creditBody, double interest, QDateTime& date) :
-		_id(id), _creditBody(creditBody), _interest(interest), _dateTaken(date) {
-	// todo: check if person can afford a new credit
+Credit::Credit(uint id, Money creditBody, double interest, Money payment) :
+		_id(id), _creditBody(creditBody), _interest(interest), _payment(payment), _dateTaken(QDateTime()) {
+	// todo: check if a person can afford a new credit
 }
 
-Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _debt(c._interest) {
+Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _payment(c._payment),
+								  _debt(c._interest) {
+
 }
 
-void Credit::replenish(double amount) {
+void Credit::replenish(Money amount) {
 	if (_creditBody >= amount) {
 		_creditBody -= amount;
 	} else {
@@ -24,12 +26,16 @@ void Credit::replenish(double amount) {
 	}
 }
 
-double Credit::creditBody() const {
+Money Credit::creditBody() const {
 	return _creditBody;
 }
 
-double Credit::debt() const {
+Money Credit::debt() const {
 	return _debt;
+}
+
+Money Credit::payment() const {
+	return _payment;
 }
 
 

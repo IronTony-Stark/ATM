@@ -7,31 +7,35 @@
 
 
 #include <QtCore/QDateTime>
+#include <logics/utils/Money.h>
 
 class Credit {
 public:
 	static double creditLimitOfIncome;
 
-	const uint _id;
-
 	const double _interest;
 
-	Credit(uint id, double creditBody, double interest, QDateTime&);
+	const uint _id;
+
+	Credit(uint id, Money creditBody, double interest, Money payment);
 
 	Credit(const Credit&);
 
-	void replenish(double amount);
+	void replenish(Money amount);
 
-	[[nodiscard]] double creditBody() const;
+	[[nodiscard]] Money creditBody() const;
 
-	[[nodiscard]] double debt() const;
+	[[nodiscard]] Money debt() const;
+
+	Money payment() const;
 
 	Credit& operator=(const Credit&) = delete;
 
 private:
-	double _creditBody;
-	double _debt = 0;
+	Money _creditBody;
+	Money _debt = 0;    //debt is bank's income, creditBody is money that customer borrowed
 	QDateTime _dateTaken;
+	Money _payment;
 };
 
 

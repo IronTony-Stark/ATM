@@ -43,7 +43,7 @@ add_executable(ATM
         logics/exceptions/NoSuchCreditException.h
         logics/exceptions/NoSuchDepositException.h
         logics/exceptions/NoSuchCustomerPossessionException.cpp
-        logics/exceptions/NoSuchCustomerPossessionException.h)
+        logics/exceptions/NoSuchCustomerPossessionException.h logics/managers/CustomerDataManager.cpp logics/managers/CustomerDataManager.h logics/managers/OperationManager.cpp logics/managers/OperationManager.h logics/auth/Authorizer.cpp logics/auth/Authorizer.h logics/auth/Registrator.cpp logics/auth/Registrator.h logics/bank_fees/CreditConditions.cpp logics/bank_fees/CreditConditions.h logics/bank_fees/DepositConditions.cpp logics/bank_fees/DepositConditions.h logics/exceptions/CreditRepayOverheadException.cpp logics/exceptions/CreditRepayOverheadException.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

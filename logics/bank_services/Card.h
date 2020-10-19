@@ -8,6 +8,7 @@
 
 #include <logics/bank_fees/ABankFee.h>
 #include <QtCore/QString>
+#include <logics/utils/Money.h>
 
 class Customer;
 
@@ -16,27 +17,31 @@ public:
 	const unsigned long int _id;
 	const ABankFee& _bankFee;
 
-	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, double balance = 0);
+	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, Money balance = 0);
 
 	Card(const Card&);
 
-	[[nodiscard]] double balance() const;
+	[[nodiscard]] Money balance() const;
 
 	/**
 	 *if balance is sufficient then subtracts else throws exception
 	 * @return <remainder, actual_withdrawal_sum>
 	 */
-	std::pair<double, double> withdraw(double);
+	std::pair<Money, Money> withdraw(Money);
 
-	double replenish(double);
+	Money replenish(Money);
 
-	double transfer(unsigned long int recipient, double amount);
+	Money transfer(unsigned long int recipient, Money amount);
+
+	const QString pin() const;
+
+	const QString regeneratePin();
 
 	Card& operator=(const Card&) = delete;
 
 private:
 	QString _pin;
-	double _balance;
+	Money _balance;
 	Customer& _customer;
 };
 

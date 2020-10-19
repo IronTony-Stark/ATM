@@ -5,20 +5,22 @@
 #include "Deposit.h"
 #include "../utils/general.h"
 
-Deposit::Deposit(uint id, double interest, QDate startDate, QDate period, double initialBalance) :
-		_id(id), _interest(interest), _startDate(), _endDate(addDates(startDate, period)), _sum(initialBalance) {}
+const Money Deposit::maxDepoSum = 50'000'000;
 
-Deposit::Deposit(const Deposit& d) : _id(d._id), _interest(d._interest), _earnings(d.earnings()), _sum(d.sum()) {}
+Deposit::Deposit(uint id, QDate startDate, QDate endDate, Money initialBalance, double interest) :
+		_id(id), _startDate(), _endDate(endDate), _sum(initialBalance), _interest(interest) {}
 
-void Deposit::replenish(double amount) {
+Deposit::Deposit(const Deposit& d) : _id(d._id), _earnings(d.earnings()), _sum(d.sum()) {}
+
+void Deposit::replenish(Money amount) {
 	_sum += amount;
 }
 
-double Deposit::sum() const {
+Money Deposit::sum() const {
 	return _sum;
 }
 
-double Deposit::earnings() const {
+Money Deposit::earnings() const {
 	return _earnings;
 }
 
