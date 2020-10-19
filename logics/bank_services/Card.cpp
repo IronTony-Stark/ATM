@@ -4,12 +4,14 @@
 
 #include <logics/exceptions/NotEnoughMoneyException.h>
 #include "Card.h"
-#include "bank_fees/BankFeeProvider.h"
+#include "logics/bank_fees/BankFeeProvider.h"
 
 Card::Card(unsigned long int id, ABankFee::FeeType feeType, Customer& customer, QString& pin, double balance) :
 		_id(id), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)), _customer(customer), _pin(pin),
 		_balance(balance) {
 }
+
+Card::Card(const Card& c) : _id(c._id), _bankFee(c._bankFee), _balance(c._balance), _customer(c._customer) {}
 
 double Card::balance() const {
 	return _balance;
@@ -33,3 +35,5 @@ double Card::transfer(unsigned long recipient, double amount) {
 	// todo: get card recipient from DB and send money there
 	return transferSum;
 }
+
+

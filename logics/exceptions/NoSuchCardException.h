@@ -1,0 +1,21 @@
+//
+// Created by Andrew on 02-Oct-20.
+//
+
+#ifndef ATM_NOSUCHCARDEXCEPTION_H
+#define ATM_NOSUCHCARDEXCEPTION_H
+
+
+#include <QtGui/qopengl.h>
+#include <ostream>
+#include "NoSuchCustomerPossessionException.h"
+
+class NoSuchCardException : NoSuchCustomerPossessionException {
+public:
+	NoSuchCardException(uint customerId, uint cardId) :
+			NoSuchCustomerPossessionException(customerId, cardId, "CARD") {}
+};
+
+//std::ostream& operator<<(std::ostream&, const NoSuchCardException&);
+
+#endif //ATM_NOSUCHCARDEXCEPTION_H
