@@ -50,6 +50,18 @@ add_executable(ATM
         views/mainMenu/MainMenuWindow.h
         views/mainMenu/MainMenuWindow.cpp
         views/mainMenu/mainmenuwindow.ui
+        views/transaction/TransactionWindow.h
+        views/transaction/TransactionWindow.cpp
+        views/transaction/transactionwindow.ui
+        views/payment/PaymentWindow.h
+        views/payment/PaymentWindow.cpp
+        views/payment/paymentwindow.ui
+        views/deposit/DepositWindow.h
+        views/deposit/DepositWindow.cpp
+        views/deposit/depositwindow.ui
+        views/credit/CreditWindow.h
+        views/credit/CreditWindow.cpp
+        views/credit/creditwindow.ui
         )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
