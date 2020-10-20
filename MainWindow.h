@@ -1,7 +1,8 @@
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef ATM_MAINWINDOW_H
+#define ATM_MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QtWidgets/QStackedWidget>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -11,12 +12,16 @@ class MainWindow : public QMainWindow {
 Q_OBJECT
 
 public:
-	explicit MainWindow(QWidget* parent = nullptr);
+    explicit MainWindow(QWidget* parent = nullptr);
+    ~MainWindow() override;
 
-	~MainWindow() override;
+private slots:
+    void onBtnInfoClicked();
+    void onBtnBack();
 
 private:
-	Ui::MainWindow* ui;
+    Ui::MainWindow* _ui;
+    QStackedWidget* _stackedWidget;
 };
 
-#endif // MAINWINDOW_H
+#endif // ATM_MAINWINDOW_H
