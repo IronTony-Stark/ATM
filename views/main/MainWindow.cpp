@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget* parent)
 
     _stackedWidget = _ui->centralwidget->findChild<QStackedWidget*>("stackedWidget");
     _stackedWidget->addWidget(&_registrationWindow);
+    _stackedWidget->addWidget(&_mainMenuWindow);
     _stackedWidget->setCurrentIndex(0);
 
     auto* btnInfo = _ui->centralwidget->findChild<QPushButton*>("btnInfo");
@@ -27,6 +28,17 @@ MainWindow::MainWindow(QWidget* parent)
 
     connect(&_registrationWindow, &RegistrationWindow::signalBtnCancelClicked,
             this, &MainWindow::onBtnBackClicked);
+
+    auto* btnInsertCard = _ui->centralwidget->findChild<QPushButton*>("btnInsertCard");
+    connect(btnInsertCard, &QPushButton::clicked,
+            this, &MainWindow::onBtnInsertCardClicked);
+
+    auto* btnEnterPin = _ui->centralwidget->findChild<QPushButton*>("btnEnterPin");
+    connect(btnEnterPin, &QPushButton::clicked,
+            this, &MainWindow::onBtnEnterPinClicked);
+
+    connect(&_mainMenuWindow, &MainMenuWindow::signalBtnFinishClicked,
+            this, &MainWindow::onBtnBackClicked);
 }
 
 MainWindow::~MainWindow() {
@@ -42,5 +54,13 @@ void MainWindow::onBtnBackClicked() {
 }
 
 void MainWindow::onBtnRegisterClicked() {
+    _stackedWidget->setCurrentIndex(3);
+}
+
+void MainWindow::onBtnInsertCardClicked() {
     _stackedWidget->setCurrentIndex(2);
+}
+
+void MainWindow::onBtnEnterPinClicked() {
+    _stackedWidget->setCurrentIndex(4);
 }

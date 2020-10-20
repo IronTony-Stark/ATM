@@ -82,7 +82,7 @@
              </widget>
             </item>
             <item>
-             <widget class="QPushButton" name="btnInsert">
+             <widget class="QPushButton" name="btnInsertCard">
               <property name="text">
                <string>Insert Card</string>
               </property>
@@ -130,6 +130,46 @@ color: black</string>
            <string>Very Important Info</string>
           </property>
          </widget>
+        </widget>
+        <widget class="QWidget" name="pageEnterPin">
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="labelEnterPin">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>Enter You Pin</string>
+            </property>
+           </widget>
+          </item>
+          <item alignment="Qt::AlignHCenter">
+           <widget class="QLabel" name="labelAttemptsRemaining">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string>3 attempts remaining</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QLineEdit" name="editPin"/>
+          </item>
+          <item>
+           <widget class="QPushButton" name="btnEnterPin">
+            <property name="text">
+             <string>Submit</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
         </widget>
        </widget>
       </item>

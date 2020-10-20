@@ -14,7 +14,7 @@ RegistrationWindow::RegistrationWindow(QWidget* parent) :
     connect(_ui->btnSubmit, &QPushButton::clicked,
             this, &RegistrationWindow::onBtnSubmitClicked);
     connect(_ui->btnTakeCard, &QPushButton::clicked,
-            this, &RegistrationWindow::onBtnSubmitTakeCard);
+            this, &RegistrationWindow::onBtnTakeCardClicked);
 }
 
 RegistrationWindow::~RegistrationWindow() {
@@ -29,7 +29,7 @@ void RegistrationWindow::onBtnSubmitClicked() {
     _ui->stackedWidget->setCurrentIndex(1);
 }
 
-void RegistrationWindow::onBtnSubmitTakeCard() {
+void RegistrationWindow::onBtnTakeCardClicked() {
     emit signalBtnCancelClicked();
     _ui->stackedWidget->setCurrentIndex(0);
 }

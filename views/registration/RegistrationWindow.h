@@ -24,7 +24,7 @@ signals:
 private slots:
     void onBtnCancelClicked();
     void onBtnSubmitClicked();
-    void onBtnSubmitTakeCard();
+    void onBtnTakeCardClicked();
 
 private:
     Ui::RegistrationWindow* _ui;

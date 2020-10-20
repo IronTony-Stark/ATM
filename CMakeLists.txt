@@ -47,6 +47,9 @@ add_executable(ATM
         views/registration/RegistrationWindow.h
         views/registration/RegistrationWindow.cpp
         views/registration/registrationwindow.ui
+        views/mainMenu/MainMenuWindow.h
+        views/mainMenu/MainMenuWindow.cpp
+        views/mainMenu/mainmenuwindow.ui
         )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
