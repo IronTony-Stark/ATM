@@ -19,9 +19,9 @@ set(CMAKE_AUTORCC ON)
 
 add_executable(ATM
         main.cpp
-        MainWindow.cpp
-        MainWindow.h
-        mainwindow.ui
+        views/main/MainWindow.cpp
+        views/main/MainWindow.h
+        views/main/mainwindow.ui
         logics/bank_fees/ABankFee.h
         logics/bank_fees/BankFeeProvider.cpp
         logics/bank_fees/BankFeeProvider.h
@@ -43,7 +43,11 @@ add_executable(ATM
         logics/exceptions/NoSuchCreditException.h
         logics/exceptions/NoSuchDepositException.h
         logics/exceptions/NoSuchCustomerPossessionException.cpp
-        logics/exceptions/NoSuchCustomerPossessionException.h)
+        logics/exceptions/NoSuchCustomerPossessionException.h
+        views/registration/RegistrationWindow.h
+        views/registration/RegistrationWindow.cpp
+        views/registration/registrationwindow.ui
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

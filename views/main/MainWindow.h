@@ -1,12 +1,16 @@
+//
+// Created by Iron Tony on 20/10/2020.
+//
+
 #ifndef ATM_MAINWINDOW_H
 #define ATM_MAINWINDOW_H
 
 #include <QMainWindow>
 #include <QtWidgets/QStackedWidget>
 
-QT_BEGIN_NAMESPACE
-namespace Ui { class MainWindow; }
-QT_END_NAMESPACE
+namespace Ui {
+    class MainWindow;
+}
 
 class MainWindow : public QMainWindow {
 Q_OBJECT
