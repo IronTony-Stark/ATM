@@ -6,11 +6,15 @@
 #include "gui/ui_registrationwindow.h"
 
 RegistrationWindow::RegistrationWindow(QWidget* parent) :
-        QWidget(parent),
-        _ui(new Ui::RegistrationWindow) {
+        QWidget(parent), _ui(new Ui::RegistrationWindow) {
     _ui->setupUi(this);
 
-    connect(_ui->btnCancel, &QPushButton::clicked, this, &RegistrationWindow::onBtnCancelClicked);
+    connect(_ui->btnCancel, &QPushButton::clicked,
+            this, &RegistrationWindow::onBtnCancelClicked);
+    connect(_ui->btnSubmit, &QPushButton::clicked,
+            this, &RegistrationWindow::onBtnSubmitClicked);
+    connect(_ui->btnTakeCard, &QPushButton::clicked,
+            this, &RegistrationWindow::onBtnSubmitTakeCard);
 }
 
 RegistrationWindow::~RegistrationWindow() {
@@ -19,4 +23,13 @@ RegistrationWindow::~RegistrationWindow() {
 
 void RegistrationWindow::onBtnCancelClicked() {
     emit signalBtnCancelClicked();
+}
+
+void RegistrationWindow::onBtnSubmitClicked() {
+    _ui->stackedWidget->setCurrentIndex(1);
+}
+
+void RegistrationWindow::onBtnSubmitTakeCard() {
+    emit signalBtnCancelClicked();
+    _ui->stackedWidget->setCurrentIndex(0);
 }
