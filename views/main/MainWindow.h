@@ -7,6 +7,7 @@
 
 #include <QMainWindow>
 #include <QtWidgets/QStackedWidget>
+#include "views/registration/RegistrationWindow.h"
 
 namespace Ui {
     class MainWindow;
@@ -21,11 +22,13 @@ public:
 
 private slots:
     void onBtnInfoClicked();
-    void onBtnBack();
+    void onBtnBackClicked();
+    void onBtnRegisterClicked();
 
 private:
     Ui::MainWindow* _ui;
     QStackedWidget* _stackedWidget;
+    RegistrationWindow _registrationWindow;
 };
 
 #endif // ATM_MAINWINDOW_H

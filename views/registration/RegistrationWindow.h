@@ -18,6 +18,12 @@ public:
     explicit RegistrationWindow(QWidget* parent = nullptr);
     ~RegistrationWindow() override;
 
+signals:
+    void signalBtnCancelClicked();
+
+private slots:
+    void onBtnCancelClicked();
+
 private:
     Ui::RegistrationWindow* _ui;
 };

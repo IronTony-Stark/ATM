@@ -9,8 +9,14 @@ RegistrationWindow::RegistrationWindow(QWidget* parent) :
         QWidget(parent),
         _ui(new Ui::RegistrationWindow) {
     _ui->setupUi(this);
+
+    connect(_ui->btnCancel, &QPushButton::clicked, this, &RegistrationWindow::onBtnCancelClicked);
 }
 
 RegistrationWindow::~RegistrationWindow() {
     delete _ui;
+}
+
+void RegistrationWindow::onBtnCancelClicked() {
+    emit signalBtnCancelClicked();
 }
