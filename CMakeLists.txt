@@ -44,6 +44,9 @@ add_executable(ATM
         logics/exceptions/NoSuchDepositException.h
         logics/exceptions/NoSuchCustomerPossessionException.cpp
         logics/exceptions/NoSuchCustomerPossessionException.h
+        views/start/StartWindow.h
+        views/start/StartWindow.cpp
+        views/start/startwindow.ui
         views/registration/RegistrationWindow.h
         views/registration/RegistrationWindow.cpp
         views/registration/registrationwindow.ui
