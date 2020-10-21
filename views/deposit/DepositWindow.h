@@ -6,6 +6,7 @@
 #define ATM_DEPOSITWINDOW_H
 
 #include <QWidget>
+#include <QtWidgets/QListWidgetItem>
 
 namespace Ui {
     class DepositWindow;
@@ -26,7 +27,6 @@ private slots:
     void onBtnMyDepositsClicked();
 
     void onBtnOpenDepositOpen();
-    void onListDepositsItemClicked();
     void onBtnMyDepositsReplenishClicked();
 
     void onBtnReplenishSubmit();
@@ -35,6 +35,8 @@ private slots:
     void onBtnBackToMyDepositsClicked();
     void onBtnBackToDepositMenuClicked();
     void onBtnBackToMainMenuClicked();
+
+    void onListDepositsItemClicked(QListWidgetItem*);
 
 private:
     Ui::DepositWindow* _ui;

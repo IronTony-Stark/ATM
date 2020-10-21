@@ -6,6 +6,7 @@
 #define ATM_CREDITWINDOW_H
 
 #include <QWidget>
+#include <QtWidgets/QListWidgetItem>
 
 namespace Ui {
     class CreditWindow;
@@ -22,10 +23,22 @@ signals:
     void signalBtnBackToMainMenuClicked();
 
 private slots:
+    void onBtnTakeCreditClicked();
+    void onBtnMyCreditsClicked();
+
+    void onBtnTakeCreditSubmitClicked();
+
+    void onBtnBackToCreditMenuClicked();
+    void onBtnBackToMyCreditsClicked();
+
     void onBtnBackToMainMenuClicked();
+
+    void onListCreditsItemClicked(QListWidgetItem*);
 
 private:
     Ui::CreditWindow* _ui;
+
+    void setupListCredits();
 };
 
 #endif // ATM_CREDITWINDOW_H

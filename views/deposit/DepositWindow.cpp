@@ -68,7 +68,7 @@ void DepositWindow::onBtnMyDepositsReplenishClicked() {
     _ui->stackedWidget->setCurrentIndex(4);
 }
 
-void DepositWindow::onListDepositsItemClicked() {
+void DepositWindow::onListDepositsItemClicked(QListWidgetItem*) {
     _ui->stackedWidget->setCurrentIndex(3);
 }
 

@@ -71,6 +71,9 @@ add_executable(ATM
         views/credit/CreditWindow.h
         views/credit/CreditWindow.cpp
         views/credit/creditwindow.ui
+        views/credit/creditWidget/CreditWidget.h
+        views/credit/creditWidget/CreditWidget.cpp
+        views/credit/creditWidget/creditwidget.ui
         )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)

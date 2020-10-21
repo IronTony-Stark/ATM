@@ -65,7 +65,7 @@ void PaymentWindow::setupListPayments() {
             this, &PaymentWindow::onListPaymentsItemClicked);
 }
 
-void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem* item) {
+void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem*) {
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
