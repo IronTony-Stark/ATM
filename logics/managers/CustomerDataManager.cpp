@@ -4,7 +4,7 @@
 
 #include <logics/exceptions/NotEnoughMoneyException.h>
 #include <logics/exceptions/NoSuchCreditException.h>
-#include <logics/exceptions/WrongPaymentException.h>
+//#include <logics/exceptions/WrongPaymentException.h>
 #include <logics/exceptions/CreditRepayOverheadException.h>
 #include <logics/exceptions/NoSuchDepositException.h>
 #include "CustomerDataManager.h"

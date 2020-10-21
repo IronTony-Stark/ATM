@@ -19,9 +19,6 @@ set(CMAKE_AUTORCC ON)
 
 add_executable(ATM
         main.cpp
-        MainWindow.cpp
-        MainWindow.h
-        mainwindow.ui
         logics/bank_fees/ABankFee.h
         logics/bank_fees/BankFeeProvider.cpp
         logics/bank_fees/BankFeeProvider.h
@@ -43,7 +40,57 @@ add_executable(ATM
         logics/exceptions/NoSuchCreditException.h
         logics/exceptions/NoSuchDepositException.h
         logics/exceptions/NoSuchCustomerPossessionException.cpp
-        logics/exceptions/NoSuchCustomerPossessionException.h logics/managers/CustomerDataManager.cpp logics/managers/CustomerDataManager.h logics/managers/OperationManager.cpp logics/managers/OperationManager.h logics/auth/Authorizer.cpp logics/auth/Authorizer.h logics/auth/Registrator.cpp logics/auth/Registrator.h logics/bank_fees/CreditConditions.cpp logics/bank_fees/CreditConditions.h logics/bank_fees/DepositConditions.cpp logics/bank_fees/DepositConditions.h logics/exceptions/CreditRepayOverheadException.cpp logics/exceptions/CreditRepayOverheadException.h)
+        logics/exceptions/NoSuchCustomerPossessionException.h
+        logics/managers/CustomerDataManager.cpp
+        logics/managers/CustomerDataManager.h
+        logics/managers/OperationManager.cpp
+        logics/managers/OperationManager.h
+        logics/auth/Authorizer.cpp
+        logics/auth/Authorizer.h
+        logics/auth/Registrator.cpp
+        logics/auth/Registrator.h
+        logics/bank_fees/CreditConditions.cpp
+        logics/bank_fees/CreditConditions.h
+        logics/bank_fees/DepositConditions.cpp
+        logics/bank_fees/DepositConditions.h
+        logics/exceptions/CreditRepayOverheadException.cpp
+        logics/exceptions/CreditRepayOverheadException.h
+
+#       Views
+        views/main/MainWindow.cpp
+        views/main/MainWindow.h
+        views/main/mainwindow.ui
+        views/start/StartWindow.h
+        views/start/StartWindow.cpp
+        views/start/startwindow.ui
+        views/registration/RegistrationWindow.h
+        views/registration/RegistrationWindow.cpp
+        views/registration/registrationwindow.ui
+        views/mainMenu/MainMenuWindow.h
+        views/mainMenu/MainMenuWindow.cpp
+        views/mainMenu/mainmenuwindow.ui
+        views/transaction/TransactionWindow.h
+        views/transaction/TransactionWindow.cpp
+        views/transaction/transactionwindow.ui
+        views/payment/PaymentWindow.h
+        views/payment/PaymentWindow.cpp
+        views/payment/paymentwindow.ui
+        views/payment/paymentWidget/PaymentWidget.h
+        views/payment/paymentWidget/PaymentWidget.cpp
+        views/payment/paymentWidget/paymentwidget.ui
+        views/deposit/DepositWindow.h
+        views/deposit/DepositWindow.cpp
+        views/deposit/depositwindow.ui
+        views/deposit/depositWidget/DepositWidget.h
+        views/deposit/depositWidget/DepositWidget.cpp
+        views/deposit/depositWidget/depositwidget.ui
+        views/credit/CreditWindow.h
+        views/credit/CreditWindow.cpp
+        views/credit/creditwindow.ui
+        views/credit/creditWidget/CreditWidget.h
+        views/credit/creditWidget/CreditWidget.cpp
+        views/credit/creditWidget/creditwidget.ui
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

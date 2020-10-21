@@ -1,4 +1,4 @@
-#include "MainWindow.h"
+#include "views/main/MainWindow.h"
 
 #include <QApplication>
 #include <logics/utils/Money.h>
