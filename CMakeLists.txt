@@ -65,6 +65,9 @@ add_executable(ATM
         views/deposit/DepositWindow.h
         views/deposit/DepositWindow.cpp
         views/deposit/depositwindow.ui
+        views/deposit/depositWidget/DepositWidget.h
+        views/deposit/depositWidget/DepositWidget.cpp
+        views/deposit/depositWidget/depositwidget.ui
         views/credit/CreditWindow.h
         views/credit/CreditWindow.cpp
         views/credit/creditwindow.ui

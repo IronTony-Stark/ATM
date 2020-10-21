@@ -21,47 +21,47 @@
     <set>Qt::AlignCenter</set>
    </property>
    <item row="0" column="0">
-    <widget class="QLabel" name="labelPaymentName">
+    <widget class="QLabel" name="labelName">
      <property name="text">
       <string>Name</string>
      </property>
     </widget>
    </item>
    <item row="1" column="0">
-    <widget class="QLabel" name="labelPaymentHowMuch">
+    <widget class="QLabel" name="labelHowMuch">
      <property name="text">
       <string>How much</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
-    <widget class="QLabel" name="labelPaymentToWhome">
+    <widget class="QLabel" name="labelToWhome">
      <property name="text">
       <string>To Whome</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
-    <widget class="QLabel" name="labelPaymentWhen">
+    <widget class="QLabel" name="labelWhen">
      <property name="text">
       <string>When</string>
      </property>
     </widget>
    </item>
    <item row="0" column="1">
-    <widget class="QLineEdit" name="editPaymentName"/>
+    <widget class="QLineEdit" name="editName"/>
    </item>
    <item row="1" column="1">
-    <widget class="QLineEdit" name="editPaymentHowMuch"/>
+    <widget class="QLineEdit" name="editHowMuch"/>
    </item>
    <item row="2" column="1">
-    <widget class="QLineEdit" name="editPaymentToWhome"/>
+    <widget class="QLineEdit" name="editToWhome"/>
    </item>
    <item row="3" column="1">
-    <widget class="QLineEdit" name="editPaymentWhen"/>
+    <widget class="QLineEdit" name="editWhen"/>
    </item>
    <item row="4" column="0" colspan="2">
-    <widget class="QCheckBox" name="checkPaymentRepeating">
+    <widget class="QCheckBox" name="checkRepeating">
      <property name="text">
       <string> repeating</string>
      </property>

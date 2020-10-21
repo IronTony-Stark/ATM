@@ -22,10 +22,24 @@ signals:
     void signalBtnBackToMainMenuClicked();
 
 private slots:
+    void onBtnOpenDepositClicked();
+    void onBtnMyDepositsClicked();
+
+    void onBtnOpenDepositOpen();
+    void onListDepositsItemClicked();
+    void onBtnMyDepositsReplenishClicked();
+
+    void onBtnReplenishSubmit();
+    void onBtnReplenishCancel();
+
+    void onBtnBackToMyDepositsClicked();
+    void onBtnBackToDepositMenuClicked();
     void onBtnBackToMainMenuClicked();
 
 private:
     Ui::DepositWindow* _ui;
+
+    void setupListDeposits();
 };
 
 #endif // ATM_DEPOSITWINDOW_H
