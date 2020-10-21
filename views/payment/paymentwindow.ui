@@ -6,40 +6,142 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>300</height>
+    <width>1000</width>
+    <height>600</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QLabel" name="label">
-   <property name="geometry">
-    <rect>
-     <x>170</x>
-     <y>180</y>
-     <width>55</width>
-     <height>16</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Payment</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="btnBackToMainMenu">
-   <property name="geometry">
-    <rect>
-     <x>50</x>
-     <y>70</y>
-     <width>80</width>
-     <height>25</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Back</string>
-   </property>
-  </widget>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QStackedWidget" name="stackedWidget">
+     <widget class="QWidget" name="pagePaymentMain">
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="labelTitle">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Payment</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnCreatePayment">
+         <property name="text">
+          <string>Create Payment</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnMyPayments">
+         <property name="text">
+          <string>My Payments</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnBackToMainMenu">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageCreatePayment">
+      <layout class="QVBoxLayout" name="verticalLayout_4">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="labelCreatePaymentTitle">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Create Payment</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="PaymentWidget" name="widgetCreatePaymentPayment" native="true"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnCreatePaymentCreate">
+         <property name="text">
+          <string>Create</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnCreatePaymentCancel">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageMyPayments">
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="labelMyPaymentsTitle">
+         <property name="text">
+          <string>My Payments</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QListWidget" name="listPayments"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnMyPaymentsBack">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="pageMyPayment">
+      <layout class="QVBoxLayout" name="verticalLayout_5">
+       <item>
+        <widget class="PaymentWidget" name="widgetMyPaymentPayment" native="true"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnMyPaymentCancelPayment">
+         <property name="text">
+          <string>Cancel Payment</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnMyPaymentBack">
+         <property name="text">
+          <string>Back</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+  </layout>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>PaymentWidget</class>
+   <extends>QWidget</extends>
+   <header> views/payment/paymentWidget/PaymentWidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

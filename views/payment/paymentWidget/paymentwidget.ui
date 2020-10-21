@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>PaymentWidget</class>
+ <widget class="QWidget" name="PaymentWidget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QFormLayout" name="formLayout">
+   <property name="labelAlignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <property name="formAlignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelPaymentName">
+     <property name="text">
+      <string>Name</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="labelPaymentHowMuch">
+     <property name="text">
+      <string>How much</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="labelPaymentToWhome">
+     <property name="text">
+      <string>To Whome</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="labelPaymentWhen">
+     <property name="text">
+      <string>When</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="editPaymentName"/>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="editPaymentHowMuch"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="editPaymentToWhome"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="editPaymentWhen"/>
+   </item>
+   <item row="4" column="0" colspan="2">
+    <widget class="QCheckBox" name="checkPaymentRepeating">
+     <property name="text">
+      <string> repeating</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

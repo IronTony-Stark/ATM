@@ -6,6 +6,7 @@
 #define ATM_PAYMENTWINDOW_H
 
 #include <QWidget>
+#include <QtWidgets/QListWidgetItem>
 
 namespace Ui {
     class PaymentWindow;
@@ -22,10 +23,22 @@ signals:
     void signalBtnBackToMainMenuClicked();
 
 private slots:
+    void onBtnCreatePayment();
+    void onBtnMyPayments();
+
+    void onBtnCreatePaymentCreate();
+    void onBtnMyPaymentCancelPayment();
+
+    void onListPaymentsItemClicked(QListWidgetItem*);
+
+    void onBtnBackToMyPayments();
+    void onBtnBackToPaymentMenu();
     void onBtnBackToMainMenuClicked();
 
 private:
     Ui::PaymentWindow* _ui;
+
+    void setupListPayments();
 };
 
 #endif // ATM_PAYMENTWINDOW_H
