@@ -18,6 +18,12 @@ public:
     explicit PaymentWindow(QWidget* parent = nullptr);
     ~PaymentWindow() override;
 
+signals:
+    void signalBtnBackToMainMenuClicked();
+
+private slots:
+    void onBtnBackToMainMenuClicked();
+
 private:
     Ui::PaymentWindow* _ui;
 };

@@ -18,6 +18,12 @@ public:
     explicit CreditWindow(QWidget* parent = nullptr);
     ~CreditWindow() override;
 
+signals:
+    void signalBtnBackToMainMenuClicked();
+
+private slots:
+    void onBtnBackToMainMenuClicked();
+
 private:
     Ui::CreditWindow* _ui;
 };

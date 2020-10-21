@@ -26,6 +26,11 @@ signals:
     void signalBtnFinishClicked();
 
 private slots:
+    void onBtnTransactionClicked();
+    void onBtnCreditClicked();
+    void onBtnDepositClicked();
+    void onBtnPaymentClicked();
+    void onBtnBackToMainMenuClicked();
     void onBtnFinishClicked();
 
 private:

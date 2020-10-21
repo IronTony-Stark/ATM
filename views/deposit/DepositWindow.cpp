@@ -8,8 +8,15 @@
 DepositWindow::DepositWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::DepositWindow) {
     _ui->setupUi(this);
+
+    connect(_ui->btnBackToMainMenu, &QPushButton::clicked,
+            this, &DepositWindow::onBtnBackToMainMenuClicked);
 }
 
 DepositWindow::~DepositWindow() {
     delete _ui;
+}
+
+void DepositWindow::onBtnBackToMainMenuClicked() {
+    emit signalBtnBackToMainMenuClicked();
 }

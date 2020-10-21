@@ -18,6 +18,12 @@ public:
     explicit TransactionWindow(QWidget* parent = nullptr);
     ~TransactionWindow() override;
 
+signals:
+    void signalBtnBackToMainMenuClicked();
+
+private slots:
+    void onBtnBackToMainMenuClicked();
+
 private:
     Ui::TransactionWindow* _ui;
 };

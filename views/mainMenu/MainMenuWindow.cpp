@@ -14,12 +14,50 @@ MainMenuWindow::MainMenuWindow(QWidget* parent) :
     _ui->stackedWidget->addWidget(&_depositWindow);
     _ui->stackedWidget->addWidget(&_paymentWindow);
 
+    connect(_ui->btnTransaction, &QPushButton::clicked,
+            this, &MainMenuWindow::onBtnTransactionClicked);
+    connect(_ui->btnCredit, &QPushButton::clicked,
+            this, &MainMenuWindow::onBtnCreditClicked);
+    connect(_ui->btnDeposit, &QPushButton::clicked,
+            this, &MainMenuWindow::onBtnDepositClicked);
+    connect(_ui->btnPayment, &QPushButton::clicked,
+            this, &MainMenuWindow::onBtnPaymentClicked);
+
+    connect(&_transactionWindow, &TransactionWindow::signalBtnBackToMainMenuClicked,
+            this, &MainMenuWindow::onBtnBackToMainMenuClicked);
+    connect(&_creditWindow, &CreditWindow::signalBtnBackToMainMenuClicked,
+            this, &MainMenuWindow::onBtnBackToMainMenuClicked);
+    connect(&_depositWindow, &DepositWindow::signalBtnBackToMainMenuClicked,
+            this, &MainMenuWindow::onBtnBackToMainMenuClicked);
+    connect(&_paymentWindow, &PaymentWindow::signalBtnBackToMainMenuClicked,
+            this, &MainMenuWindow::onBtnBackToMainMenuClicked);
+
     connect(_ui->btnFinish, &QPushButton::clicked,
             this, &MainMenuWindow::onBtnFinishClicked);
 }
 
 MainMenuWindow::~MainMenuWindow() {
     delete _ui;
+}
+
+void MainMenuWindow::onBtnTransactionClicked() {
+    _ui->stackedWidget->setCurrentIndex(1);
+}
+
+void MainMenuWindow::onBtnCreditClicked() {
+    _ui->stackedWidget->setCurrentIndex(2);
+}
+
+void MainMenuWindow::onBtnDepositClicked() {
+    _ui->stackedWidget->setCurrentIndex(3);
+}
+
+void MainMenuWindow::onBtnPaymentClicked() {
+    _ui->stackedWidget->setCurrentIndex(4);
+}
+
+void MainMenuWindow::onBtnBackToMainMenuClicked() {
+    _ui->stackedWidget->setCurrentIndex(0);
 }
 
 void MainMenuWindow::onBtnFinishClicked() {

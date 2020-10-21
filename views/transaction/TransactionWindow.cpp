@@ -8,8 +8,15 @@
 TransactionWindow::TransactionWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::TransactionWindow) {
     _ui->setupUi(this);
+
+    connect(_ui->btnBackToMainMenu, &QPushButton::clicked,
+            this, &TransactionWindow::onBtnBackToMainMenuClicked);
 }
 
 TransactionWindow::~TransactionWindow() {
     delete _ui;
+}
+
+void TransactionWindow::onBtnBackToMainMenuClicked() {
+    emit signalBtnBackToMainMenuClicked();
 }

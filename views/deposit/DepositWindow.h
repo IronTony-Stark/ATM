@@ -18,6 +18,12 @@ public:
     explicit DepositWindow(QWidget* parent = nullptr);
     ~DepositWindow() override;
 
+signals:
+    void signalBtnBackToMainMenuClicked();
+
+private slots:
+    void onBtnBackToMainMenuClicked();
+
 private:
     Ui::DepositWindow* _ui;
 };
