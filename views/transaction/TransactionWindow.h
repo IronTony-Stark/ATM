@@ -22,6 +22,16 @@ signals:
     void signalBtnBackToMainMenuClicked();
 
 private slots:
+    void onBtnReplenishClicked();
+    void onBtnWithdrawClicked();
+    void onBtnTransferClicked();
+
+    void onBtnReplenishSubmitClicked();
+    void onBtnWithdrawSubmitClicked();
+    void onBtnTransferSubmitClicked();
+
+    void onBtnBackToTransactionMenu();
+
     void onBtnBackToMainMenuClicked();
 
 private:
