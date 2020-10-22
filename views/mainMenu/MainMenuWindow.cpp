@@ -5,6 +5,14 @@
 #include "MainMenuWindow.h"
 #include "gui/ui_mainmenuwindow.h"
 
+enum Windows {
+    MAIN_MENU,
+    TRANSACTION,
+    CREDIT,
+    DEPOSIT,
+    PAYMENT,
+};
+
 MainMenuWindow::MainMenuWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::MainMenuWindow) {
     _ui->setupUi(this);
@@ -14,15 +22,6 @@ MainMenuWindow::MainMenuWindow(QWidget* parent) :
     _ui->stackedWidget->addWidget(&_depositWindow);
     _ui->stackedWidget->addWidget(&_paymentWindow);
 
-    connect(_ui->btnTransaction, &QPushButton::clicked,
-            this, &MainMenuWindow::onBtnTransactionClicked);
-    connect(_ui->btnCredit, &QPushButton::clicked,
-            this, &MainMenuWindow::onBtnCreditClicked);
-    connect(_ui->btnDeposit, &QPushButton::clicked,
-            this, &MainMenuWindow::onBtnDepositClicked);
-    connect(_ui->btnPayment, &QPushButton::clicked,
-            this, &MainMenuWindow::onBtnPaymentClicked);
-
     connect(&_transactionWindow, &TransactionWindow::signalBtnBackToMainMenuClicked,
             this, &MainMenuWindow::onBtnBackToMainMenuClicked);
     connect(&_creditWindow, &CreditWindow::signalBtnBackToMainMenuClicked,
@@ -31,35 +30,49 @@ MainMenuWindow::MainMenuWindow(QWidget* parent) :
             this, &MainMenuWindow::onBtnBackToMainMenuClicked);
     connect(&_paymentWindow, &PaymentWindow::signalBtnBackToMainMenuClicked,
             this, &MainMenuWindow::onBtnBackToMainMenuClicked);
-
-    connect(_ui->btnFinish, &QPushButton::clicked,
-            this, &MainMenuWindow::onBtnFinishClicked);
 }
 
 MainMenuWindow::~MainMenuWindow() {
     delete _ui;
 }
 
-void MainMenuWindow::onBtnTransactionClicked() {
-    _ui->stackedWidget->setCurrentIndex(1);
+void MainMenuWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+    _transactionWindow.setController(logicSettable);
+    _creditWindow.setController(logicSettable);
+    _depositWindow.setController(logicSettable);
+    _paymentWindow.setController(logicSettable);
 }
 
-void MainMenuWindow::onBtnCreditClicked() {
-    _ui->stackedWidget->setCurrentIndex(2);
+void MainMenuWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
 }
 
-void MainMenuWindow::onBtnDepositClicked() {
-    _ui->stackedWidget->setCurrentIndex(3);
+void MainMenuWindow::onBtnCancelClicked() {
+    emit signalBtnFinishClicked();
 }
 
-void MainMenuWindow::onBtnPaymentClicked() {
-    _ui->stackedWidget->setCurrentIndex(4);
+void MainMenuWindow::onBtn0Clicked() {
+    _transactionWindow.setLogicActive();
+    _ui->stackedWidget->setCurrentIndex(TRANSACTION);
+}
+
+void MainMenuWindow::onBtn1Clicked() {
+    _creditWindow.setLogicActive();
+    _ui->stackedWidget->setCurrentIndex(CREDIT);
+}
+
+void MainMenuWindow::onBtn2Clicked() {
+    _depositWindow.setLogicActive();
+    _ui->stackedWidget->setCurrentIndex(DEPOSIT);
+}
+
+void MainMenuWindow::onBtn3Clicked() {
+    _paymentWindow.setLogicActive();
+    _ui->stackedWidget->setCurrentIndex(PAYMENT);
 }
 
 void MainMenuWindow::onBtnBackToMainMenuClicked() {
-    _ui->stackedWidget->setCurrentIndex(0);
-}
-
-void MainMenuWindow::onBtnFinishClicked() {
-    emit signalBtnFinishClicked();
+    _logicSettable->setLogic(this);
+    _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
 }

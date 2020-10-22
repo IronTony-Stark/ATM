@@ -47,21 +47,21 @@
          <item>
           <widget class="QPushButton" name="btnInfo">
            <property name="text">
-            <string>Info</string>
+            <string>|0| Info</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnInsertCard">
            <property name="text">
-            <string>Insert Card</string>
+            <string>|Card| Insert Card</string>
            </property>
           </widget>
          </item>
          <item>
           <widget class="QPushButton" name="btnRegister">
            <property name="text">
-            <string>Register</string>
+            <string>|1| Register</string>
            </property>
           </widget>
          </item>
@@ -70,36 +70,19 @@
       </layout>
      </widget>
      <widget class="QWidget" name="pageInfo">
-      <widget class="QPushButton" name="btnBack">
-       <property name="geometry">
-        <rect>
-         <x>20</x>
-         <y>20</y>
-         <width>80</width>
-         <height>25</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Back</string>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label">
-       <property name="geometry">
-        <rect>
-         <x>180</x>
-         <y>210</y>
-         <width>361</width>
-         <height>121</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">font: 24pt &quot;MS Shell Dlg 2&quot;;
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <item alignment="Qt::AlignHCenter">
+        <widget class="QLabel" name="label">
+         <property name="styleSheet">
+          <string notr="true">font: 24pt &quot;MS Shell Dlg 2&quot;;
 color: black</string>
-       </property>
-       <property name="text">
-        <string>Very Important Info</string>
-       </property>
-      </widget>
+         </property>
+         <property name="text">
+          <string>Very Important Info</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="pageEnterPin">
       <layout class="QVBoxLayout" name="verticalLayout">
@@ -116,6 +99,12 @@ color: black</string>
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QLineEdit" name="editCardNumber"/>
+       </item>
+       <item>
+        <widget class="QLineEdit" name="editPin"/>
+       </item>
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="labelAttemptsRemaining">
          <property name="sizePolicy">
@@ -126,16 +115,6 @@ color: black</string>
          </property>
          <property name="text">
           <string>3 attempts remaining</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="editPin"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnEnterPin">
-         <property name="text">
-          <string>Submit</string>
          </property>
         </widget>
        </item>

@@ -90,7 +90,15 @@ add_executable(ATM
         views/credit/creditWidget/CreditWidget.h
         views/credit/creditWidget/CreditWidget.cpp
         views/credit/creditWidget/creditwidget.ui
-        )
+        views/clock/widgets/Clock.h
+        views/clock/widgets/Clock.cpp
+        views/clock/setdialog/SetDialog.h
+        views/clock/setdialog/SetDialog.cpp
+        views/clock/setdialog/setdialog.ui
+        views/main/controller/ControllerLogic.h
+        views/main/controller/ControllerLogicSettable.h
+        views/Navigatable.h
+        views/exceptions/AbsentNavigationDestination.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

@@ -71,3 +71,10 @@ void CreditWindow::onListCreditsItemClicked(QListWidgetItem*) {
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
+void CreditWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+}
+
+void CreditWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}

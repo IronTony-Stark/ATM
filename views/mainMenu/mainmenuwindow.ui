@@ -21,41 +21,34 @@
        <item>
         <widget class="QPushButton" name="btnTransaction">
          <property name="text">
-          <string>Transaction</string>
+          <string>|0| Transaction</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnCredit">
          <property name="text">
-          <string>Credit</string>
+          <string>|1| Credit</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnDeposit">
          <property name="text">
-          <string>Deposit</string>
+          <string>|2| Deposit</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnPayment">
          <property name="text">
-          <string>Payment</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnFinish">
-         <property name="text">
-          <string>Finish</string>
+          <string>|3| Payment</string>
          </property>
         </widget>
        </item>
       </layout>
      </widget>
- 	</widget>
+    </widget>
    </item>
   </layout>
  </widget>

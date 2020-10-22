@@ -7,17 +7,21 @@
 
 #include <QWidget>
 #include <QtWidgets/QListWidgetItem>
+#include "views/main/controller/ControllerLogicSettable.h"
 
 namespace Ui {
     class PaymentWindow;
 }
 
-class PaymentWindow : public QWidget {
+class PaymentWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
     explicit PaymentWindow(QWidget* parent = nullptr);
     ~PaymentWindow() override;
+
+    void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnBackToMainMenuClicked();
@@ -37,6 +41,7 @@ private slots:
 
 private:
     Ui::PaymentWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
 
     void setupListPayments();
 };
