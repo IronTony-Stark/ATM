@@ -57,3 +57,15 @@ void StartWindow::onBtnInsertCardClicked() {
 void StartWindow::onBtnEnterPinClicked() {
     _ui->stackedWidget->setCurrentIndex(4);
 }
+
+void StartWindow::setController(ControllerLogicSettable* logicSettable) {
+    logicSettable->setLogic(this);
+}
+
+void StartWindow::onBtnEnterClicked() {
+    _ui->stackedWidget->setCurrentIndex(1);
+}
+
+void StartWindow::onBtnCancelClicked() {
+    _ui->stackedWidget->setCurrentIndex(2);
+}

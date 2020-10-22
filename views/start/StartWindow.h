@@ -6,6 +6,7 @@
 #define ATM_STARTWINDOW_H
 
 #include <QWidget>
+#include "views/main/controller/ControllerLogicSettable.h"
 #include "views/registration/RegistrationWindow.h"
 #include "views/mainMenu/MainMenuWindow.h"
 
@@ -14,12 +15,14 @@ namespace Ui {
 }
 
 // TODO enter pin card number
-class StartWindow : public QWidget {
+class StartWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
     explicit StartWindow(QWidget* parent = nullptr);
     ~StartWindow() override;
+
+    void setController(ControllerLogicSettable* logicSettable);
 
 private slots:
     void onBtnInfoClicked();
@@ -32,6 +35,9 @@ private:
     Ui::StartWindow* _ui;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
+
+    void onBtnEnterClicked() override;
+    void onBtnCancelClicked() override;
 };
 
 #endif // ATM_STARTWINDOW_H
