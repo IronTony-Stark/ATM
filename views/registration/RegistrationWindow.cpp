@@ -5,35 +5,47 @@
 #include "RegistrationWindow.h"
 #include "gui/ui_registrationwindow.h"
 
+enum Windows {
+    REGISTRATION,
+    CARD
+};
+
 RegistrationWindow::RegistrationWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::RegistrationWindow) {
     _ui->setupUi(this);
-
-    connect(_ui->btnCancel, &QPushButton::clicked,
-            this, &RegistrationWindow::onBtnCancelClicked);
-    connect(_ui->btnSubmit, &QPushButton::clicked,
-            this, &RegistrationWindow::onBtnSubmitClicked);
-    connect(_ui->btnTakeCard, &QPushButton::clicked,
-            this, &RegistrationWindow::onBtnTakeCardClicked);
 }
 
 RegistrationWindow::~RegistrationWindow() {
     delete _ui;
 }
 
-void RegistrationWindow::onBtnCancelClicked() {
-    emit signalBtnCancelClicked();
-}
-
-void RegistrationWindow::onBtnSubmitClicked() {
-    _ui->stackedWidget->setCurrentIndex(1);
-}
-
-void RegistrationWindow::onBtnTakeCardClicked() {
-    emit signalBtnCancelClicked();
-    _ui->stackedWidget->setCurrentIndex(0);
-}
-
 void RegistrationWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
+}
+
+void RegistrationWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}
+
+void RegistrationWindow::onBtnEnterClicked() {
+    if (state() != CARD) {
+        _ui->stackedWidget->setCurrentIndex(CARD);
+    }
+}
+
+void RegistrationWindow::onBtnCancelClicked() {
+    if (state() != CARD) {
+        emit signalBtnCancelClicked();
+    }
+}
+
+void RegistrationWindow::onBtnCardClicked() {
+    if (state() == CARD) {
+        emit signalBtnCancelClicked();
+        _ui->stackedWidget->setCurrentIndex(REGISTRATION);
+    }
+}
+
+int RegistrationWindow::state() {
+    return _ui->stackedWidget->currentIndex();
 }

@@ -24,21 +24,21 @@ public:
 
     void setController(ControllerLogicSettable* logicSettable);
 
-private slots:
-    void onBtnInfoClicked();
-    void onBtnBackClicked();
-    void onBtnRegisterClicked();
-    void onBtnInsertCardClicked();
-    void onBtnEnterPinClicked();
-
 private:
     Ui::StartWindow* _ui;
     ControllerLogicSettable* _logicSettable;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
 
+    bool checkPin();
+
+    void onBtn0Clicked() override;
+    void onBtn1Clicked() override;
+    void onBtnCardClicked() override;
     void onBtnEnterClicked() override;
     void onBtnCancelClicked() override;
+
+    int state();
 };
 
 #endif // ATM_STARTWINDOW_H
