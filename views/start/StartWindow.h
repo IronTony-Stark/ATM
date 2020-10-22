@@ -13,6 +13,7 @@ namespace Ui {
     class StartWindow;
 }
 
+// TODO enter pin card number
 class StartWindow : public QWidget {
 Q_OBJECT
 
