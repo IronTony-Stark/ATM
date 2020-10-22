@@ -8,7 +8,7 @@
 
 Clock::Clock(QWidget* parent) : QLCDNumber(parent) {
     setSegmentStyle(Filled);
-    setDigitCount(17);
+    setDigitCount(18);
 
     auto* timer = new QTimer(this);
     connect(timer, &QTimer::timeout, this, &Clock::showDateTime);
@@ -38,7 +38,7 @@ void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
 }
 
 void Clock::displayTime(const QDateTime& datetime) {
-    QString text = datetime.toString("hh:mm:ss dd-MM-yy");
+    QString text = datetime.toString("hh:mm:ss  dd-MM-yy");
     if ((datetime.time().second() % 2) == 0) {
         text[2] = ' ';
         text[5] = ' ';

@@ -79,7 +79,10 @@ add_executable(ATM
         views/clock/setdialog/SetDialog.h
         views/clock/setdialog/SetDialog.cpp
         views/clock/setdialog/setdialog.ui
-        views/main/controller/ControllerLogic.h views/main/controller/ControllerLogicSettable.h)
+        views/main/controller/ControllerLogic.h
+        views/main/controller/ControllerLogicSettable.h
+        views/Navigatable.h
+        views/exceptions/AbsentNavigationDestination.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

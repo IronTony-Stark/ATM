@@ -21,28 +21,21 @@
        <item>
         <widget class="QPushButton" name="btnReplenish">
          <property name="text">
-          <string>Replenish</string>
+          <string>|0| Replenish</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnWithdraw">
          <property name="text">
-          <string>Withdraw</string>
+          <string>|1| Withdraw</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnTransfer">
          <property name="text">
-          <string>Transfer</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnBackToMainMenu">
-         <property name="text">
-          <string>Back</string>
+          <string>|2| Transfer</string>
          </property>
         </widget>
        </item>
@@ -95,20 +88,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="btnReplenishSubmit">
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnReplenishCancel">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageWithdraw">
@@ -142,33 +121,6 @@
        <item>
         <widget class="QLineEdit" name="editWithdrawHowMuch"/>
        </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="labelWithdrawError">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Error:</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnWithdrawSubmit">
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnWithdrawCancel">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageTransfer">
@@ -176,7 +128,7 @@
        <item alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="labelTransferTitle">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
@@ -230,33 +182,6 @@
           </widget>
          </item>
         </layout>
-       </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="labelTransferError">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Error: </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnTransferCancel">
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnTransferSubmit">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>
