@@ -2,6 +2,7 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
+#include <QtWidgets/QMessageBox>
 #include "RegistrationWindow.h"
 #include "gui/ui_registrationwindow.h"
 
@@ -30,7 +31,17 @@ void RegistrationWindow::setLogicActive() {
 
 void RegistrationWindow::onBtnEnterClicked() {
     if (state() != CARD) {
-        _ui->stackedWidget->setCurrentIndex(CARD);
+        QString name = _ui->editName->text();
+        QString phone = _ui->editPhone->text();
+        uint taxNumber = _ui->editTaxNumber->text().toUInt();
+        QString cardType = _ui->comboCardType->currentText();
+        try {
+            ushort pin = _operationManager.registerCustomer(name, phone, taxNumber, cardType);
+            _ui->labelPin->setText(QString::number(pin));
+            _ui->stackedWidget->setCurrentIndex(CARD);
+        } catch (const std::exception& e) {
+            QMessageBox::critical(this, tr("ATM"), tr(e.what()));
+        }
     }
 }
 

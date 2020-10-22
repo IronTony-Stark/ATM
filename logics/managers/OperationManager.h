@@ -10,9 +10,11 @@
 class OperationManager {
 public:
     bool authorizeCustomer(const QString& cardNumber, unsigned short pinCode);
-    bool registerCustomer(const Customer& customer);
-    bool transfer(const QString& cartNumberFrom, const QString& cartNumberFromTo);
-    bool withdraw(unsigned int amount);
+    void blockCustomer(const QString& cardNumber);
+    ushort registerCustomer(const QString& name, const QString& phone, uint taxNumber, QString cardType);
+    void replenish(uint amount);
+    void withdraw(unsigned int amount);
+    void transfer(const QString& cartNumberFromTo, uint amount);
     void startDeposit(unsigned int startAmount);
     int endDeposit();
     void cancelDeposit();

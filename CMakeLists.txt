@@ -98,7 +98,9 @@ add_executable(ATM
         views/main/controller/ControllerLogic.h
         views/main/controller/ControllerLogicSettable.h
         views/Navigatable.h
-        views/exceptions/AbsentNavigationDestination.h)
+        views/exceptions/AbsentNavigationDestination.h
+        views/MessageDisplay.h
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

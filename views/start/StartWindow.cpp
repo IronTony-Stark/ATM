@@ -60,9 +60,13 @@ void StartWindow::onBtnCardClicked() {
 
 void StartWindow::onBtnEnterClicked() {
     if (state() == INSERT_CARD) {
-        if (checkPin()) {
+        QString number = _ui->editCardNumber->text();
+        ushort pin = _ui->editPin->text().toUShort();
+        if (_operationManager.authorizeCustomer(number, pin)) {
             _mainMenuWindow.setLogicActive();
             _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
+        } else if (--_pinAttempts == 0) {
+            _operationManager.blockCustomer(number);
         }
     }
 }
@@ -70,10 +74,6 @@ void StartWindow::onBtnEnterClicked() {
 void StartWindow::onBtnCancelClicked() {
     _logicSettable->setLogic(this);
     _ui->stackedWidget->setCurrentIndex(START);
-}
-
-bool StartWindow::checkPin() {
-    return true;
 }
 
 int StartWindow::state() {

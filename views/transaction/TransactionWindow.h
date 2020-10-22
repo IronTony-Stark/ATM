@@ -6,6 +6,8 @@
 #define ATM_TRANSACTIONWINDOW_H
 
 #include <QWidget>
+#include <QtWidgets/QLineEdit>
+#include "views/MessageDisplay.h"
 #include "views/Navigatable.h"
 #include "views/main/controller/ControllerLogicSettable.h"
 #include "logics/managers/OperationManager.h"
@@ -45,40 +47,49 @@ private:
 
     class ReplenishPageLogic : public ControllerLogic {
     public:
-        explicit ReplenishPageLogic(Navigatable&);
+        explicit ReplenishPageLogic(Navigatable&, OperationManager&, QLineEdit&);
 
     private:
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
 
         Navigatable& _navigatable;
+        OperationManager& _operationManager;
+        QLineEdit& _editHowMuch;
     };
 
     class WithdrawPageLogic : public ControllerLogic {
     public:
-        explicit WithdrawPageLogic(Navigatable&);
+        explicit WithdrawPageLogic(Navigatable&, OperationManager&, QLineEdit&, MessageDisplay&);
 
     private:
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
 
         Navigatable& _navigatable;
+        OperationManager& _operationManager;
+        QLineEdit& _editHowMuch;
+        MessageDisplay& _messageDisplay;
     };
 
     class TransferPageLogic : public ControllerLogic {
     public:
-        explicit TransferPageLogic(Navigatable&);
+        explicit TransferPageLogic(Navigatable&, OperationManager&, QLineEdit&, QLineEdit&, MessageDisplay&);
 
     private:
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
 
         Navigatable& _navigatable;
+        OperationManager& _operationManager;
+        QLineEdit& _editHowMuch;
+        QLineEdit& _editToWhom;
+        MessageDisplay& _messageDisplay;
     };
 
     Ui::TransactionWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
-    OperationManager& _operationManager;
+    MessageDisplay _messageDisplay;
     TransactionPageLogic _transactionPageLogic;
     ReplenishPageLogic _replenishPageLogic;
     WithdrawPageLogic _withdrawPageLogic;

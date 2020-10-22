@@ -30,8 +30,7 @@ private:
     OperationManager _operationManager;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
-
-    bool checkPin();
+    int _pinAttempts = 3;
 
     void onBtn0Clicked() override;
     void onBtn1Clicked() override;

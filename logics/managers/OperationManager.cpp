@@ -4,20 +4,21 @@
 
 #include "OperationManager.h"
 
+// todo withdraw, transfer, register can throw std::exception
 bool OperationManager::authorizeCustomer(const QString& cardNumber, unsigned short pinCode) {
-    return false;
+    return true;
 }
 
-bool OperationManager::registerCustomer(const Customer& customer) {
-    return false;
+void OperationManager::blockCustomer(const QString& cardNumber) {
+
 }
 
-bool OperationManager::transfer(const QString& cartNumberFrom, const QString& cartNumberFromTo) {
-    return false;
+ushort OperationManager::registerCustomer(const QString& name, const QString& phone, uint taxNumber, QString cardType) {
+    return 1;
 }
 
-bool OperationManager::withdraw(unsigned int amount) {
-    return false;
+void OperationManager::withdraw(unsigned int amount) {
+
 }
 
 void OperationManager::startDeposit(unsigned int startAmount) {
@@ -41,5 +42,12 @@ void OperationManager::takeCredit(unsigned int amount) {
 }
 
 void OperationManager::repayCredit(unsigned int amount) {
+
+}
+
+void OperationManager::replenish(uint howMuch) {
+}
+
+void OperationManager::transfer(const QString& cartNumberFromTo, uint amount) {
 
 }

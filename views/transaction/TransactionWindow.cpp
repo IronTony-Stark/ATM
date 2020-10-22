@@ -2,6 +2,10 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
+// TODO edit check for ill-formed input
+// TODO Fix Segmentation Fault due to passing LineEdit before setup(ui)
+
+#include <QtWidgets/QMessageBox>
 #include "TransactionWindow.h"
 #include "gui/ui_transactionwindow.h"
 #include "views/exceptions/AbsentNavigationDestination.h"
@@ -16,11 +20,14 @@ enum Windows {
 
 TransactionWindow::TransactionWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::TransactionWindow),
-        _operationManager(operationManager),
+        _messageDisplay(*this),
         _transactionPageLogic(*this),
-        _replenishPageLogic(*this),
-        _withdrawPageLogic(*this),
-        _transferPageLogic(*this) {
+        _replenishPageLogic(*this, operationManager,
+                            *_ui->editReplenishHowMuch),
+        _withdrawPageLogic(*this, operationManager,
+                           *_ui->editWithdrawHowMuch, _messageDisplay),
+        _transferPageLogic(*this, operationManager, *_ui->editTransferHowMuch,
+                           *_ui->editTransferToWhom, _messageDisplay) {
     _ui->setupUi(this);
 }
 
@@ -58,7 +65,7 @@ void TransactionWindow::navigate(int destination) {
             emit signalBtnBackToMainMenuClicked();
             break;
         default:
-            throw AbsentNavigationDestination(&"TransactionWindow navigate " [ destination]);
+            throw AbsentNavigationDestination(&"TransactionWindow navigate "[destination]);
     }
 }
 
@@ -83,10 +90,18 @@ void TransactionWindow::TransactionPageLogic::onBtnCancelClicked() {
 }
 
 // ReplenishPageLogic
-TransactionWindow::ReplenishPageLogic::ReplenishPageLogic(Navigatable& navigatable) :
-        _navigatable(navigatable) {}
+TransactionWindow::ReplenishPageLogic::ReplenishPageLogic(
+        Navigatable& navigatable,
+        OperationManager& operationManager,
+        QLineEdit& editHowMuch) :
+        _navigatable(navigatable),
+        _operationManager(operationManager),
+        _editHowMuch(editHowMuch) {}
 
 void TransactionWindow::ReplenishPageLogic::onBtnEnterClicked() {
+    QString amountStr = _editHowMuch.text();
+    uint amount = _editHowMuch.text().toUInt();
+    _operationManager.replenish(amount);
     _navigatable.navigate(TRANSACTIONS);
 }
 
@@ -95,11 +110,24 @@ void TransactionWindow::ReplenishPageLogic::onBtnCancelClicked() {
 }
 
 // WithdrawPageLogic
-TransactionWindow::WithdrawPageLogic::WithdrawPageLogic(Navigatable& navigatable) :
-        _navigatable(navigatable) {}
+TransactionWindow::WithdrawPageLogic::WithdrawPageLogic(
+        Navigatable& navigatable,
+        OperationManager& operationManager,
+        QLineEdit& editHowMuch,
+        MessageDisplay& messageDisplay) :
+        _navigatable(navigatable),
+        _operationManager(operationManager),
+        _editHowMuch(editHowMuch),
+        _messageDisplay(messageDisplay) {}
 
 void TransactionWindow::WithdrawPageLogic::onBtnEnterClicked() {
-    _navigatable.navigate(TRANSACTIONS);
+    uint amount = _editHowMuch.text().toUInt();
+    try {
+        _operationManager.withdraw(amount);
+        _navigatable.navigate(TRANSACTIONS);
+    } catch (const std::exception& e) {
+        _messageDisplay.show(e.what());
+    }
 }
 
 void TransactionWindow::WithdrawPageLogic::onBtnCancelClicked() {
@@ -107,11 +135,27 @@ void TransactionWindow::WithdrawPageLogic::onBtnCancelClicked() {
 }
 
 // TransferPageLogic
-TransactionWindow::TransferPageLogic::TransferPageLogic(Navigatable& navigatable) :
-        _navigatable(navigatable) {}
+TransactionWindow::TransferPageLogic::TransferPageLogic(
+        Navigatable& navigatable,
+        OperationManager& operationManager,
+        QLineEdit& editHowMuch,
+        QLineEdit& editToWhom,
+        MessageDisplay& messageDisplay) :
+        _navigatable(navigatable),
+        _operationManager(operationManager),
+        _editHowMuch(editHowMuch),
+        _editToWhom(editToWhom),
+        _messageDisplay(messageDisplay) {}
 
 void TransactionWindow::TransferPageLogic::onBtnEnterClicked() {
-    _navigatable.navigate(TRANSACTIONS);
+    QString to = _editToWhom.text();
+    uint amount = _editHowMuch.text().toUInt();
+    try {
+        _operationManager.transfer(to, amount);
+        _navigatable.navigate(TRANSACTIONS);
+    } catch (const std::exception& e) {
+        _messageDisplay.show(e.what());
+    }
 }
 
 void TransactionWindow::TransferPageLogic::onBtnCancelClicked() {
