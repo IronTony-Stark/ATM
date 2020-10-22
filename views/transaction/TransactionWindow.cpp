@@ -14,8 +14,9 @@ enum Windows {
     MAIN_MENU,
 };
 
-TransactionWindow::TransactionWindow(QWidget* parent) :
+TransactionWindow::TransactionWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::TransactionWindow),
+        _operationManager(operationManager),
         _transactionPageLogic(*this),
         _replenishPageLogic(*this),
         _withdrawPageLogic(*this),

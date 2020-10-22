@@ -11,6 +11,7 @@
 #include "views/credit/CreditWindow.h"
 #include "views/deposit/DepositWindow.h"
 #include "views/payment/PaymentWindow.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class MainMenuWindow;
@@ -20,7 +21,7 @@ class MainMenuWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
-    explicit MainMenuWindow(QWidget* parent = nullptr);
+    explicit MainMenuWindow(OperationManager& operationManager, QWidget* parent = nullptr);
     ~MainMenuWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
@@ -34,7 +35,8 @@ private slots:
 
 private:
     Ui::MainMenuWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager& _operationManager;
     TransactionWindow _transactionWindow;
     CreditWindow _creditWindow;
     DepositWindow _depositWindow;

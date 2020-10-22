@@ -5,8 +5,9 @@
 #include "PaymentWindow.h"
 #include "gui/ui_paymentwindow.h"
 
-PaymentWindow::PaymentWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::PaymentWindow) {
+PaymentWindow::PaymentWindow(OperationManager& operationManager, QWidget* parent) :
+        QWidget(parent), _ui(new Ui::PaymentWindow),
+        _operationManager(operationManager) {
     _ui->setupUi(this);
 
     connect(_ui->btnCreatePayment, &QPushButton::clicked,

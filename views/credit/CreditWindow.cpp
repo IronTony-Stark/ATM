@@ -5,8 +5,9 @@
 #include "CreditWindow.h"
 #include "gui/ui_creditwindow.h"
 
-CreditWindow::CreditWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::CreditWindow) {
+CreditWindow::CreditWindow(OperationManager& operationManager, QWidget* parent) :
+        QWidget(parent), _ui(new Ui::CreditWindow),
+        _operationManager(operationManager) {
     _ui->setupUi(this);
 
     connect(_ui->btnTakeCredit, &QPushButton::clicked,

@@ -5,8 +5,9 @@
 #include "DepositWindow.h"
 #include "gui/ui_depositwindow.h"
 
-DepositWindow::DepositWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::DepositWindow) {
+DepositWindow::DepositWindow(OperationManager& operationManager, QWidget* parent) :
+        QWidget(parent), _ui(new Ui::DepositWindow),
+        _operationManager(operationManager) {
     _ui->setupUi(this);
 
     connect(_ui->btnOpenDeposit, &QPushButton::clicked,

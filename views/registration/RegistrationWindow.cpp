@@ -10,8 +10,9 @@ enum Windows {
     CARD
 };
 
-RegistrationWindow::RegistrationWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::RegistrationWindow) {
+RegistrationWindow::RegistrationWindow(OperationManager& operationManager, QWidget* parent) :
+        QWidget(parent), _ui(new Ui::RegistrationWindow),
+        _operationManager(operationManager) {
     _ui->setupUi(this);
 }
 

@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include "views/main/controller/ControllerLogicSettable.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class RegistrationWindow;
@@ -16,7 +17,7 @@ class RegistrationWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
-    explicit RegistrationWindow(QWidget* parent = nullptr);
+    explicit RegistrationWindow(OperationManager&, QWidget* parent = nullptr);
     ~RegistrationWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
@@ -27,7 +28,8 @@ signals:
 
 private:
     Ui::RegistrationWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager& _operationManager;
 
     void onBtnEnterClicked() override;
     void onBtnCancelClicked() override;

@@ -14,7 +14,9 @@ enum Windows {
 };
 
 StartWindow::StartWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::StartWindow) {
+        QWidget(parent), _ui(new Ui::StartWindow),
+        _registrationWindow(_operationManager),
+        _mainMenuWindow(_operationManager) {
     _ui->setupUi(this);
 
     _ui->stackedWidget->addWidget(&_registrationWindow);

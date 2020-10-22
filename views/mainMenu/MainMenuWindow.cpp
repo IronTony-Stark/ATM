@@ -13,8 +13,13 @@ enum Windows {
     PAYMENT,
 };
 
-MainMenuWindow::MainMenuWindow(QWidget* parent) :
-        QWidget(parent), _ui(new Ui::MainMenuWindow) {
+MainMenuWindow::MainMenuWindow(OperationManager& operationManager, QWidget* parent) :
+        QWidget(parent), _ui(new Ui::MainMenuWindow),
+        _operationManager(operationManager),
+        _transactionWindow(operationManager),
+        _creditWindow(operationManager),
+        _depositWindow(operationManager),
+        _paymentWindow(operationManager) {
     _ui->setupUi(this);
 
     _ui->stackedWidget->addWidget(&_transactionWindow);

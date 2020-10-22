@@ -8,6 +8,7 @@
 #include <QWidget>
 #include <QtWidgets/QListWidgetItem>
 #include "views/main/controller/ControllerLogicSettable.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class DepositWindow;
@@ -17,7 +18,7 @@ class DepositWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
-    explicit DepositWindow(QWidget* parent = nullptr);
+    explicit DepositWindow(OperationManager& operationManager, QWidget* parent = nullptr);
     ~DepositWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
@@ -44,7 +45,8 @@ private slots:
 
 private:
     Ui::DepositWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager& _operationManager;
 
     void setupListDeposits();
 };

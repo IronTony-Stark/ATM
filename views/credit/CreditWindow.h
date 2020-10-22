@@ -8,6 +8,7 @@
 #include <QWidget>
 #include <QtWidgets/QListWidgetItem>
 #include "views/main/controller/ControllerLogicSettable.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class CreditWindow;
@@ -17,7 +18,7 @@ class CreditWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
-    explicit CreditWindow(QWidget* parent = nullptr);
+    explicit CreditWindow(OperationManager& operationManager, QWidget* parent = nullptr);
     ~CreditWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
@@ -41,7 +42,8 @@ private slots:
 
 private:
     Ui::CreditWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager& _operationManager;
 
     void setupListCredits();
 };

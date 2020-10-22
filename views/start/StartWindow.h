@@ -9,12 +9,12 @@
 #include "views/main/controller/ControllerLogicSettable.h"
 #include "views/registration/RegistrationWindow.h"
 #include "views/mainMenu/MainMenuWindow.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class StartWindow;
 }
 
-// TODO enter pin card number
 class StartWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
@@ -26,7 +26,8 @@ public:
 
 private:
     Ui::StartWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager _operationManager;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
 

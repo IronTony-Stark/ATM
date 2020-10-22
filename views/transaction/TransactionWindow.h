@@ -8,6 +8,7 @@
 #include <QWidget>
 #include "views/Navigatable.h"
 #include "views/main/controller/ControllerLogicSettable.h"
+#include "logics/managers/OperationManager.h"
 
 namespace Ui {
     class TransactionWindow;
@@ -17,7 +18,7 @@ class TransactionWindow : public QWidget, public Navigatable {
 Q_OBJECT
 
 public:
-    explicit TransactionWindow(QWidget* parent = nullptr);
+    explicit TransactionWindow(OperationManager& operationManager, QWidget* parent = nullptr);
     ~TransactionWindow() override;
 
     void navigate(int i) override;
@@ -76,7 +77,8 @@ private:
     };
 
     Ui::TransactionWindow* _ui;
-    ControllerLogicSettable* _logicSettable;
+    ControllerLogicSettable* _logicSettable = nullptr;
+    OperationManager& _operationManager;
     TransactionPageLogic _transactionPageLogic;
     ReplenishPageLogic _replenishPageLogic;
     WithdrawPageLogic _withdrawPageLogic;
