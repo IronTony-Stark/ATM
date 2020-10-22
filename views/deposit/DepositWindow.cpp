@@ -92,3 +92,7 @@ void DepositWindow::setupListDeposits() {
 void DepositWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
 }
+
+void DepositWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}

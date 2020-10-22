@@ -16,7 +16,7 @@ namespace Ui {
     class MainMenuWindow;
 }
 
-class MainMenuWindow : public QWidget {
+class MainMenuWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
@@ -24,17 +24,13 @@ public:
     ~MainMenuWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnFinishClicked();
 
 private slots:
-    void onBtnTransactionClicked();
-    void onBtnCreditClicked();
-    void onBtnDepositClicked();
-    void onBtnPaymentClicked();
     void onBtnBackToMainMenuClicked();
-    void onBtnFinishClicked();
 
 private:
     Ui::MainMenuWindow* _ui;
@@ -43,6 +39,13 @@ private:
     CreditWindow _creditWindow;
     DepositWindow _depositWindow;
     PaymentWindow _paymentWindow;
+
+public:
+    void onBtnCancelClicked() override;
+    void onBtn0Clicked() override;
+    void onBtn1Clicked() override;
+    void onBtn2Clicked() override;
+    void onBtn3Clicked() override;
 };
 
 #endif // ATM_MAINMENUWINDOW_H

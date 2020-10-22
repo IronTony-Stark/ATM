@@ -80,3 +80,7 @@ void PaymentWindow::onBtnMyPaymentCancelPayment() {
 void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
 }
+
+void PaymentWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}

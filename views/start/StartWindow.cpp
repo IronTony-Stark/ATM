@@ -22,6 +22,8 @@ StartWindow::StartWindow(QWidget* parent) :
 
     connect(&_registrationWindow, &RegistrationWindow::signalBtnCancelClicked,
             this, &StartWindow::onBtnCancelClicked);
+    connect(&_mainMenuWindow, &MainMenuWindow::signalBtnFinishClicked,
+            this, &StartWindow::onBtnCancelClicked);
 }
 
 StartWindow::~StartWindow() {
@@ -57,6 +59,7 @@ void StartWindow::onBtnCardClicked() {
 void StartWindow::onBtnEnterClicked() {
     if (state() == INSERT_CARD) {
         if (checkPin()) {
+            _mainMenuWindow.setLogicActive();
             _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
         }
     }

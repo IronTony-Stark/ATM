@@ -73,3 +73,7 @@ void TransactionWindow::onBtnBackToMainMenuClicked() {
 void TransactionWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
 }
+
+void TransactionWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}

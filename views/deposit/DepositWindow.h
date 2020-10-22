@@ -13,7 +13,7 @@ namespace Ui {
     class DepositWindow;
 }
 
-class DepositWindow : public QWidget {
+class DepositWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
@@ -21,6 +21,7 @@ public:
     ~DepositWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnBackToMainMenuClicked();

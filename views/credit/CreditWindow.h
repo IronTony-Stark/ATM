@@ -13,7 +13,7 @@ namespace Ui {
     class CreditWindow;
 }
 
-class CreditWindow : public QWidget {
+class CreditWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
@@ -21,6 +21,7 @@ public:
     ~CreditWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnBackToMainMenuClicked();

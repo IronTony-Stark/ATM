@@ -12,7 +12,7 @@ namespace Ui {
     class TransactionWindow;
 }
 
-class TransactionWindow : public QWidget {
+class TransactionWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
@@ -20,6 +20,7 @@ public:
     ~TransactionWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnBackToMainMenuClicked();

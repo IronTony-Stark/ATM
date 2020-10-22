@@ -75,3 +75,6 @@ void CreditWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
 }
 
+void CreditWindow::setLogicActive() {
+    _logicSettable->setLogic(this);
+}

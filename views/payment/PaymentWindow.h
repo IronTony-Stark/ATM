@@ -13,7 +13,7 @@ namespace Ui {
     class PaymentWindow;
 }
 
-class PaymentWindow : public QWidget {
+class PaymentWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
 public:
@@ -21,6 +21,7 @@ public:
     ~PaymentWindow() override;
 
     void setController(ControllerLogicSettable* logicSettable);
+    void setLogicActive();
 
 signals:
     void signalBtnBackToMainMenuClicked();
