@@ -59,7 +59,10 @@ void StartWindow::onBtnEnterPinClicked() {
 }
 
 void StartWindow::setController(ControllerLogicSettable* logicSettable) {
-    logicSettable->setLogic(this);
+    _logicSettable = logicSettable;
+    _logicSettable->setLogic(this);
+    _registrationWindow.setController(logicSettable);
+    _mainMenuWindow.setController(logicSettable);
 }
 
 void StartWindow::onBtnEnterClicked() {

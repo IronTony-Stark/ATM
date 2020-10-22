@@ -88,3 +88,7 @@ void DepositWindow::setupListDeposits() {
     connect(_ui->listDeposits, &QListWidget::itemClicked,
             this, &DepositWindow::onListDepositsItemClicked);
 }
+
+void DepositWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+}

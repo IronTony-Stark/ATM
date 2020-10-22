@@ -63,3 +63,11 @@ void MainMenuWindow::onBtnBackToMainMenuClicked() {
 void MainMenuWindow::onBtnFinishClicked() {
     emit signalBtnFinishClicked();
 }
+
+void MainMenuWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+    _transactionWindow.setController(logicSettable);
+    _creditWindow.setController(logicSettable);
+    _depositWindow.setController(logicSettable);
+    _paymentWindow.setController(logicSettable);
+}

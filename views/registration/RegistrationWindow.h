@@ -6,6 +6,7 @@
 #define ATM_REGISTRATIONWINDOW_H
 
 #include <QWidget>
+#include "views/main/controller/ControllerLogicSettable.h"
 
 namespace Ui {
     class RegistrationWindow;
@@ -18,6 +19,8 @@ public:
     explicit RegistrationWindow(QWidget* parent = nullptr);
     ~RegistrationWindow() override;
 
+    void setController(ControllerLogicSettable* logicSettable);
+
 signals:
     void signalBtnCancelClicked();
 
@@ -28,6 +31,7 @@ private slots:
 
 private:
     Ui::RegistrationWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
 };
 
 #endif // ATM_REGISTRATIONWINDOW_H

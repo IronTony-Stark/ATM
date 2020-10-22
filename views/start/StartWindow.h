@@ -33,6 +33,7 @@ private slots:
 
 private:
     Ui::StartWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
 

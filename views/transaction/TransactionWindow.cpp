@@ -69,3 +69,7 @@ void TransactionWindow::onBtnBackToTransactionMenu() {
 void TransactionWindow::onBtnBackToMainMenuClicked() {
     emit signalBtnBackToMainMenuClicked();
 }
+
+void TransactionWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+}

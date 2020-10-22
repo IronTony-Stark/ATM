@@ -6,6 +6,7 @@
 #define ATM_TRANSACTIONWINDOW_H
 
 #include <QWidget>
+#include "views/main/controller/ControllerLogicSettable.h"
 
 namespace Ui {
     class TransactionWindow;
@@ -17,6 +18,8 @@ Q_OBJECT
 public:
     explicit TransactionWindow(QWidget* parent = nullptr);
     ~TransactionWindow() override;
+
+    void setController(ControllerLogicSettable* logicSettable);
 
 signals:
     void signalBtnBackToMainMenuClicked();
@@ -36,6 +39,7 @@ private slots:
 
 private:
     Ui::TransactionWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
 };
 
 #endif // ATM_TRANSACTIONWINDOW_H

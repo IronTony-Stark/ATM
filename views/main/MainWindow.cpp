@@ -13,6 +13,38 @@ MainWindow::MainWindow(QWidget* parent)
             this, &MainWindow::onBtnEnterClicked);
     connect(_ui->btnCancel, &QPushButton::clicked,
             this, &MainWindow::onBtnCancelClicked);
+    connect(_ui->btnClear, &QPushButton::clicked,
+            this, &MainWindow::onBtnClearClicked);
+    connect(_ui->btn0, &QPushButton::clicked,
+            this, &MainWindow::onBtn0Clicked);
+    connect(_ui->btn1, &QPushButton::clicked,
+            this, &MainWindow::onBtn1Clicked);
+    connect(_ui->btn2, &QPushButton::clicked,
+            this, &MainWindow::onBtn2Clicked);
+    connect(_ui->btn3, &QPushButton::clicked,
+            this, &MainWindow::onBtn3Clicked);
+    connect(_ui->btn4, &QPushButton::clicked,
+            this, &MainWindow::onBtn4Clicked);
+    connect(_ui->btn5, &QPushButton::clicked,
+            this, &MainWindow::onBtn5Clicked);
+    connect(_ui->btn6, &QPushButton::clicked,
+            this, &MainWindow::onBtn6Clicked);
+    connect(_ui->btn7, &QPushButton::clicked,
+            this, &MainWindow::onBtn7Clicked);
+    connect(_ui->btn8, &QPushButton::clicked,
+            this, &MainWindow::onBtn8Clicked);
+    connect(_ui->btn9, &QPushButton::clicked,
+            this, &MainWindow::onBtn9Clicked);
+    connect(_ui->btnMoneyIn, &QPushButton::clicked,
+            this, &MainWindow::onBtnMoneyInClicked);
+    connect(_ui->btnCheck, &QPushButton::clicked,
+            this, &MainWindow::onBtnCheckClicked);
+    connect(_ui->btnCard, &QPushButton::clicked,
+            this, &MainWindow::onBtnCardClicked);
+    connect(_ui->btnPoint, &QPushButton::clicked,
+            this, &MainWindow::onBtnPointClicked);
+    connect(_ui->btnMoneyOut, &QPushButton::clicked,
+            this, &MainWindow::onBtnMoneyOutClicked);
 
     _ui->mainWindow->setController(this);
 }

@@ -6,6 +6,7 @@
 #define ATM_MAINMENUWINDOW_H
 
 #include <QWidget>
+#include "views/main/controller/ControllerLogicSettable.h"
 #include "views/transaction/TransactionWindow.h"
 #include "views/credit/CreditWindow.h"
 #include "views/deposit/DepositWindow.h"
@@ -22,6 +23,8 @@ public:
     explicit MainMenuWindow(QWidget* parent = nullptr);
     ~MainMenuWindow() override;
 
+    void setController(ControllerLogicSettable* logicSettable);
+
 signals:
     void signalBtnFinishClicked();
 
@@ -35,6 +38,7 @@ private slots:
 
 private:
     Ui::MainMenuWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
     TransactionWindow _transactionWindow;
     CreditWindow _creditWindow;
     DepositWindow _depositWindow;

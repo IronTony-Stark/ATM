@@ -33,3 +33,7 @@ void RegistrationWindow::onBtnTakeCardClicked() {
     emit signalBtnCancelClicked();
     _ui->stackedWidget->setCurrentIndex(0);
 }
+
+void RegistrationWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+}

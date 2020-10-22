@@ -76,3 +76,7 @@ void PaymentWindow::onBtnBackToMyPayments() {
 void PaymentWindow::onBtnMyPaymentCancelPayment() {
     _ui->stackedWidget->setCurrentIndex(2);
 }
+
+void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {
+    _logicSettable = logicSettable;
+}

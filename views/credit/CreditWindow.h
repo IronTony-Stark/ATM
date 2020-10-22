@@ -7,6 +7,7 @@
 
 #include <QWidget>
 #include <QtWidgets/QListWidgetItem>
+#include "views/main/controller/ControllerLogicSettable.h"
 
 namespace Ui {
     class CreditWindow;
@@ -18,6 +19,8 @@ Q_OBJECT
 public:
     explicit CreditWindow(QWidget* parent = nullptr);
     ~CreditWindow() override;
+
+    void setController(ControllerLogicSettable* logicSettable);
 
 signals:
     void signalBtnBackToMainMenuClicked();
@@ -37,6 +40,7 @@ private slots:
 
 private:
     Ui::CreditWindow* _ui;
+    ControllerLogicSettable* _logicSettable;
 
     void setupListCredits();
 };
