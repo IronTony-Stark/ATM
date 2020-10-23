@@ -34,6 +34,7 @@ void RegistrationWindow::onBtnEnterClicked() {
         QString name = _ui->editName->text();
         QString phone = _ui->editPhone->text();
         uint taxNumber = _ui->editTaxNumber->text().toUInt();
+        // TODO income
         QString cardType = _ui->comboCardType->currentText();
         try {
             ushort pin = _operationManager.registerCustomer(name, phone, taxNumber, cardType);

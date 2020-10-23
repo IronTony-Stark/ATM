@@ -12,6 +12,8 @@
 #include "views/main/controller/ControllerLogicSettable.h"
 #include "logics/managers/OperationManager.h"
 
+class Command;
+
 namespace Ui {
     class TransactionWindow;
 }
@@ -47,44 +49,41 @@ private:
 
     class ReplenishPageLogic : public ControllerLogic {
     public:
-        explicit ReplenishPageLogic(Navigatable&, OperationManager&, QLineEdit&);
+        void setEnterCommand(std::shared_ptr<Command>);
+        void setCancelCommand(std::shared_ptr<Command>);
 
     private:
+        std::shared_ptr<Command> _enterCommand;
+        std::shared_ptr<Command> _cancelCommand;
+
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
-
-        Navigatable& _navigatable;
-        OperationManager& _operationManager;
-        QLineEdit& _editHowMuch;
     };
 
     class WithdrawPageLogic : public ControllerLogic {
     public:
-        explicit WithdrawPageLogic(Navigatable&, OperationManager&, QLineEdit&, MessageDisplay&);
+        void setEnterCommand(std::shared_ptr<Command>);
+        void setCancelCommand(std::shared_ptr<Command>);
 
     private:
+        std::shared_ptr<Command> _enterCommand;
+        std::shared_ptr<Command> _cancelCommand;
+
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
-
-        Navigatable& _navigatable;
-        OperationManager& _operationManager;
-        QLineEdit& _editHowMuch;
-        MessageDisplay& _messageDisplay;
     };
 
     class TransferPageLogic : public ControllerLogic {
     public:
-        explicit TransferPageLogic(Navigatable&, OperationManager&, QLineEdit&, QLineEdit&, MessageDisplay&);
+        void setEnterCommand(std::shared_ptr<Command>);
+        void setCancelCommand(std::shared_ptr<Command>);
 
     private:
+        std::shared_ptr<Command> _enterCommand;
+        std::shared_ptr<Command> _cancelCommand;
+
         void onBtnEnterClicked() override;
         void onBtnCancelClicked() override;
-
-        Navigatable& _navigatable;
-        OperationManager& _operationManager;
-        QLineEdit& _editHowMuch;
-        QLineEdit& _editToWhom;
-        MessageDisplay& _messageDisplay;
     };
 
     Ui::TransactionWindow* _ui;
@@ -94,6 +93,8 @@ private:
     ReplenishPageLogic _replenishPageLogic;
     WithdrawPageLogic _withdrawPageLogic;
     TransferPageLogic _transferPageLogic;
+
+    void setupCommands(OperationManager& operationManager);
 };
 
 #endif // ATM_TRANSACTIONWINDOW_H

@@ -55,8 +55,20 @@ add_executable(ATM
         logics/bank_fees/DepositConditions.h
         logics/exceptions/CreditRepayOverheadException.cpp
         logics/exceptions/CreditRepayOverheadException.h
+        logics/bank_services/RegularPayment.cpp
+        logics/bank_services/RegularPayment.h
+        data_access/CustomerDAO.cpp
+        data_access/CustomerDAO.h
+        data_access/CreditDAO.cpp
+        data_access/CreditDAO.h
+        data_access/DepositDAO.cpp
+        data_access/DepositDAO.h
+        data_access/PaymentDAO.cpp
+        data_access/PaymentDAO.h
+        data_access/DBAccessor.cpp
+        data_access/DBAccessor.h
 
-#       Views
+        #       Views
         views/main/MainWindow.cpp
         views/main/MainWindow.h
         views/main/mainwindow.ui
@@ -100,7 +112,18 @@ add_executable(ATM
         views/Navigatable.h
         views/exceptions/AbsentNavigationDestination.h
         views/MessageDisplay.h
-        data_access/CustomerDAO.cpp data_access/CustomerDAO.h data_access/CreditDAO.cpp data_access/CreditDAO.h data_access/DepositDAO.cpp data_access/DepositDAO.h data_access/PaymentDAO.cpp data_access/PaymentDAO.h logics/bank_services/RegularPayment.cpp logics/bank_services/RegularPayment.h data_access/DBAccessor.cpp data_access/DBAccessor.h)
+        views/transaction/Windows.h
+        views/Command.h
+        views/transaction/commands/btnReplenishCommand/BtnReplenishCommand.cpp
+        views/transaction/commands/btnReplenishCommand/BtnReplenishCommand.h
+        views/transaction/commands/btnTransferCommand/BtnTransferCommand.cpp
+        views/transaction/commands/btnTransferCommand/BtnTransferCommand.h
+        views/transaction/commands/btnWithdrawCommand/BtnWithdrawCommand.cpp
+        views/transaction/commands/btnWithdrawCommand/BtnWithdrawCommand.h
+        views/transaction/commands/IncludeAllCommands.h
+        views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.cpp
+        views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.h
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

@@ -6,29 +6,19 @@
 // TODO Fix Segmentation Fault due to passing LineEdit before setup(ui)
 
 #include <QtWidgets/QMessageBox>
+#include <utility>
 #include "TransactionWindow.h"
 #include "gui/ui_transactionwindow.h"
 #include "views/exceptions/AbsentNavigationDestination.h"
-
-enum Windows {
-    TRANSACTIONS,
-    REPLENISH,
-    WITHDRAW,
-    TRANSFER,
-    MAIN_MENU,
-};
+#include "views/transaction/Windows.h"
+#include "commands/IncludeAllCommands.h"
 
 TransactionWindow::TransactionWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::TransactionWindow),
         _messageDisplay(*this),
-        _transactionPageLogic(*this),
-        _replenishPageLogic(*this, operationManager,
-                            *_ui->editReplenishHowMuch),
-        _withdrawPageLogic(*this, operationManager,
-                           *_ui->editWithdrawHowMuch, _messageDisplay),
-        _transferPageLogic(*this, operationManager, *_ui->editTransferHowMuch,
-                           *_ui->editTransferToWhom, _messageDisplay) {
+        _transactionPageLogic(*this) {
     _ui->setupUi(this);
+    setupCommands(operationManager);
 }
 
 TransactionWindow::~TransactionWindow() {
@@ -90,74 +80,77 @@ void TransactionWindow::TransactionPageLogic::onBtnCancelClicked() {
 }
 
 // ReplenishPageLogic
-TransactionWindow::ReplenishPageLogic::ReplenishPageLogic(
-        Navigatable& navigatable,
-        OperationManager& operationManager,
-        QLineEdit& editHowMuch) :
-        _navigatable(navigatable),
-        _operationManager(operationManager),
-        _editHowMuch(editHowMuch) {}
-
 void TransactionWindow::ReplenishPageLogic::onBtnEnterClicked() {
-    QString amountStr = _editHowMuch.text();
-    uint amount = _editHowMuch.text().toUInt();
-    _operationManager.replenish(amount);
-    _navigatable.navigate(TRANSACTIONS);
+    assert(_enterCommand != nullptr);
+    _enterCommand->execute();
 }
 
 void TransactionWindow::ReplenishPageLogic::onBtnCancelClicked() {
-    _navigatable.navigate(TRANSACTIONS);
+    assert(_cancelCommand != nullptr);
+    _cancelCommand->execute();
+}
+
+void TransactionWindow::ReplenishPageLogic::setEnterCommand(std::shared_ptr<Command> enterCommand) {
+    _enterCommand = std::move(enterCommand);
+}
+
+void TransactionWindow::ReplenishPageLogic::setCancelCommand(std::shared_ptr<Command> cancelCommand) {
+    _cancelCommand = std::move(cancelCommand);
 }
 
 // WithdrawPageLogic
-TransactionWindow::WithdrawPageLogic::WithdrawPageLogic(
-        Navigatable& navigatable,
-        OperationManager& operationManager,
-        QLineEdit& editHowMuch,
-        MessageDisplay& messageDisplay) :
-        _navigatable(navigatable),
-        _operationManager(operationManager),
-        _editHowMuch(editHowMuch),
-        _messageDisplay(messageDisplay) {}
-
 void TransactionWindow::WithdrawPageLogic::onBtnEnterClicked() {
-    uint amount = _editHowMuch.text().toUInt();
-    try {
-        _operationManager.withdraw(amount);
-        _navigatable.navigate(TRANSACTIONS);
-    } catch (const std::exception& e) {
-        _messageDisplay.show(e.what());
-    }
+    assert(_enterCommand != nullptr);
+    _enterCommand->execute();
 }
 
 void TransactionWindow::WithdrawPageLogic::onBtnCancelClicked() {
-    _navigatable.navigate(TRANSACTIONS);
+    assert(_cancelCommand != nullptr);
+    _cancelCommand->execute();
+}
+
+void TransactionWindow::WithdrawPageLogic::setEnterCommand(std::shared_ptr<Command> enterCommand) {
+    _enterCommand = std::move(enterCommand);
+}
+
+void TransactionWindow::WithdrawPageLogic::setCancelCommand(std::shared_ptr<Command> cancelCommand) {
+    _cancelCommand = std::move(cancelCommand);
 }
 
 // TransferPageLogic
-TransactionWindow::TransferPageLogic::TransferPageLogic(
-        Navigatable& navigatable,
-        OperationManager& operationManager,
-        QLineEdit& editHowMuch,
-        QLineEdit& editToWhom,
-        MessageDisplay& messageDisplay) :
-        _navigatable(navigatable),
-        _operationManager(operationManager),
-        _editHowMuch(editHowMuch),
-        _editToWhom(editToWhom),
-        _messageDisplay(messageDisplay) {}
-
 void TransactionWindow::TransferPageLogic::onBtnEnterClicked() {
-    QString to = _editToWhom.text();
-    uint amount = _editHowMuch.text().toUInt();
-    try {
-        _operationManager.transfer(to, amount);
-        _navigatable.navigate(TRANSACTIONS);
-    } catch (const std::exception& e) {
-        _messageDisplay.show(e.what());
-    }
+    assert(_enterCommand != nullptr);
+    _enterCommand->execute();
 }
 
 void TransactionWindow::TransferPageLogic::onBtnCancelClicked() {
-    _navigatable.navigate(TRANSACTIONS);
+    assert(_cancelCommand != nullptr);
+    _cancelCommand->execute();
+}
+
+void TransactionWindow::TransferPageLogic::setEnterCommand(std::shared_ptr<Command> enterCommand) {
+    _enterCommand = std::move(enterCommand);
+}
+
+void TransactionWindow::TransferPageLogic::setCancelCommand(std::shared_ptr<Command> cancelCommand) {
+    _cancelCommand = std::move(cancelCommand);
+}
+
+void TransactionWindow::setupCommands(OperationManager& operationManager) {
+    std::shared_ptr<Command> btnNavigateCommand(new BtnNavigateTransactionsCommand(*this));
+    _replenishPageLogic.setCancelCommand(btnNavigateCommand);
+    _withdrawPageLogic.setCancelCommand(btnNavigateCommand);
+    _transferPageLogic.setCancelCommand(btnNavigateCommand);
+
+    std::shared_ptr<Command> btnReplenishCommand(new BtnReplenishCommand(
+            *this, operationManager, *_ui->editReplenishHowMuch));
+    _replenishPageLogic.setEnterCommand(btnReplenishCommand);
+
+    std::shared_ptr<Command> btnWithdrawCommand(new BtnWithdrawCommand(
+            *this, operationManager, *_ui->editWithdrawHowMuch, _messageDisplay));
+    _withdrawPageLogic.setEnterCommand(btnWithdrawCommand);
+
+    std::shared_ptr<Command> btnTransferCommand(new BtnTransferCommand(
+            *this, operationManager, *_ui->editWithdrawHowMuch, *_ui->editTransferToWhom, _messageDisplay));
+    _transferPageLogic.setEnterCommand(btnTransferCommand);
 }
