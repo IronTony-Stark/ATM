@@ -13,3 +13,12 @@ PaymentWidget::PaymentWidget(QWidget* parent) :
 PaymentWidget::~PaymentWidget() {
     delete _ui;
 }
+
+std::tuple<QString, uint, QString, QDateTime> PaymentWidget::data() {
+    QString name = _ui->editName->text();
+    uint period = _ui->editHowMuch->text().toUInt();
+    QString receiver = _ui->editToWhome->text();
+    QDateTime when = _ui->editWhen->dateTime();
+
+    return std::tuple<QString, uint, QString, QDateTime>(name, period, receiver, when);
+}

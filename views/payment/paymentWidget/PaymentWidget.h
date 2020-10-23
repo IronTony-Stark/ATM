@@ -18,6 +18,8 @@ public:
     explicit PaymentWidget(QWidget* parent = nullptr);
     ~PaymentWidget() override;
 
+    std::tuple<QString, uint, QString, QDateTime> data();
+
 private:
     Ui::PaymentWidget* _ui;
 };

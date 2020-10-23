@@ -4,7 +4,7 @@
 
 #include "OperationManager.h"
 
-// todo withdraw, transfer, register, takeCredit, repayCredit, replenishDeposit, startDeposit can throw std::exception
+// todo withdraw, transfer, register, takeCredit, repayCredit, replenishDeposit, startDeposit, setPayment can throw std::exception
 bool OperationManager::authorizeCustomer(const QString& cardNumber, unsigned short pinCode) {
     return true;
 }
@@ -23,10 +23,6 @@ void OperationManager::withdraw(unsigned int amount) {
 
 int OperationManager::endDeposit() {
     return 0;
-}
-
-void OperationManager::setPayment(unsigned long amount, const QDate& date) {
-
 }
 
 void OperationManager::repayCredit(uint id) {
@@ -67,6 +63,18 @@ void OperationManager::cancelDeposit(uint id) {
 
 void OperationManager::replenishDeposit(uint id, uint amount) {
 
+}
+
+void OperationManager::cancelPayment(uint id) {
+
+}
+
+void OperationManager::setPayment(const QString& name, uint amount, const QString& receiver, const QDateTime& when) {
+
+}
+
+std::pair<RegularPayment*, int> OperationManager::getAllPayments() {
+    return std::pair<RegularPayment*, int>(nullptr, 0);
 }
 
 

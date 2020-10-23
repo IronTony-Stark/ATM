@@ -6,6 +6,7 @@
 #define ATM_OPERATIONMANAGER_H
 
 #include <logics/Customer.h>
+#include <logics/bank_services/RegularPayment.h>
 
 class OperationManager {
 public:
@@ -23,10 +24,13 @@ public:
 
     std::pair<Deposit*, int> getAllDeposits();
     void startDeposit(const QString&, uint, uint, const QDateTime&, const QDateTime&, double);
-    void cancelDeposit(uint id);
-    void replenishDeposit(uint id, uint amount);
+    void cancelDeposit(uint);
+    void replenishDeposit(uint, uint);
     int endDeposit();
-    void setPayment(unsigned long amount, const QDate& date);
+
+    std::pair<RegularPayment*, int> getAllPayments();
+    void setPayment(const QString&, uint, const QString&, const QDateTime&);
+    void cancelPayment(uint id);
 };
 
 

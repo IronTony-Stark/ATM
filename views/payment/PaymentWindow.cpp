@@ -2,9 +2,11 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
+#include <QtWidgets/QMessageBox>
 #include "PaymentWindow.h"
 #include "gui/ui_paymentwindow.h"
 
+// TODO setupPayments should be called each time a user navigates to MyPaymentsWindow
 PaymentWindow::PaymentWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::PaymentWindow),
         _operationManager(operationManager) {
@@ -46,7 +48,17 @@ void PaymentWindow::onBtnMyPayments() {
 }
 
 void PaymentWindow::onBtnCreatePaymentCreate() {
-    _ui->stackedWidget->setCurrentIndex(0);
+    QString name;
+    uint amount;
+    QString receiver;
+    QDateTime when;
+    std::tie(name, amount, receiver, when) = _ui->widgetCreatePaymentPayment->data();
+    try {
+        _operationManager.setPayment(name, amount, receiver, when);
+        _ui->stackedWidget->setCurrentIndex(0);
+    } catch (const std::exception& e) {
+        QMessageBox::critical(this, "ATM", e.what());
+    }
 }
 
 void PaymentWindow::onBtnBackToPaymentMenu() {
@@ -58,15 +70,24 @@ void PaymentWindow::onBtnBackToMainMenuClicked() {
 }
 
 void PaymentWindow::setupListPayments() {
-    new QListWidgetItem("Test 1", _ui->listPayments);
-    new QListWidgetItem("Test 2", _ui->listPayments);
-    new QListWidgetItem("Test 3", _ui->listPayments);
+    std::pair<RegularPayment*, int> payments = _operationManager.getAllPayments();
+    delete[] _payments;
+    _payments = payments.first;
+    _paymentsLen = payments.second;
+
+    for (int i = 0; i < _paymentsLen; ++i) {
+        new QListWidgetItem(QString::number(i), _ui->listPayments);
+    }
 
     connect(_ui->listPayments, &QListWidget::itemClicked,
             this, &PaymentWindow::onListPaymentsItemClicked);
 }
 
-void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem*) {
+void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem* item) {
+    int index = _ui->listPayments->row(item);
+    _selectedPayment = index;
+    RegularPayment& payment = _payments[index];
+    setupPaymentItem(payment);
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
@@ -74,7 +95,9 @@ void PaymentWindow::onBtnBackToMyPayments() {
     _ui->stackedWidget->setCurrentIndex(2);
 }
 
+// TODO pass payment id
 void PaymentWindow::onBtnMyPaymentCancelPayment() {
+    _operationManager.cancelPayment(0);
     _ui->stackedWidget->setCurrentIndex(2);
 }
 
@@ -84,4 +107,8 @@ void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {
 
 void PaymentWindow::setLogicActive() {
     _logicSettable->setLogic(this);
+}
+
+void PaymentWindow::setupPaymentItem(RegularPayment&) {
+
 }
