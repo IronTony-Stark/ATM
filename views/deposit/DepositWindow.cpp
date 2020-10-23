@@ -98,6 +98,7 @@ void DepositWindow::setupDepositItem(Deposit&) {
 
 }
 
+// DepositPageLogic
 DepositWindow::DepositPageLogic::DepositPageLogic(Navigatable& navigatable) :
         _navigatable(navigatable) {}
 
@@ -113,6 +114,7 @@ void DepositWindow::DepositPageLogic::onBtnCancelClicked() {
     _navigatable.navigate(MAIN_MENU);
 }
 
+// OpenDepositPageLogic
 DepositWindow::OpenDepositPageLogic::OpenDepositPageLogic(Navigatable& navigatable) :
         _navigatable(navigatable) {}
 
@@ -128,6 +130,7 @@ void DepositWindow::OpenDepositPageLogic::setEnterCommand(std::shared_ptr<Comman
     _enterCommand = std::move(command);
 }
 
+// MyDepositsPageLogic
 DepositWindow::MyDepositsPageLogic::MyDepositsPageLogic(Navigatable& navigatable) :
         _navigatable(navigatable) {}
 

@@ -67,7 +67,7 @@ void CreditWindow::navigate(int destination) {
 
 void CreditWindow::setupCommands() {
     std::shared_ptr<Command> takeCreditCommand(new TakeCreditCommand(
-            *this,*_ui->widgetTakeCreditCredit, _operationManager, _messageDisplay));
+            *this, *_ui->widgetTakeCreditCredit, _operationManager, _messageDisplay));
     _takeCreditPageLogic.setEnterCommand(takeCreditCommand);
 
     std::shared_ptr<Command> repayCreditCommand(new RepayCreditCommand(

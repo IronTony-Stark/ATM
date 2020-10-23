@@ -69,6 +69,10 @@ add_executable(ATM
         data_access/DBAccessor.h
 
         #       Views
+        views/transaction/Windows.h
+        views/credit/Windows.h
+        views/deposit/Windows.h
+        views/payment/Windows.h
         views/main/MainWindow.cpp
         views/main/MainWindow.h
         views/main/mainwindow.ui
@@ -110,20 +114,36 @@ add_executable(ATM
         views/main/controller/ControllerLogic.h
         views/main/controller/ControllerLogicSettable.h
         views/Navigatable.h
-        views/exceptions/AbsentNavigationDestination.h
         views/MessageDisplay.h
-        views/transaction/Windows.h
         views/Command.h
+        views/exceptions/AbsentNavigationDestination.h
+        views/transaction/commands/IncludeAllCommands.h
+        views/credit/commands/IncludeAllCommands.h
+        views/deposit/commands/IncludeAllCommands.h
+        views/payment/commands/IncludeAllCommands.h
         views/transaction/commands/replenishCommand/ReplenishCommand.cpp
         views/transaction/commands/replenishCommand/ReplenishCommand.h
         views/transaction/commands/transferCommand/TransferCommand.cpp
         views/transaction/commands/transferCommand/TransferCommand.h
         views/transaction/commands/withdrawCommand/WithdrawCommand.cpp
         views/transaction/commands/withdrawCommand/WithdrawCommand.h
-        views/transaction/commands/IncludeAllCommands.h
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.cpp
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.h
-        views/credit/Windows.h views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp views/credit/commands/takeCreditCommand/TakeCreditCommand.h views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp views/credit/commands/repayCreditCommand/RepayCreditCommand.h views/credit/commands/IncludeAllCommands.h views/deposit/Windows.h views/deposit/commands/openDepositCommand/OpenDepositCommand.cpp views/deposit/commands/openDepositCommand/OpenDepositCommand.h views/deposit/commands/cancelDepositCommand/CancelDepositCommand.cpp views/deposit/commands/cancelDepositCommand/CancelDepositCommand.h views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.cpp views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.h views/deposit/commands/IncludeAllCommands.h)
+        views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp
+        views/credit/commands/takeCreditCommand/TakeCreditCommand.h
+        views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp
+        views/credit/commands/repayCreditCommand/RepayCreditCommand.h
+        views/deposit/commands/openDepositCommand/OpenDepositCommand.cpp
+        views/deposit/commands/openDepositCommand/OpenDepositCommand.h
+        views/deposit/commands/cancelDepositCommand/CancelDepositCommand.cpp
+        views/deposit/commands/cancelDepositCommand/CancelDepositCommand.h
+        views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.cpp
+        views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.h
+        views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.cpp
+        views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.h
+        views/payment/commands/createPaymentCommand/CreatePaymentCommand.cpp
+        views/payment/commands/createPaymentCommand/CreatePaymentCommand.h
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
