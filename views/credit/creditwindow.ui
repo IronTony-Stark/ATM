@@ -84,19 +84,6 @@
         </layout>
        </item>
        <item>
-        <widget class="QLabel" name="labelTakeCreditError">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Error</string>
-         </property>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btnTakeCreditSubmit">
          <property name="text">
           <string>Submit</string>
@@ -137,6 +124,13 @@
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="CreditWidget" name="widgetMyCreditCredit" native="true"/>
+       </item>
+       <item>
+        <widget class="QPushButton" name="btnMyCreditRepay">
+         <property name="text">
+          <string>Repay</string>
+         </property>
+        </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnMyCreditBack">

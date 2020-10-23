@@ -18,6 +18,8 @@ public:
     explicit CreditWidget(QWidget* parent = nullptr);
     ~CreditWidget() override;
 
+    std::tuple<QString, uint, uint, QDateTime, QDateTime> data();
+
 private:
     Ui::CreditWidget* _ui;
 };

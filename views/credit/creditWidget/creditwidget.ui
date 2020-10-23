@@ -112,7 +112,7 @@
    <item row="0" column="0">
     <widget class="QLabel" name="labelName">
      <property name="text">
-      <string>TextLabel</string>
+      <string>Name</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>

@@ -36,16 +36,22 @@ private slots:
     void onBtnBackToCreditMenuClicked();
     void onBtnBackToMyCreditsClicked();
 
+    void onBtnMyCreditRepayClicked();
     void onBtnBackToMainMenuClicked();
 
     void onListCreditsItemClicked(QListWidgetItem*);
+
 
 private:
     Ui::CreditWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
     OperationManager& _operationManager;
+    Credit* _credits = nullptr;
+    int _creditsLen = 0;
+    int _selectedCredit = -1;
 
     void setupListCredits();
+    void setupCreditItem(Credit&);
 };
 
 #endif // ATM_CREDITWINDOW_H

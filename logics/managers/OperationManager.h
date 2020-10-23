@@ -15,12 +15,13 @@ public:
     void replenish(uint amount);
     void withdraw(unsigned int amount);
     void transfer(const QString& cartNumberFromTo, uint amount);
+    std::pair<Credit*, int> getAllCredits();
+    void takeCredit(const QString& name, uint amount, uint period, const QDateTime& start, const QDateTime& end);
+    void repayCredit(uint id);
     void startDeposit(unsigned int startAmount);
     int endDeposit();
     void cancelDeposit();
     void setPayment(unsigned long amount, const QDate& date);
-    void takeCredit(unsigned int amount);
-    void repayCredit(unsigned int amount);
 };
 
 
