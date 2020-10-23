@@ -3,7 +3,6 @@
 //
 
 // TODO edit check for ill-formed input
-// TODO Fix Segmentation Fault due to passing LineEdit before setup(ui)
 
 #include <QtWidgets/QMessageBox>
 #include <utility>
@@ -137,20 +136,20 @@ void TransactionWindow::TransferPageLogic::setCancelCommand(std::shared_ptr<Comm
 }
 
 void TransactionWindow::setupCommands(OperationManager& operationManager) {
-    std::shared_ptr<Command> btnNavigateCommand(new NavigateTransactionsCommand(*this));
-    _replenishPageLogic.setCancelCommand(btnNavigateCommand);
-    _withdrawPageLogic.setCancelCommand(btnNavigateCommand);
-    _transferPageLogic.setCancelCommand(btnNavigateCommand);
+    std::shared_ptr<Command> navigateCommand(new NavigateTransactionsCommand(*this));
+    _replenishPageLogic.setCancelCommand(navigateCommand);
+    _withdrawPageLogic.setCancelCommand(navigateCommand);
+    _transferPageLogic.setCancelCommand(navigateCommand);
 
-    std::shared_ptr<Command> btnReplenishCommand(new ReplenishCommand(
+    std::shared_ptr<Command> replenishCommand(new ReplenishCommand(
             *this, operationManager, *_ui->editReplenishHowMuch));
-    _replenishPageLogic.setEnterCommand(btnReplenishCommand);
+    _replenishPageLogic.setEnterCommand(replenishCommand);
 
-    std::shared_ptr<Command> btnWithdrawCommand(new WithdrawCommand(
+    std::shared_ptr<Command> withdrawCommand(new WithdrawCommand(
             *this, operationManager, *_ui->editWithdrawHowMuch, _messageDisplay));
-    _withdrawPageLogic.setEnterCommand(btnWithdrawCommand);
+    _withdrawPageLogic.setEnterCommand(withdrawCommand);
 
-    std::shared_ptr<Command> btnTransferCommand(new TransferCommand(
+    std::shared_ptr<Command> transferCommand(new TransferCommand(
             *this, operationManager, *_ui->editWithdrawHowMuch, *_ui->editTransferToWhom, _messageDisplay));
-    _transferPageLogic.setEnterCommand(btnTransferCommand);
+    _transferPageLogic.setEnterCommand(transferCommand);
 }

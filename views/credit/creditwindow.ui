@@ -21,21 +21,14 @@
        <item>
         <widget class="QPushButton" name="btnTakeCredit">
          <property name="text">
-          <string>Take Credit</string>
+          <string>|0| Take Credit</string>
          </property>
         </widget>
        </item>
        <item>
         <widget class="QPushButton" name="btnMyCredits">
          <property name="text">
-          <string>My Credits</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnBackToMainMenu">
-         <property name="text">
-          <string>Back</string>
+          <string>|1| My Credits</string>
          </property>
         </widget>
        </item>
@@ -83,20 +76,6 @@
          </item>
         </layout>
        </item>
-       <item>
-        <widget class="QPushButton" name="btnTakeCreditSubmit">
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnTakeCreditCancel">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageMyCredits">
@@ -111,33 +90,12 @@
        <item>
         <widget class="QListWidget" name="listCredits"/>
        </item>
-       <item>
-        <widget class="QPushButton" name="btnMyCreditsBack">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageMyCredit">
       <layout class="QVBoxLayout" name="verticalLayout_5">
        <item>
         <widget class="CreditWidget" name="widgetMyCreditCredit" native="true"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyCreditRepay">
-         <property name="text">
-          <string>Repay</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyCreditBack">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
        </item>
       </layout>
      </widget>

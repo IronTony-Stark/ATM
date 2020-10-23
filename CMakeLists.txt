@@ -123,7 +123,7 @@ add_executable(ATM
         views/transaction/commands/IncludeAllCommands.h
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.cpp
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.h
-        views/credit/Windows.h)
+        views/credit/Windows.h views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp views/credit/commands/takeCreditCommand/TakeCreditCommand.h views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp views/credit/commands/repayCreditCommand/RepayCreditCommand.h views/credit/commands/IncludeAllCommands.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

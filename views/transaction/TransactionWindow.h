@@ -89,6 +89,7 @@ private:
     Ui::TransactionWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
     MessageDisplay _messageDisplay;
+
     TransactionPageLogic _transactionPageLogic;
     ReplenishPageLogic _replenishPageLogic;
     WithdrawPageLogic _withdrawPageLogic;

@@ -3,35 +3,26 @@
 //
 
 #include <QtWidgets/QMessageBox>
+#include <utility>
+#include <views/exceptions/AbsentNavigationDestination.h>
 #include "CreditWindow.h"
+#include "Windows.h"
 #include "gui/ui_creditwindow.h"
+#include "commands/IncludeAllCommands.h"
 
 CreditWindow::CreditWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::CreditWindow),
-        _operationManager(operationManager) {
+        _operationManager(operationManager),
+        _messageDisplay(*this),
+        _creditPageLogic(*this),
+        _takeCreditPageLogic(*this),
+        _myCreditsPageLogic(*this),
+        _myCreditPageLogic(*this) {
     _ui->setupUi(this);
 
     _ui->labelTakeCreditLimit->setText(QString::number(Credit::creditLimitOfIncome));
 
-    connect(_ui->btnTakeCredit, &QPushButton::clicked,
-            this, &CreditWindow::onBtnTakeCreditClicked);
-    connect(_ui->btnMyCredits, &QPushButton::clicked,
-            this, &CreditWindow::onBtnMyCreditsClicked);
-
-    connect(_ui->btnTakeCreditSubmit, &QPushButton::clicked,
-            this, &CreditWindow::onBtnTakeCreditSubmitClicked);
-    connect(_ui->btnTakeCreditCancel, &QPushButton::clicked,
-            this, &CreditWindow::onBtnBackToCreditMenuClicked);
-    connect(_ui->btnMyCreditsBack, &QPushButton::clicked,
-            this, &CreditWindow::onBtnBackToCreditMenuClicked);
-
-    connect(_ui->btnMyCreditRepay, &QPushButton::clicked,
-            this, &CreditWindow::onBtnMyCreditRepayClicked);
-    connect(_ui->btnMyCreditBack, &QPushButton::clicked,
-            this, &CreditWindow::onBtnBackToMyCreditsClicked);
-
-    connect(_ui->btnBackToMainMenu, &QPushButton::clicked,
-            this, &CreditWindow::onBtnBackToMainMenuClicked);
+    setupCommands();
 
     setupListCredits();
 }
@@ -40,43 +31,55 @@ CreditWindow::~CreditWindow() {
     delete _ui;
 }
 
-void CreditWindow::onBtnBackToMainMenuClicked() {
-    emit signalBtnBackToMainMenuClicked();
+void CreditWindow::onListCreditsItemClicked(QListWidgetItem* item) {
+    int index = _ui->listCredits->row(item);
+    _selectedCredit = index;
+    Credit& credit = _credits[index];
+    setupCreditItem(credit);
+    navigate(MY_CREDIT);
 }
 
-void CreditWindow::onBtnTakeCreditClicked() {
-    _ui->stackedWidget->setCurrentIndex(1);
-}
-
-void CreditWindow::onBtnMyCreditsClicked() {
-    _ui->stackedWidget->setCurrentIndex(2);
-}
-
-void CreditWindow::onBtnTakeCreditSubmitClicked() {
-    QString name;
-    uint sum;
-    uint period;
-    uint payment;
-    QDateTime start;
-    QDateTime end;
-    std::tie(name, sum, period, payment, start, end) = _ui->widgetTakeCreditCredit->data();
-    try {
-        _operationManager.takeCredit(name, sum, period, payment, start, end);
-        _ui->stackedWidget->setCurrentIndex(0);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "ATM", e.what());
+void CreditWindow::navigate(int destination) {
+    switch (destination) {
+        case CREDITS_MENU:
+            _ui->stackedWidget->setCurrentIndex(0);
+            _logicSettable->setLogic(&_creditPageLogic);
+            break;
+        case TAKE_CREDIT:
+            _ui->stackedWidget->setCurrentIndex(1);
+            _logicSettable->setLogic(&_takeCreditPageLogic);
+            break;
+        case MY_CREDITS:
+            _ui->stackedWidget->setCurrentIndex(2);
+            _logicSettable->setLogic(&_myCreditsPageLogic);
+            break;
+        case MY_CREDIT:
+            _ui->stackedWidget->setCurrentIndex(3);
+            _logicSettable->setLogic(&_myCreditPageLogic);
+            break;
+        case MAIN_MENU:
+            emit signalBtnBackToMainMenuClicked();
+            break;
+        default:
+            throw AbsentNavigationDestination(&"CreditWindow navigate "[destination]);
     }
 }
 
-void CreditWindow::onBtnBackToCreditMenuClicked() {
-    _ui->stackedWidget->setCurrentIndex(0);
+void CreditWindow::setupCommands() {
+    std::shared_ptr<Command> takeCreditCommand(new TakeCreditCommand(
+            *this,*_ui->widgetTakeCreditCredit, _operationManager, _messageDisplay));
+    _takeCreditPageLogic.setEnterCommand(takeCreditCommand);
+
+    std::shared_ptr<Command> repayCreditCommand(new RepayCreditCommand(
+            _operationManager, _messageDisplay));
+    _myCreditPageLogic.setEnterCommand(repayCreditCommand);
 }
 
-void CreditWindow::onBtnBackToMyCreditsClicked() {
-    _ui->stackedWidget->setCurrentIndex(2);
+// TODO setup credit item
+void CreditWindow::setupCreditItem(Credit&) {
+
 }
 
-// TODO credit name
 void CreditWindow::setupListCredits() {
     std::pair<Credit*, int> credits = _operationManager.getAllCredits();
     delete[] _credits;
@@ -84,6 +87,7 @@ void CreditWindow::setupListCredits() {
     _creditsLen = credits.second;
 
     for (int i = 0; i < _creditsLen; ++i) {
+        // TODO credit name
         new QListWidgetItem(QString::number(i), _ui->listCredits);
     }
 
@@ -91,32 +95,67 @@ void CreditWindow::setupListCredits() {
             this, &CreditWindow::onListCreditsItemClicked);
 }
 
-void CreditWindow::onListCreditsItemClicked(QListWidgetItem* item) {
-    int index = _ui->listCredits->row(item);
-    _selectedCredit = index;
-    Credit& credit = _credits[index];
-    setupCreditItem(credit);
-    _ui->stackedWidget->setCurrentIndex(3);
-}
-
 void CreditWindow::setController(ControllerLogicSettable* logicSettable) {
     _logicSettable = logicSettable;
 }
 
 void CreditWindow::setLogicActive() {
-    _logicSettable->setLogic(this);
+    _logicSettable->setLogic(&_creditPageLogic);
 }
 
-// TODO credit item
-void CreditWindow::setupCreditItem(Credit&) {
+CreditWindow::CreditPageLogic::CreditPageLogic(Navigatable& navigatable)
+        : _navigatable(navigatable) {}
 
+void CreditWindow::CreditPageLogic::onBtn0Clicked() {
+    _navigatable.navigate(TAKE_CREDIT);
 }
 
-// TODO pass id
-void CreditWindow::onBtnMyCreditRepayClicked() {
-    try {
-        _operationManager.repayCredit(-1);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "ATM", e.what());
-    }
+void CreditWindow::CreditPageLogic::onBtn1Clicked() {
+    _navigatable.navigate(MY_CREDITS);
+}
+
+void CreditWindow::CreditPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(MAIN_MENU);
+}
+
+// TakeCreditPageLogic
+CreditWindow::TakeCreditPageLogic::TakeCreditPageLogic(Navigatable& navigatable)
+        : _navigatable(navigatable) {}
+
+void CreditWindow::TakeCreditPageLogic::onBtnEnterClicked() {
+    assert(_enterCommand != nullptr);
+    _enterCommand->execute();
+}
+
+void CreditWindow::TakeCreditPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(CREDITS_MENU);
+}
+
+void CreditWindow::TakeCreditPageLogic::setEnterCommand(std::shared_ptr<Command> command) {
+    _enterCommand = std::move(command);
+}
+
+// MyCreditsPageLogic
+CreditWindow::MyCreditsPageLogic::MyCreditsPageLogic(Navigatable& navigatable)
+        : _navigatable(navigatable) {}
+
+void CreditWindow::MyCreditsPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(CREDITS_MENU);
+}
+
+// MyCreditPageLogic
+CreditWindow::MyCreditPageLogic::MyCreditPageLogic(Navigatable& navigatable)
+        : _navigatable(navigatable) {}
+
+void CreditWindow::MyCreditPageLogic::onBtnEnterClicked() {
+    assert(_enterCommand != nullptr);
+    _enterCommand->execute();
+}
+
+void CreditWindow::MyCreditPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(MY_CREDITS);
+}
+
+void CreditWindow::MyCreditPageLogic::setEnterCommand(std::shared_ptr<Command> command) {
+    _enterCommand = std::move(command);
 }
