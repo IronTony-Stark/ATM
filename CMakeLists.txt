@@ -100,7 +100,7 @@ add_executable(ATM
         views/Navigatable.h
         views/exceptions/AbsentNavigationDestination.h
         views/MessageDisplay.h
-        )
+        data_access/CustomerDAO.cpp data_access/CustomerDAO.h data_access/CreditDAO.cpp data_access/CreditDAO.h data_access/DepositDAO.cpp data_access/DepositDAO.h data_access/PaymentDAO.cpp data_access/PaymentDAO.h logics/bank_services/RegularPayment.cpp logics/bank_services/RegularPayment.h data_access/DBAccessor.cpp data_access/DBAccessor.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

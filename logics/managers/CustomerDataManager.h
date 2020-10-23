@@ -20,13 +20,13 @@ public:
 
 	bool canAffordCredit(Money amount, double interest) const;
 
-	uint takeCredit(Money debt, double interest);
+	uint takeCredit(Money debt, QString name, double interest);
 
 	bool repayCredit(Money amount, uint creditId);
 
 	bool canOpenDeposit(Money potentialBalance) const;
 
-	uint openDeposit(Money initialBalance, double interest, uint months);
+	uint openDeposit(Money initialBalance, QString name, double interest, uint months);
 
 	void replenishDeposit(Money amount, uint depoId);
 

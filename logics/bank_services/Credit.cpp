@@ -4,16 +4,28 @@
 
 #include "Credit.h"
 
+#include <utility>
+
 double Credit::creditLimitOfIncome = 0.45;
 
-Credit::Credit(uint id, Money creditBody, double interest, Money payment) :
-		_id(id), _creditBody(creditBody), _interest(interest), _payment(payment), _dateTaken(QDateTime()) {
+Credit::Credit(uint id, QString name, Money creditBody, double interest, Money payment) :
+		_id(id), _name(std::move(name)), _creditBody(creditBody), _interest(interest), _payment(payment),
+		_dateTaken(QDate()) {
 	// todo: check if a person can afford a new credit
 }
 
 Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _payment(c._payment),
 								  _debt(c._interest) {
 
+}
+
+const QString& Credit::name() const {
+	return _name;
+}
+
+void Credit::setName(QString newName) {
+	if (newName.isEmpty()) throw std::invalid_argument("new name is empty");
+	_name = std::move(newName);
 }
 
 void Credit::replenish(Money amount) {
@@ -36,6 +48,10 @@ Money Credit::debt() const {
 
 Money Credit::payment() const {
 	return _payment;
+}
+
+const QDate& Credit::dateTaken() const {
+	return _dateTaken;
 }
 
 

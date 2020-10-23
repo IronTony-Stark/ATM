@@ -3,13 +3,16 @@
 //
 
 #include <logics/exceptions/NotEnoughMoneyException.h>
+
+#include <utility>
 #include "Card.h"
 #include "logics/bank_fees/BankFeeProvider.h"
 #include "logics/utils/general.h"
 
-Card::Card(unsigned long int id, ABankFee::FeeType feeType, Customer& customer, QString& pin, Money balance) :
+Card::Card(unsigned long int id, ABankFee::FeeType feeType, Customer& customer, QString& pin, QString name,
+		   Money balance) :
 		_id(id), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)), _customer(customer), _pin(pin),
-		_balance(balance) {
+		_name(std::move(name)), _balance(balance) {
 }
 
 Card::Card(const Card& c) : _id(c._id), _bankFee(c._bankFee), _balance(c._balance), _customer(c._customer) {}
@@ -35,6 +38,14 @@ Money Card::transfer(unsigned long recipient, Money amount) {
 	Money transferSum = amount / (1 + _bankFee.transferFee());
 	// todo: get card recipient from DB and send money there
 	return transferSum;
+}
+
+const QString& Card::name() const {
+	return _name;
+}
+
+void Card::setName(QString newName) {
+	_name = std::move(newName);
 }
 
 const QString Card::pin() const {

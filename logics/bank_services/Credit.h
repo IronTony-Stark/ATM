@@ -17,9 +17,13 @@ public:
 
 	const uint _id;
 
-	Credit(uint id, Money creditBody, double interest, Money payment);
+	Credit(uint id, QString name, Money creditBody, double interest, Money payment);
 
 	Credit(const Credit&);
+
+	[[nodiscard]] const QString& name() const;
+
+	void setName(QString newName);
 
 	void replenish(Money amount);
 
@@ -27,15 +31,18 @@ public:
 
 	[[nodiscard]] Money debt() const;
 
-	Money payment() const;
+	[[nodiscard]] Money payment() const;
+
+	[[nodiscard]] const QDate& dateTaken() const;
 
 	Credit& operator=(const Credit&) = delete;
 
 private:
+	QString _name;
 	Money _creditBody;
 	Money _debt = 0;    //debt is bank's income, creditBody is money that customer borrowed
-	QDateTime _dateTaken;
 	Money _payment;
+	QDate _dateTaken;
 };
 
 

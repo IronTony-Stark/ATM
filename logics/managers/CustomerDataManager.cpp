@@ -7,6 +7,8 @@
 //#include <logics/exceptions/WrongPaymentException.h>
 #include <logics/exceptions/CreditRepayOverheadException.h>
 #include <logics/exceptions/NoSuchDepositException.h>
+
+#include <utility>
 #include "CustomerDataManager.h"
 
 const Customer& CustomerDataManager::customer() const {
@@ -30,9 +32,9 @@ bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {
 	return _customer->creditLimit() <= amount * interest;
 }
 
-uint CustomerDataManager::takeCredit(Money debt, double interest) {
+uint CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
 	// todo: take next free id from db and save data to db
-	_customer->addCredit(new Credit(-1, debt, interest, debt * interest / 12));
+	_customer->addCredit(new Credit(-1, std::move(name), debt, interest, debt * interest / 12));
 	return -1;
 }
 
@@ -56,9 +58,9 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
 	return (totalDepositBalance + potentialBalance) < Deposit::maxDepoSum;
 }
 
-uint CustomerDataManager::openDeposit(Money initialBalance, double interest, uint months) {
+uint CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
 	// todo: same stuff with DB as with credit
-	Deposit* depo = new Deposit(-1, QDate(), QDate().addMonths(months), initialBalance, interest);
+	Deposit* depo = new Deposit(-1, std::move(name), QDate(), QDate().addMonths(months), initialBalance, interest);
 	_customer->addDeposit(depo);
 	return -1;
 }

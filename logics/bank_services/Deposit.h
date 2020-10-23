@@ -15,7 +15,7 @@ public:
 
 	const uint _id;
 
-	Deposit(uint id, QDate startDate, QDate endDate, Money initialBalance, double interest);
+	Deposit(uint id, QString name, QDate startDate, QDate endDate, Money initialBalance, double interest);
 
 	Deposit(const Deposit&);
 
@@ -25,11 +25,22 @@ public:
 
 	[[nodiscard]] Money earnings() const;
 
+	[[nodiscard]] const QString& name() const;
+
+	void setName(QString newName);
+
+	[[nodiscard]] double interest() const;
+
+	[[nodiscard]] const QDate& startDate() const;
+
+	[[nodiscard]] const QDate& endDate() const;
+
 	[[nodiscard]] QDate timeRemaining() const;
 
 	Deposit& operator=(const Deposit&) = delete;
 
 private:
+	QString _name;
 	double _interest;
 	Money _sum;
 	Money _earnings = 0;

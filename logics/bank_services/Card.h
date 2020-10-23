@@ -17,7 +17,7 @@ public:
 	const unsigned long int _id;
 	const ABankFee& _bankFee;
 
-	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, Money balance = 0);
+	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, QString name, Money balance = 0);
 
 	Card(const Card&);
 
@@ -33,6 +33,10 @@ public:
 
 	Money transfer(unsigned long int recipient, Money amount);
 
+	const QString& name() const;
+
+	void setName(QString newName);
+
 	const QString pin() const;
 
 	const QString regeneratePin();
@@ -40,6 +44,7 @@ public:
 	Card& operator=(const Card&) = delete;
 
 private:
+	QString _name;
 	QString _pin;
 	Money _balance;
 	Customer& _customer;
