@@ -2,9 +2,12 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
+#include <logics/managers/CustomerDataManager.h>
+#include <logics/auth/Registrator.h>
 #include <QtWidgets/QMessageBox>
 #include "RegistrationWindow.h"
 #include "gui/ui_registrationwindow.h"
+#include <QDebug>
 
 enum Windows {
     REGISTRATION,
@@ -33,11 +36,13 @@ void RegistrationWindow::onBtnEnterClicked() {
     if (state() != CARD) {
         QString name = _ui->editName->text();
         QString phone = _ui->editPhone->text();
-        uint taxNumber = _ui->editTaxNumber->text().toUInt();
+        QString taxNumber = _ui->editTaxNumber->text();
         // TODO income
-        QString cardType = _ui->comboCardType->currentText();
+        // TODO CardType : ABankFee::STANDARD
+//        QString cardType = _ui->comboCardType->currentText();
         try {
-            ushort pin = _operationManager.registerCustomer(name, phone, taxNumber, cardType);
+            // TODO income
+            ushort pin = _operationManager.registerCustomer(CustomerVerificationData(name, taxNumber, 0, phone, ABankFee::STANDARD));
             _ui->labelPin->setText(QString::number(pin));
             _ui->stackedWidget->setCurrentIndex(CARD);
         } catch (const std::exception& e) {

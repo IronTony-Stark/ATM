@@ -27,7 +27,11 @@ public:
 private:
     Ui::StartWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
-    OperationManager _operationManager;
+    OperationManager _operationManager = OperationManager{
+            CustomerDataManager(), TimeDrivenEventsHandler(),
+            CustomerDAO(),
+            CreditDAO(), DepositDAO(), PaymentDAO()
+    };
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
     int _pinAttempts = 3;

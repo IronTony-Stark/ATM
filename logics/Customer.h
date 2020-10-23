@@ -5,7 +5,6 @@
 #ifndef ATM_CUSTOMER_H
 #define ATM_CUSTOMER_H
 
-
 #include <logics/bank_services/Credit.h>
 #include <logics/bank_services/Deposit.h>
 #include <logics/utils/Money.h>
@@ -13,10 +12,11 @@
 
 class Customer {
 public:
-	const uint _taxNumber;
-	const QString _passportCode;
+    const QString _taxNumber;
+	const QString _phoneNumber;
+//	const QString _passportCode;
 
-	Customer(const QString& name, uint taxNum, QString passportCode, Money revenue);
+	Customer(QString  name, QString  taxNum, QString  phoneNum, const Money revenue);
 
 	[[nodiscard]] const QString& name() const;
 

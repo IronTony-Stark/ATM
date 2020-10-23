@@ -12,6 +12,11 @@ class CustomerDataManager {
 public:
 	const Customer& customer() const;
 
+	Card& card() const;
+
+    Customer* const getCustomerByTaxNumber(const QString&) const;
+    Customer* const getCustomerByCardNumber(const QString& cardNumber) const;
+
 	Money balance() const;
 
 	void replenish(Money amount);

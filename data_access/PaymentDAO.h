@@ -6,8 +6,14 @@
 #define ATM_PAYMENTDAO_H
 
 
-class PaymentDAO {
+#include <logics/bank_services/RegularPayment.h>
 
+class PaymentDAO {
+public:
+    QList<RegularPayment> getAll() const;
+    RegularPayment* const getById(uint id) const;
+    void save(RegularPayment*) const;
+    void deleteRP(RegularPayment*) const;
 };
 
 

@@ -6,8 +6,12 @@
 #define ATM_CUSTOMERDAO_H
 
 
-class CustomerDAO {
+#include <logics/Customer.h>
+#include <QtCore/QString>
 
+class CustomerDAO {
+public:
+    void save(const Customer* const) const;
 };
 
 

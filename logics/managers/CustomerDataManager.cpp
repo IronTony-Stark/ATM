@@ -29,9 +29,11 @@ void CustomerDataManager::withdraw(Money amount) {
 }
 
 bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {
+    // TODO: do we need amount + amount * interest?
 	return _customer->creditLimit() <= amount * interest;
 }
 
+// TODO return amount
 uint CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
 	// todo: take next free id from db and save data to db
 	_customer->addCredit(new Credit(-1, std::move(name), debt, interest, debt * interest / 12));
@@ -94,4 +96,18 @@ QString CustomerDataManager::getPin() const {
 
 QString CustomerDataManager::changePin() {
 	return _bankCard->regeneratePin();
+}
+
+Card& CustomerDataManager::card() const {
+    return *_bankCard;
+}
+
+
+// TODO implement
+Customer* const CustomerDataManager::getCustomerByTaxNumber(const QString&) const {
+    return nullptr;
+}
+
+Customer* const CustomerDataManager::getCustomerByCardNumber(const QString& cardNumber) const {
+    return nullptr;
 }

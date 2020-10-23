@@ -9,7 +9,7 @@
 #include <QtCore/QString>
 #include <logics/utils/Money.h>
 
-typedef unsigned long int uli;
+typedef QString uli;
 
 class RegularPayment {
 public:

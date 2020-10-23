@@ -70,14 +70,15 @@ void PaymentWindow::onBtnBackToMainMenuClicked() {
 }
 
 void PaymentWindow::setupListPayments() {
-    std::pair<RegularPayment*, int> payments = _operationManager.getAllPayments();
-    delete[] _payments;
-    _payments = payments.first;
-    _paymentsLen = payments.second;
-
-    for (int i = 0; i < _paymentsLen; ++i) {
-        new QListWidgetItem(QString::number(i), _ui->listPayments);
-    }
+    // TODO payments
+//    std::pair<RegularPayment*, int> payments = _operationManager.getAllPayments();
+//    delete[] _payments;
+//    _payments = payments.first;
+//    _paymentsLen = payments.second;
+//
+//    for (int i = 0; i < _paymentsLen; ++i) {
+//        new QListWidgetItem(QString::number(i), _ui->listPayments);
+//    }
 
     connect(_ui->listPayments, &QListWidget::itemClicked,
             this, &PaymentWindow::onListPaymentsItemClicked);

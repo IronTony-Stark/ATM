@@ -9,35 +9,38 @@
 #include "logics/bank_fees/BankFeeProvider.h"
 #include "logics/utils/general.h"
 
-Card::Card(unsigned long int id, ABankFee::FeeType feeType, Customer& customer, QString& pin, QString name,
-		   Money balance) :
-		_id(id), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)), _customer(customer), _pin(pin),
-		_name(std::move(name)), _balance(balance) {
+Card::Card(ABankFee::FeeType feeType, Customer& customer, QString& pin, QString name,Money balance) :
+        _cardType(feeType), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)),
+        _customer(customer), _pin(pin),
+        _name(std::move(name)), _balance(balance) {
+    // TODO get id from database
+    _id = -1;
 }
 
-Card::Card(const Card& c) : _id(c._id), _bankFee(c._bankFee), _balance(c._balance), _customer(c._customer) {}
+Card::Card(const Card& c) : _id(c._id), _bankFee(c._bankFee), _cardType(c._cardType),
+                            _balance(c._balance), _customer(c._customer) {}
 
 Money Card::balance() const {
-	return _balance;
+    return _balance;
 }
 
 std::pair<Money, Money> Card::withdraw(Money amount) {
-	Money withdrawSum = amount * _bankFee.withdrawFee();
-	if (withdrawSum > _balance) throw NotEnoughMoneyException(_balance, withdrawSum);
-	_balance -= withdrawSum;
-	return {_balance, withdrawSum};
+    Money withdrawSum = amount * _bankFee.withdrawFee();
+    if (withdrawSum > _balance) throw NotEnoughMoneyException(_balance, withdrawSum);
+    _balance -= withdrawSum;
+    return {_balance, withdrawSum};
 }
 
 Money Card::replenish(Money amount) {
-	Money replenishmentSum = amount / (1 + _bankFee.replenishFee());
-	_balance += replenishmentSum;
-	return _balance;
+    Money replenishmentSum = amount / (1 + _bankFee.replenishFee());
+    _balance += replenishmentSum;
+    return _balance;
 }
 
-Money Card::transfer(unsigned long recipient, Money amount) {
-	Money transferSum = amount / (1 + _bankFee.transferFee());
-	// todo: get card recipient from DB and send money there
-	return transferSum;
+Money Card::transfer(const QString& recipient, Money amount) {
+    Money transferSum = amount / (1 + _bankFee.transferFee());
+    // todo: get card recipient from DB and send money there
+    return transferSum;
 }
 
 const QString& Card::name() const {
@@ -48,12 +51,21 @@ void Card::setName(QString newName) {
 	_name = std::move(newName);
 }
 
-const QString Card::pin() const {
+const QString& Card::pin() const {
 	return _pin;
 }
 
-const QString Card::regeneratePin() {
-	return _pin = generatePin();
+const QString& Card::regeneratePin() {
+    return _pin = generatePin();
+}
+
+const QString& Card::number() const {
+    // TODO return real number
+    return QString();
+}
+
+const ABankFee::FeeType Card::cardType() const {
+    return _cardType;
 }
 
 

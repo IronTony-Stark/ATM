@@ -6,8 +6,12 @@
 #define ATM_DEPOSITDAO_H
 
 
-class DepositDAO {
+#include <logics/bank_services/Deposit.h>
 
+class DepositDAO {
+public:
+    QList<Deposit* const> getAll() const;
+    Deposit* const getById(uint id) const;
 };
 
 

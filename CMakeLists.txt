@@ -102,6 +102,7 @@ add_executable(ATM
         views/credit/creditWidget/CreditWidget.h
         views/credit/creditWidget/CreditWidget.cpp
         views/credit/creditWidget/creditwidget.ui
+        logics/utils/TimeDrivenEventsHandler.cpp logics/utils/TimeDrivenEventsHandler.h logics/auth/CustomerVerificationData.cpp logics/auth/CustomerVerificationData.h
         views/clock/widgets/Clock.h
         views/clock/widgets/Clock.cpp
         views/clock/setdialog/SetDialog.h
@@ -123,7 +124,7 @@ add_executable(ATM
         views/transaction/commands/IncludeAllCommands.h
         views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.cpp
         views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.h
-        )
+        logics/exceptions/CustomerRegistrationException.cpp logics/exceptions/CustomerRegistrationException.h logics/exceptions/CustomerAuthorizationException.cpp logics/exceptions/CustomerAuthorizationException.h logics/exceptions/DepositMaxSumReachedException.cpp logics/exceptions/DepositMaxSumReachedException.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

@@ -14,10 +14,11 @@ class Customer;
 
 class Card {
 public:
-	const unsigned long int _id;
+	unsigned long int _id;
 	const ABankFee& _bankFee;
+	const ABankFee::FeeType _cardType;
 
-	explicit Card(unsigned long int id, ABankFee::FeeType, Customer&, QString& _pin, QString name, Money balance = 0);
+	explicit Card(ABankFee::FeeType, Customer&, QString& _pin, QString name, Money balance = (uint)0);
 
 	Card(const Card&);
 
@@ -31,20 +32,23 @@ public:
 
 	Money replenish(Money);
 
-	Money transfer(unsigned long int recipient, Money amount);
+	Money transfer(const QString& recipient, Money amount);
 
 	const QString& name() const;
 
 	void setName(QString newName);
 
-	const QString pin() const;
+	const QString& pin() const;
+    const QString& number() const;
+    const ABankFee::FeeType cardType() const;
 
-	const QString regeneratePin();
+	const QString& regeneratePin();
 
 	Card& operator=(const Card&) = delete;
 
 private:
 	QString _name;
+	// TODO change to ushort
 	QString _pin;
 	Money _balance;
 	Customer& _customer;

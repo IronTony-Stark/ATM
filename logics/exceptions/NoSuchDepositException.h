@@ -6,12 +6,14 @@
 #define ATM_NOSUCHDEPOSITEXCEPTION_H
 
 
+#include <utility>
+
 #include "NoSuchCustomerPossessionException.h"
 
 class NoSuchDepositException : NoSuchCustomerPossessionException {
 public:
-	NoSuchDepositException(uint customerId, uint depositId) :
-			NoSuchCustomerPossessionException(customerId, depositId, "DEPOSIT") {};
+	NoSuchDepositException(QString customerId, uint depositId) :
+			NoSuchCustomerPossessionException(std::move(customerId), depositId, "DEPOSIT") {};
 };
 
 

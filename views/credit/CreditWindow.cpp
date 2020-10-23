@@ -78,14 +78,15 @@ void CreditWindow::onBtnBackToMyCreditsClicked() {
 
 // TODO credit name
 void CreditWindow::setupListCredits() {
-    std::pair<Credit*, int> credits = _operationManager.getAllCredits();
-    delete[] _credits;
-    _credits = credits.first;
-    _creditsLen = credits.second;
-
-    for (int i = 0; i < _creditsLen; ++i) {
-        new QListWidgetItem(QString::number(i), _ui->listCredits);
-    }
+    // TODO credits
+//    std::pair<Credit*, int> credits = _operationManager.getAllCredits();
+//    delete[] _credits;
+//    _credits = credits.first;
+//    _creditsLen = credits.second;
+//
+//    for (int i = 0; i < _creditsLen; ++i) {
+//        new QListWidgetItem(QString::number(i), _ui->listCredits);
+//    }
 
     connect(_ui->listCredits, &QListWidget::itemClicked,
             this, &CreditWindow::onListCreditsItemClicked);

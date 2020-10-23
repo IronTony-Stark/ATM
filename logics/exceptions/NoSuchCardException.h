@@ -8,12 +8,13 @@
 
 #include <QtGui/qopengl.h>
 #include <ostream>
+#include <utility>
 #include "NoSuchCustomerPossessionException.h"
 
 class NoSuchCardException : NoSuchCustomerPossessionException {
 public:
-	NoSuchCardException(uint customerId, uint cardId) :
-			NoSuchCustomerPossessionException(customerId, cardId, "CARD") {}
+	NoSuchCardException(QString customerId, uint cardId) :
+			NoSuchCustomerPossessionException(std::move(customerId), cardId, "CARD") {}
 };
 
 //std::ostream& operator<<(std::ostream&, const NoSuchCardException&);

@@ -12,17 +12,17 @@
 
 class NoSuchCustomerPossessionException : std::exception {
 public:
-	NoSuchCustomerPossessionException(uint customerId, uint possessionId, QString possName);
+	NoSuchCustomerPossessionException(QString customerId, uint possessionId, QString possName);
 
 	[[nodiscard]] const QString& possessionType() const;
 
-	[[nodiscard]] uint customerId() const;
+	[[nodiscard]] QString customerId() const;
 
 	[[nodiscard]] uint possessionId() const;
 
 private:
 	const QString _possName;
-	const uint _customerId;
+	const QString _customerId;
 	const uint _possessionId;
 };
 

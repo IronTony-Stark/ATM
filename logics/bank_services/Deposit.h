@@ -11,6 +11,7 @@
 
 class Deposit {
 public:
+    // TODO add cancel
 	static const Money maxDepoSum;
 
 	const uint _id;
@@ -20,6 +21,8 @@ public:
 	Deposit(const Deposit&);
 
 	void replenish(Money amount);
+
+	void cancel();
 
 	[[nodiscard]] Money sum() const;
 

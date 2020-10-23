@@ -108,14 +108,15 @@ void DepositWindow::onBtnReplenishCancel() {
 }
 
 void DepositWindow::setupListDeposits() {
-    std::pair<Deposit*, int> deposits = _operationManager.getAllDeposits();
-    delete[] _deposits;
-    _deposits = deposits.first;
-    _depositsLen = deposits.second;
-
-    for (int i = 0; i < _depositsLen; ++i) {
-        new QListWidgetItem(QString::number(i), _ui->listDeposits);
-    }
+    // TODO deposits
+//    std::pair<Deposit*, int> deposits = _operationManager.getAllDeposits();
+//    delete[] _deposits;
+//    _deposits = deposits.first;
+//    _depositsLen = deposits.second;
+//
+//    for (int i = 0; i < _depositsLen; ++i) {
+//        new QListWidgetItem(QString::number(i), _ui->listDeposits);
+//    }
 
     connect(_ui->listDeposits, &QListWidget::itemClicked,
             this, &DepositWindow::onListDepositsItemClicked);

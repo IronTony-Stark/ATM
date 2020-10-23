@@ -15,7 +15,9 @@ struct Money {
 
 	[[nodiscard]] int sign() const;
 
-	Money(int);
+	Money(uint);
+
+    Money(int);
 
 	Money(double);
 

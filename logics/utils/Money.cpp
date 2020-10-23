@@ -6,6 +6,9 @@
 #include "general.h"
 
 
+Money::Money(uint m) : _intPart(m), _decPart(0) {
+}
+
 Money::Money(int m) : _intPart(m), _decPart(0) {
 }
 

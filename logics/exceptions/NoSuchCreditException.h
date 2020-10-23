@@ -9,12 +9,13 @@
 #include <exception>
 #include <QtGui/qopengl.h>
 #include <ostream>
+#include <utility>
 #include "NoSuchCustomerPossessionException.h"
 
 class NoSuchCreditException : NoSuchCustomerPossessionException {
 public:
-	NoSuchCreditException(uint customerId, uint creditId) :
-			NoSuchCustomerPossessionException(customerId, creditId, "CREDIT") {};
+	NoSuchCreditException(QString customerId, uint creditId) :
+			NoSuchCustomerPossessionException(std::move(customerId), creditId, "CREDIT") {};
 };
 
 //std::ostream& operator<<(std::ostream&, const NoSuchCreditException&);

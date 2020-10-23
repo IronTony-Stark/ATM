@@ -51,3 +51,7 @@ void Deposit::setName(QString newName) {
 	_name = std::move(newName);
 }
 
+void Deposit::cancel() {
+    // TODO implement
+}
+
