@@ -2,6 +2,7 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
+#include <QtWidgets/QMessageBox>
 #include "DepositWindow.h"
 #include "gui/ui_depositwindow.h"
 
@@ -20,6 +21,8 @@ DepositWindow::DepositWindow(OperationManager& operationManager, QWidget* parent
     connect(_ui->btnMyDepositReplenish, &QPushButton::clicked,
             this, &DepositWindow::onBtnMyDepositsReplenishClicked);
 
+    connect(_ui->btnMyDepositCancel, &QPushButton::clicked,
+            this, &DepositWindow::onBtnMyDepositCancelClicked);
     connect(_ui->btnReplenishSubmit, &QPushButton::clicked,
             this, &DepositWindow::onBtnReplenishSubmit);
     connect(_ui->btnReplenishCancel, &QPushButton::clicked,
@@ -62,19 +65,42 @@ void DepositWindow::onBtnOpenDepositClicked() {
 }
 
 void DepositWindow::onBtnOpenDepositOpen() {
-    _ui->stackedWidget->setCurrentIndex(0);
+    QString name;
+    uint amount;
+    uint period;
+    QDateTime start;
+    QDateTime end;
+    uint percentage;
+    std::tie(name, amount, period, start, end, percentage) = _ui->widgetOpenDepositDeposit->data();
+    try {
+        _operationManager.startDeposit(name, amount, period, start, end, percentage);
+        _ui->stackedWidget->setCurrentIndex(0);
+    } catch (const std::exception& e) {
+        QMessageBox::critical(this, "ATM", e.what());
+    }
 }
 
 void DepositWindow::onBtnMyDepositsReplenishClicked() {
     _ui->stackedWidget->setCurrentIndex(4);
 }
 
-void DepositWindow::onListDepositsItemClicked(QListWidgetItem*) {
+void DepositWindow::onListDepositsItemClicked(QListWidgetItem* item) {
+    int index = _ui->listDeposits->row(item);
+    _selectedDeposit = index;
+    Deposit& deposit = _deposits[index];
+    setupDepositItem(deposit);
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
+// TODO pass deposit id
 void DepositWindow::onBtnReplenishSubmit() {
-    _ui->stackedWidget->setCurrentIndex(3);
+    uint amount = _ui->editReplenishHowMuch->text().toUInt();
+    try {
+        _operationManager.replenishDeposit(-1, amount);
+        _ui->stackedWidget->setCurrentIndex(3);
+    } catch (const std::exception& e) {
+        QMessageBox::critical(this, "ATM", e.what());
+    }
 }
 
 void DepositWindow::onBtnReplenishCancel() {
@@ -82,9 +108,14 @@ void DepositWindow::onBtnReplenishCancel() {
 }
 
 void DepositWindow::setupListDeposits() {
-    new QListWidgetItem("Deposit 1", _ui->listDeposits);
-    new QListWidgetItem("Deposit 2", _ui->listDeposits);
-    new QListWidgetItem("Deposit 3", _ui->listDeposits);
+    std::pair<Deposit*, int> deposits = _operationManager.getAllDeposits();
+    delete[] _deposits;
+    _deposits = deposits.first;
+    _depositsLen = deposits.second;
+
+    for (int i = 0; i < _depositsLen; ++i) {
+        new QListWidgetItem(QString::number(i), _ui->listDeposits);
+    }
 
     connect(_ui->listDeposits, &QListWidget::itemClicked,
             this, &DepositWindow::onListDepositsItemClicked);
@@ -96,4 +127,13 @@ void DepositWindow::setController(ControllerLogicSettable* logicSettable) {
 
 void DepositWindow::setLogicActive() {
     _logicSettable->setLogic(this);
+}
+
+void DepositWindow::setupDepositItem(Deposit&) {
+
+}
+
+// TODO pass deposit id
+void DepositWindow::onBtnMyDepositCancelClicked() {
+    _operationManager.cancelDeposit(-1);
 }

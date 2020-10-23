@@ -9,18 +9,23 @@
 
 class OperationManager {
 public:
-    bool authorizeCustomer(const QString& cardNumber, unsigned short pinCode);
-    void blockCustomer(const QString& cardNumber);
-    ushort registerCustomer(const QString& name, const QString& phone, uint taxNumber, QString cardType);
-    void replenish(uint amount);
-    void withdraw(unsigned int amount);
-    void transfer(const QString& cartNumberFromTo, uint amount);
+    bool authorizeCustomer(const QString&, unsigned short);
+    void blockCustomer(const QString&);
+    ushort registerCustomer(const QString&, const QString&, uint, QString);
+
+    void replenish(uint);
+    void withdraw(unsigned int);
+    void transfer(const QString&, uint);
+
     std::pair<Credit*, int> getAllCredits();
-    void takeCredit(const QString& name, uint amount, uint period, const QDateTime& start, const QDateTime& end);
+    void takeCredit(const QString&, uint, uint, uint, const QDateTime&, const QDateTime&);
     void repayCredit(uint id);
-    void startDeposit(unsigned int startAmount);
+
+    std::pair<Deposit*, int> getAllDeposits();
+    void startDeposit(const QString&, uint, uint, const QDateTime&, const QDateTime&, double);
+    void cancelDeposit(uint id);
+    void replenishDeposit(uint id, uint amount);
     int endDeposit();
-    void cancelDeposit();
     void setPayment(unsigned long amount, const QDate& date);
 };
 

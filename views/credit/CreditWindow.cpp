@@ -56,11 +56,12 @@ void CreditWindow::onBtnTakeCreditSubmitClicked() {
     QString name;
     uint sum;
     uint period;
+    uint payment;
     QDateTime start;
     QDateTime end;
-    std::tie(name, sum, period, start, end) = _ui->widgetTakeCreditCredit->data();
+    std::tie(name, sum, period, payment, start, end) = _ui->widgetTakeCreditCredit->data();
     try {
-        _operationManager.takeCredit(name, sum, period, start, end);
+        _operationManager.takeCredit(name, sum, period, payment, start, end);
         _ui->stackedWidget->setCurrentIndex(0);
     } catch (const std::exception& e) {
         QMessageBox::critical(this, "ATM", e.what());

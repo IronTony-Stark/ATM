@@ -37,6 +37,7 @@ private slots:
     void onBtnReplenishSubmit();
     void onBtnReplenishCancel();
 
+    void onBtnMyDepositCancelClicked();
     void onBtnBackToMyDepositsClicked();
     void onBtnBackToDepositMenuClicked();
     void onBtnBackToMainMenuClicked();
@@ -47,8 +48,12 @@ private:
     Ui::DepositWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
     OperationManager& _operationManager;
+    Deposit* _deposits = nullptr;
+    int _depositsLen = 0;
+    int _selectedDeposit = -1;
 
     void setupListDeposits();
+    void setupDepositItem(Deposit&);
 };
 
 #endif // ATM_DEPOSITWINDOW_H

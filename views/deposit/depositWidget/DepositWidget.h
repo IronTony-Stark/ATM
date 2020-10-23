@@ -18,6 +18,9 @@ public:
     explicit DepositWidget(QWidget* parent = nullptr);
     ~DepositWidget() override;
 
+    // TODO typedef names
+    std::tuple<QString, uint, uint, QDateTime, QDateTime, double> data();
+
 private:
     Ui::DepositWidget* _ui;
 };

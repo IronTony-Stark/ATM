@@ -128,6 +128,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btnMyDepositCancel">
+         <property name="text">
+          <string>Cancel</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <widget class="QPushButton" name="btnMyDepositBack">
          <property name="text">
           <string>Back</string>
