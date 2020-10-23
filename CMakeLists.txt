@@ -114,16 +114,16 @@ add_executable(ATM
         views/MessageDisplay.h
         views/transaction/Windows.h
         views/Command.h
-        views/transaction/commands/btnReplenishCommand/BtnReplenishCommand.cpp
-        views/transaction/commands/btnReplenishCommand/BtnReplenishCommand.h
-        views/transaction/commands/btnTransferCommand/BtnTransferCommand.cpp
-        views/transaction/commands/btnTransferCommand/BtnTransferCommand.h
-        views/transaction/commands/btnWithdrawCommand/BtnWithdrawCommand.cpp
-        views/transaction/commands/btnWithdrawCommand/BtnWithdrawCommand.h
+        views/transaction/commands/replenishCommand/ReplenishCommand.cpp
+        views/transaction/commands/replenishCommand/ReplenishCommand.h
+        views/transaction/commands/transferCommand/TransferCommand.cpp
+        views/transaction/commands/transferCommand/TransferCommand.h
+        views/transaction/commands/withdrawCommand/WithdrawCommand.cpp
+        views/transaction/commands/withdrawCommand/WithdrawCommand.h
         views/transaction/commands/IncludeAllCommands.h
-        views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.cpp
-        views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.h
-        )
+        views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.cpp
+        views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.h
+        views/credit/Windows.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

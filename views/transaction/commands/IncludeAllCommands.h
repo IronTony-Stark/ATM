@@ -5,9 +5,9 @@
 #ifndef ATM_INCLUDEALLCOMMANDS_H
 #define ATM_INCLUDEALLCOMMANDS_H
 
-#include "btnReplenishCommand/BtnReplenishCommand.h"
-#include "btnWithdrawCommand/BtnWithdrawCommand.h"
-#include "btnTransferCommand/BtnTransferCommand.h"
-#include "views/transaction/commands/btnNavigateTransactions/BtnNavigateTransactionsCommand.h"
+#include "replenishCommand/ReplenishCommand.h"
+#include "withdrawCommand/WithdrawCommand.h"
+#include "transferCommand/TransferCommand.h"
+#include "navigateTransactions/NavigateTransactionsCommand.h"
 
 #endif //ATM_INCLUDEALLCOMMANDS_H

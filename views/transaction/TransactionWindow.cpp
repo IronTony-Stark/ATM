@@ -137,20 +137,20 @@ void TransactionWindow::TransferPageLogic::setCancelCommand(std::shared_ptr<Comm
 }
 
 void TransactionWindow::setupCommands(OperationManager& operationManager) {
-    std::shared_ptr<Command> btnNavigateCommand(new BtnNavigateTransactionsCommand(*this));
+    std::shared_ptr<Command> btnNavigateCommand(new NavigateTransactionsCommand(*this));
     _replenishPageLogic.setCancelCommand(btnNavigateCommand);
     _withdrawPageLogic.setCancelCommand(btnNavigateCommand);
     _transferPageLogic.setCancelCommand(btnNavigateCommand);
 
-    std::shared_ptr<Command> btnReplenishCommand(new BtnReplenishCommand(
+    std::shared_ptr<Command> btnReplenishCommand(new ReplenishCommand(
             *this, operationManager, *_ui->editReplenishHowMuch));
     _replenishPageLogic.setEnterCommand(btnReplenishCommand);
 
-    std::shared_ptr<Command> btnWithdrawCommand(new BtnWithdrawCommand(
+    std::shared_ptr<Command> btnWithdrawCommand(new WithdrawCommand(
             *this, operationManager, *_ui->editWithdrawHowMuch, _messageDisplay));
     _withdrawPageLogic.setEnterCommand(btnWithdrawCommand);
 
-    std::shared_ptr<Command> btnTransferCommand(new BtnTransferCommand(
+    std::shared_ptr<Command> btnTransferCommand(new TransferCommand(
             *this, operationManager, *_ui->editWithdrawHowMuch, *_ui->editTransferToWhom, _messageDisplay));
     _transferPageLogic.setEnterCommand(btnTransferCommand);
 }
