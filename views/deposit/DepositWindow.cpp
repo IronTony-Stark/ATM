@@ -3,85 +3,29 @@
 //
 
 #include <QtWidgets/QMessageBox>
+#include <utility>
+#include <views/exceptions/AbsentNavigationDestination.h>
 #include "DepositWindow.h"
 #include "gui/ui_depositwindow.h"
+#include "Windows.h"
+#include "commands/IncludeAllCommands.h"
 
 DepositWindow::DepositWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::DepositWindow),
-        _operationManager(operationManager) {
+        _operationManager(operationManager),
+        _messageDisplay(*this),
+        _depositPageLogic(*this),
+        _openDepositPageLogic(*this),
+        _myDepositsPageLogic(*this) {
     _ui->setupUi(this);
 
-    connect(_ui->btnOpenDeposit, &QPushButton::clicked,
-            this, &DepositWindow::onBtnOpenDepositClicked);
-    connect(_ui->btnMyDeposits, &QPushButton::clicked,
-            this, &DepositWindow::onBtnMyDepositsClicked);
-
-    connect(_ui->btnOpenDepositOpen, &QPushButton::clicked,
-            this, &DepositWindow::onBtnOpenDepositOpen);
-    connect(_ui->btnMyDepositReplenish, &QPushButton::clicked,
-            this, &DepositWindow::onBtnMyDepositsReplenishClicked);
-
-    connect(_ui->btnMyDepositCancel, &QPushButton::clicked,
-            this, &DepositWindow::onBtnMyDepositCancelClicked);
-    connect(_ui->btnReplenishSubmit, &QPushButton::clicked,
-            this, &DepositWindow::onBtnReplenishSubmit);
-    connect(_ui->btnReplenishCancel, &QPushButton::clicked,
-            this, &DepositWindow::onBtnReplenishCancel);
-
-    connect(_ui->btnOpenDepositCancel, &QPushButton::clicked,
-            this, &DepositWindow::onBtnBackToDepositMenuClicked);
-    connect(_ui->btnMyDepositsBack, &QPushButton::clicked,
-            this, &DepositWindow::onBtnBackToDepositMenuClicked);
-    connect(_ui->btnMyDepositBack, &QPushButton::clicked,
-            this, &DepositWindow::onBtnBackToMyDepositsClicked);
-    connect(_ui->btnBackToMainMenu, &QPushButton::clicked,
-            this, &DepositWindow::onBtnBackToMainMenuClicked);
+    setupCommands();
 
     setupListDeposits();
 }
 
 DepositWindow::~DepositWindow() {
     delete _ui;
-}
-
-void DepositWindow::onBtnBackToMainMenuClicked() {
-    emit signalBtnBackToMainMenuClicked();
-}
-
-void DepositWindow::onBtnBackToDepositMenuClicked() {
-    _ui->stackedWidget->setCurrentIndex(0);
-}
-
-void DepositWindow::onBtnBackToMyDepositsClicked() {
-    _ui->stackedWidget->setCurrentIndex(2);
-}
-
-void DepositWindow::onBtnMyDepositsClicked() {
-    _ui->stackedWidget->setCurrentIndex(2);
-}
-
-void DepositWindow::onBtnOpenDepositClicked() {
-    _ui->stackedWidget->setCurrentIndex(1);
-}
-
-void DepositWindow::onBtnOpenDepositOpen() {
-    QString name;
-    uint amount;
-    uint period;
-    QDateTime start;
-    QDateTime end;
-    uint percentage;
-    std::tie(name, amount, period, start, end, percentage) = _ui->widgetOpenDepositDeposit->data();
-    try {
-        _operationManager.startDeposit(name, amount, period, start, end, percentage);
-        _ui->stackedWidget->setCurrentIndex(0);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "ATM", e.what());
-    }
-}
-
-void DepositWindow::onBtnMyDepositsReplenishClicked() {
-    _ui->stackedWidget->setCurrentIndex(4);
 }
 
 void DepositWindow::onListDepositsItemClicked(QListWidgetItem* item) {
@@ -92,19 +36,40 @@ void DepositWindow::onListDepositsItemClicked(QListWidgetItem* item) {
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
-// TODO pass deposit id
-void DepositWindow::onBtnReplenishSubmit() {
-    uint amount = _ui->editReplenishHowMuch->text().toUInt();
-    try {
-        _operationManager.replenishDeposit(-1, amount);
-        _ui->stackedWidget->setCurrentIndex(3);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "ATM", e.what());
+void DepositWindow::navigate(int destination) {
+    switch (destination) {
+        case DEPOSIT_MENU:
+            _ui->stackedWidget->setCurrentIndex(0);
+            _logicSettable->setLogic(&_depositPageLogic);
+            break;
+        case OPEN_DEPOSIT:
+            _ui->stackedWidget->setCurrentIndex(1);
+            _logicSettable->setLogic(&_openDepositPageLogic);
+            break;
+        case MY_DEPOSITS:
+            _ui->stackedWidget->setCurrentIndex(2);
+            _logicSettable->setLogic(&_myDepositsPageLogic);
+            break;
+        case MAIN_MENU:
+            emit signalBtnBackToMainMenuClicked();
+            break;
+        default:
+            throw AbsentNavigationDestination(&"DepositWindow navigate "[destination]);
     }
 }
 
-void DepositWindow::onBtnReplenishCancel() {
-    _ui->stackedWidget->setCurrentIndex(3);
+void DepositWindow::setupCommands() {
+    std::shared_ptr<Command> openDepositCommand(new OpenDepositCommand(
+            *this, _operationManager, *_ui->widgetOpenDepositDeposit, _messageDisplay));
+    _openDepositPageLogic.setEnterCommand(openDepositCommand);
+
+    std::shared_ptr<Command> replenishDepositCommand(new ReplenishDepositCommand(
+            _operationManager, *_ui->editMyDepositsReplenish, _messageDisplay));
+    _myDepositsPageLogic.setEnterCommand(replenishDepositCommand);
+
+    std::shared_ptr<Command> cancelDepositCommand(new CancelDepositCommand(
+            _operationManager));
+    _myDepositsPageLogic.setClearCommand(cancelDepositCommand);
 }
 
 void DepositWindow::setupListDeposits() {
@@ -126,14 +91,62 @@ void DepositWindow::setController(ControllerLogicSettable* logicSettable) {
 }
 
 void DepositWindow::setLogicActive() {
-    _logicSettable->setLogic(this);
+    _logicSettable->setLogic(&_depositPageLogic);
 }
 
 void DepositWindow::setupDepositItem(Deposit&) {
 
 }
 
-// TODO pass deposit id
-void DepositWindow::onBtnMyDepositCancelClicked() {
-    _operationManager.cancelDeposit(-1);
+DepositWindow::DepositPageLogic::DepositPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
+
+void DepositWindow::DepositPageLogic::onBtn0Clicked() {
+    _navigatable.navigate(OPEN_DEPOSIT);
+}
+
+void DepositWindow::DepositPageLogic::onBtn1Clicked() {
+    _navigatable.navigate(MY_DEPOSITS);
+}
+
+void DepositWindow::DepositPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(MAIN_MENU);
+}
+
+DepositWindow::OpenDepositPageLogic::OpenDepositPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
+
+void DepositWindow::OpenDepositPageLogic::onBtnEnterClicked() {
+    _enterCommand->execute();
+}
+
+void DepositWindow::OpenDepositPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(DEPOSIT_MENU);
+}
+
+void DepositWindow::OpenDepositPageLogic::setEnterCommand(std::shared_ptr<Command> command) {
+    _enterCommand = std::move(command);
+}
+
+DepositWindow::MyDepositsPageLogic::MyDepositsPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
+
+void DepositWindow::MyDepositsPageLogic::onBtnEnterClicked() {
+    _enterCommand->execute();
+}
+
+void DepositWindow::MyDepositsPageLogic::onBtnClearClicked() {
+    _clearCommand->execute();
+}
+
+void DepositWindow::MyDepositsPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(DEPOSIT_MENU);
+}
+
+void DepositWindow::MyDepositsPageLogic::setEnterCommand(std::shared_ptr<Command> command) {
+    _enterCommand = std::move(command);
+}
+
+void DepositWindow::MyDepositsPageLogic::setClearCommand(std::shared_ptr<Command> command) {
+    _clearCommand = std::move(command);
 }

@@ -51,7 +51,7 @@ private:
 
     class TakeCreditPageLogic : public ControllerLogic {
     public:
-        explicit TakeCreditPageLogic(Navigatable& navigatable);
+        explicit TakeCreditPageLogic(Navigatable&);
 
         void setEnterCommand(std::shared_ptr<Command>);
 
@@ -65,7 +65,7 @@ private:
 
     class MyCreditsPageLogic : public ControllerLogic {
     public:
-        explicit MyCreditsPageLogic(Navigatable& navigatable);
+        explicit MyCreditsPageLogic(Navigatable&);
 
     private:
         Navigatable& _navigatable;
@@ -75,7 +75,7 @@ private:
 
     class MyCreditPageLogic : public ControllerLogic {
     public:
-        explicit MyCreditPageLogic(Navigatable& navigatable);
+        explicit MyCreditPageLogic(Navigatable&);
 
         void setEnterCommand(std::shared_ptr<Command>);
 

@@ -123,7 +123,7 @@ add_executable(ATM
         views/transaction/commands/IncludeAllCommands.h
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.cpp
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.h
-        views/credit/Windows.h views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp views/credit/commands/takeCreditCommand/TakeCreditCommand.h views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp views/credit/commands/repayCreditCommand/RepayCreditCommand.h views/credit/commands/IncludeAllCommands.h)
+        views/credit/Windows.h views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp views/credit/commands/takeCreditCommand/TakeCreditCommand.h views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp views/credit/commands/repayCreditCommand/RepayCreditCommand.h views/credit/commands/IncludeAllCommands.h views/deposit/Windows.h views/deposit/commands/openDepositCommand/OpenDepositCommand.cpp views/deposit/commands/openDepositCommand/OpenDepositCommand.h views/deposit/commands/cancelDepositCommand/CancelDepositCommand.cpp views/deposit/commands/cancelDepositCommand/CancelDepositCommand.h views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.cpp views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.h views/deposit/commands/IncludeAllCommands.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
