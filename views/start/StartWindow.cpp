@@ -15,6 +15,12 @@ enum Windows {
 
 StartWindow::StartWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::StartWindow),
+        _operationManager(CustomerDataManager(),
+                          TimeDrivenEventsHandler(),
+                          CustomerDAO(),
+                          CreditDAO(),
+                          DepositDAO(),
+                          PaymentDAO()),
         _registrationWindow(_operationManager),
         _mainMenuWindow(_operationManager) {
     _ui->setupUi(this);
@@ -78,4 +84,8 @@ void StartWindow::onBtnCancelClicked() {
 
 int StartWindow::state() {
     return _ui->stackedWidget->currentIndex();
+}
+
+void StartWindow::setClock(Clock* clock) {
+    _operationManager.setClock(clock);
 }

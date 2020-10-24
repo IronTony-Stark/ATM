@@ -9,6 +9,8 @@ MainWindow::MainWindow(QWidget* parent)
         : QMainWindow(parent), _ui(new Ui::MainWindow) {
     _ui->setupUi(this);
 
+    _ui->mainWindow->setClock(_ui->clock);
+
     connect(_ui->btnEnter, &QPushButton::clicked,
             this, &MainWindow::onBtnEnterClicked);
     connect(_ui->btnCancel, &QPushButton::clicked,
