@@ -108,6 +108,7 @@ add_executable(ATM
         views/credit/creditWidget/creditwidget.ui
         views/clock/widgets/Clock.h
         views/clock/widgets/Clock.cpp
+        views/clock/widgets/ClockListener.h
         views/clock/setdialog/SetDialog.h
         views/clock/setdialog/SetDialog.cpp
         views/clock/setdialog/setdialog.ui

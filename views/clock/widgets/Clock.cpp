@@ -34,6 +34,9 @@ void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
     _custom = nullptr;
     if (result == 1) {
         _custom = new QDateTime(dialog.getDate(), dialog.getTime());
+        notifyListeners(*_custom);
+    } else {
+        notifyListeners(QDateTime::currentDateTime());
     }
 }
 
@@ -44,4 +47,18 @@ void Clock::displayTime(const QDateTime& datetime) {
         text[5] = ' ';
     }
     display(text);
+}
+
+void Clock::subscribe(ClockListener* clockListener) {
+    _clockListeners.push_back(clockListener);
+}
+
+void Clock::unsubscribe(ClockListener* clockListener) {
+    _clockListeners.remove(clockListener);
+}
+
+void Clock::notifyListeners(const QDateTime& newTime) {
+    for (auto& clockListener : _clockListeners) {
+        clockListener->onTimeChanged(newTime);
+    }
 }
