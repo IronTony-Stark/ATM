@@ -12,15 +12,18 @@
 
 class Customer;
 
+typedef unsigned long int uli;
+
 class Card {
 public:
-	unsigned long int _id;
 	const ABankFee& _bankFee;
 	const ABankFee::FeeType _cardType;
 
-	explicit Card(ABankFee::FeeType, Customer&, QString& _pin, QString name, Money balance = (uint)0);
+	explicit Card(ABankFee::FeeType, Customer&, QString& _pin, QString name, Money balance = (uint) 0);
 
 	Card(const Card&);
+
+	uli id() const;
 
 	[[nodiscard]] Money balance() const;
 
@@ -39,14 +42,18 @@ public:
 	void setName(QString newName);
 
 	const QString& pin() const;
-    const QString& number() const;
-    const ABankFee::FeeType cardType() const;
+
+	const QString& number() const;
+
+	const ABankFee::FeeType cardType() const;
 
 	const QString& regeneratePin();
 
 	Card& operator=(const Card&) = delete;
 
 private:
+
+	uli _id;
 	QString _name;
 	// TODO change to ushort
 	QString _pin;

@@ -27,20 +27,24 @@ Money Card::balance() const {
 std::pair<Money, Money> Card::withdraw(Money amount) {
     Money withdrawSum = amount * _bankFee.withdrawFee();
     if (withdrawSum > _balance) throw NotEnoughMoneyException(_balance, withdrawSum);
-    _balance -= withdrawSum;
-    return {_balance, withdrawSum};
+	_balance -= withdrawSum;
+	return {_balance, withdrawSum};
 }
 
 Money Card::replenish(Money amount) {
-    Money replenishmentSum = amount / (1 + _bankFee.replenishFee());
-    _balance += replenishmentSum;
-    return _balance;
+	Money replenishmentSum = amount / (1 + _bankFee.replenishFee());
+	_balance += replenishmentSum;
+	return _balance;
+}
+
+uli Card::id() const {
+	return _id;
 }
 
 Money Card::transfer(const QString& recipient, Money amount) {
-    Money transferSum = amount / (1 + _bankFee.transferFee());
-    // todo: get card recipient from DB and send money there
-    return transferSum;
+	Money transferSum = amount / (1 + _bankFee.transferFee());
+	// todo: get card recipient from DB and send money there
+	return transferSum;
 }
 
 const QString& Card::name() const {
@@ -67,5 +71,7 @@ const QString& Card::number() const {
 const ABankFee::FeeType Card::cardType() const {
     return _cardType;
 }
+
+
 
 

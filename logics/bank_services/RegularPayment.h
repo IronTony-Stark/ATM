@@ -9,31 +9,25 @@
 #include <QtCore/QString>
 #include <logics/utils/Money.h>
 
-typedef QString uli;
-
 class RegularPayment {
 public:
-	RegularPayment(QString name, Money amount, uli sender, uli receiver, uint dayOfMonth);
+	RegularPayment(QString name, Money amount, QString sender, QString receiver, uint dayOfMonth);
 
 	const QString& name() const;
 
-//	void setName(QString newName);
-
 	const Money& amount() const;
 
-//	void setName(QString newName);
+	QString receiver() const;
 
-	uli receiver() const;
-
-	uli sender() const;
+	QString sender() const;
 
 	uint dayOfMonth() const;
 
 private:
 	QString _name;
 	Money _amount;
-	uli _sender;
-	uli _receiver;
+	QString _sender;
+	QString _receiver;
 	uint _dayOfMonth;
 };
 

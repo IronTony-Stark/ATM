@@ -6,8 +6,9 @@
 
 #include <utility>
 
-RegularPayment::RegularPayment(QString name, Money amount, uli sender, uli receiver, uint dayOfMonth) :
-		_name(std::move(name)), _amount(amount), _sender(sender), _receiver(receiver), _dayOfMonth(dayOfMonth) {
+RegularPayment::RegularPayment(QString name, Money amount, QString sender, QString receiver, uint dayOfMonth) :
+		_name(std::move(name)), _amount(amount), _sender(std::move(sender)), _receiver(std::move(receiver)),
+		_dayOfMonth(dayOfMonth) {
 	if (dayOfMonth > 28) throw std::invalid_argument("day of payment > 28, February causes troubles");
 }
 
@@ -19,11 +20,11 @@ const Money& RegularPayment::amount() const {
 	return _amount;
 }
 
-uli RegularPayment::receiver() const {
+QString RegularPayment::receiver() const {
 	return _receiver;
 }
 
-uli RegularPayment::sender() const {
+QString RegularPayment::sender() const {
 	return _sender;
 }
 

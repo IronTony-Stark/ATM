@@ -10,6 +10,7 @@ set(CMAKE_PREFIX_PATH $ENV{QtPath}) # e.g. C:/Qt/5.15.1/mingw81_64/
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Sql REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -129,3 +130,4 @@ add_executable(ATM
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
+target_link_libraries(${PROJECT_NAME} Qt5::Sql)

@@ -11,14 +11,14 @@
 
 class Deposit {
 public:
-    // TODO add cancel
+	// TODO add cancel
 	static const Money maxDepoSum;
 
-	const uint _id;
-
-	Deposit(uint id, QString name, QDate startDate, QDate endDate, Money initialBalance, double interest);
+	Deposit(QString name, QDate startDate, QDate endDate, Money initialBalance, double interest);
 
 	Deposit(const Deposit&);
+
+	uint id() const;
 
 	void replenish(Money amount);
 
@@ -43,6 +43,9 @@ public:
 	Deposit& operator=(const Deposit&) = delete;
 
 private:
+	friend class DepositDAO;
+
+	uint _id;
 	QString _name;
 	double _interest;
 	Money _sum;

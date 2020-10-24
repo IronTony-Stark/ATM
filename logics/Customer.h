@@ -59,7 +59,7 @@ private:
 	template<typename Identifiable>
 	uint findIndex(const QList<Identifiable>& list, uint id) {
 		for (int i = 0; i < list.length(); i++) {
-			if (list[i]->_id == id) {
+            if (list[i]->id() == id) {
 				return i;
 			}
 		}

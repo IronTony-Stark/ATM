@@ -36,14 +36,14 @@ bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {
 // TODO return amount
 uint CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
 	// todo: take next free id from db and save data to db
-	_customer->addCredit(new Credit(-1, std::move(name), debt, interest, debt * interest / 12));
+	_customer->addCredit(new Credit(std::move(name), debt, interest, debt * interest / 12));
 	return -1;
 }
 
 bool CustomerDataManager::repayCredit(Money amount, uint creditId) {
 	Credit* selected = nullptr;
 	for (auto iter : _customer->credits())
-		if (iter->_id == creditId) {
+		if (iter->id() == creditId) {
 			selected = iter;
 			break;
 		}
@@ -62,7 +62,7 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
 
 uint CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
 	// todo: same stuff with DB as with credit
-	Deposit* depo = new Deposit(-1, std::move(name), QDate(), QDate().addMonths(months), initialBalance, interest);
+	Deposit* depo = new Deposit(std::move(name), QDate(), QDate().addMonths(months), initialBalance, interest);
 	_customer->addDeposit(depo);
 	return -1;
 }
@@ -70,7 +70,7 @@ uint CustomerDataManager::openDeposit(Money initialBalance, QString name, double
 void CustomerDataManager::replenishDeposit(Money amount, uint depoId) {
 	Deposit* deposit = nullptr;
 	for (auto iter : _customer->deposits())
-		if (iter->_id == depoId) {
+		if (iter->id() == depoId) {
 			deposit = iter;
 			break;
 		}
@@ -81,7 +81,7 @@ void CustomerDataManager::replenishDeposit(Money amount, uint depoId) {
 void CustomerDataManager::closeDeposit(uint depoId) {
 	Deposit* deposit = nullptr;
 	for (auto iter : _customer->deposits())
-		if (iter->_id == depoId) {
+		if (iter->id() == depoId) {
 			deposit = iter;
 			break;
 		}

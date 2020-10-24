@@ -15,15 +15,17 @@ public:
 
 	const double _interest;
 
-	const uint _id;
-
-	Credit(uint id, QString name, Money creditBody, double interest, Money payment);
+	Credit(QString name, Money creditBody, double interest, Money payment);
 
 	Credit(const Credit&);
+
+	uint id() const;
 
 	[[nodiscard]] const QString& name() const;
 
 	void setName(QString newName);
+
+	Money bankIncome() const;
 
 	void replenish(Money amount);
 
@@ -38,9 +40,12 @@ public:
 	Credit& operator=(const Credit&) = delete;
 
 private:
+	friend class CreditDAO;
+
+	uint _id;
 	QString _name;
 	Money _creditBody;
-	Money _debt = 0;    //debt is bank's income, creditBody is money that customer borrowed
+	Money _bankIncome = 0;
 	Money _payment;
 	QDate _dateTaken;
 };

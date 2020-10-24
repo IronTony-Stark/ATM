@@ -8,15 +8,19 @@
 
 double Credit::creditLimitOfIncome = 0.45;
 
-Credit::Credit(uint id, QString name, Money creditBody, double interest, Money payment) :
-		_id(id), _name(std::move(name)), _creditBody(creditBody), _interest(interest), _payment(payment),
+Credit::Credit(QString name, Money creditBody, double interest, Money payment) :
+		_name(std::move(name)), _creditBody(creditBody), _interest(interest), _payment(payment),
 		_dateTaken(QDate()) {
 	// todo: check if a person can afford a new credit
 }
 
 Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _payment(c._payment),
-								  _debt(c._interest) {
+								  _bankIncome(c._interest) {
 
+}
+
+uint Credit::id() const {
+	return _id;
 }
 
 const QString& Credit::name() const {
@@ -28,13 +32,17 @@ void Credit::setName(QString newName) {
 	_name = std::move(newName);
 }
 
+Money Credit::bankIncome() const {
+	return _bankIncome;
+}
+
 void Credit::replenish(Money amount) {
 	if (_creditBody >= amount) {
 		_creditBody -= amount;
 	} else {
 		amount -= _creditBody;
 		_creditBody = 0;
-		_debt -= amount;
+		_bankIncome -= amount;
 	}
 }
 
@@ -43,7 +51,7 @@ Money Credit::creditBody() const {
 }
 
 Money Credit::debt() const {
-	return _debt;
+	return _bankIncome;
 }
 
 Money Credit::payment() const {

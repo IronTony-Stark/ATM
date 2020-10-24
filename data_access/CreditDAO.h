@@ -5,16 +5,26 @@
 #ifndef ATM_CREDITDAO_H
 #define ATM_CREDITDAO_H
 
+#include <QString>
+#include "logics/bank_services/Credit.h"
 
 #include <QtCore/QHash>
 #include <logics/bank_services/Credit.h>
 
 class CreditDAO {
 public:
-    QList<Credit* const> getAll() const;
+	QList<Credit* const> getAll() const;
 
-    Credit* const getById(uint id) const;
+	Credit* getById(uint id) const;
 
+	static CreditDAO& getInstance();
+
+	Credit& saveCredit(Credit&);
+
+private:
+	static void initialize();
+
+	CreditDAO() = default;
 };
 
 
