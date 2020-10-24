@@ -19,7 +19,7 @@ StartWindow::StartWindow(QWidget* parent) :
 						  TimeDrivenEventsHandler(),
 						  CustomerDAO(),
 						  CreditDAO::getInstance(),
-						  DepositDAO(),
+						  DepositDAO::getInstance(),
 						  PaymentDAO()),
 		_registrationWindow(_operationManager),
 		_mainMenuWindow(_operationManager) {

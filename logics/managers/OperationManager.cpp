@@ -93,8 +93,8 @@ void OperationManager::repayCredit(uint id) {
 }
 
 
-QList<Deposit* const> OperationManager::getAllDeposits() {
-    return _depositDao.getAll();
+QList<Deposit*> OperationManager::getAllDeposits() {
+	return _depositDao.getAll();
 }
 
 void OperationManager::startDeposit(

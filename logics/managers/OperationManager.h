@@ -60,7 +60,7 @@ public:
 
 	void repayCredit(uint id);
 
-	QList<Deposit* const> getAllDeposits();
+	QList<Deposit*> getAllDeposits();
 
 	void startDeposit(const QString&, uint, uint, const QDateTime&, const QDateTime&, double);
 

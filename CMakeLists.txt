@@ -76,8 +76,6 @@ add_executable(ATM
         data_access/DepositDAO.h
         data_access/PaymentDAO.cpp
         data_access/PaymentDAO.h
-        data_access/DBAccessor.cpp
-        data_access/DBAccessor.h
 
         #       Views
         views/transaction/Windows.h

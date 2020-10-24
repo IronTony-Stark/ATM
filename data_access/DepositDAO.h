@@ -7,11 +7,28 @@
 
 
 #include <logics/bank_services/Deposit.h>
+#include <QSqlQuery>
 
 class DepositDAO {
 public:
-    QList<Deposit* const> getAll() const;
-    Deposit* const getById(uint id) const;
+	static DepositDAO& getInstance();
+
+	QList<Deposit*> getAll() const;
+
+	Deposit* getById(uint id) const;
+
+	Deposit& saveDeposit(Deposit&);
+
+	boolean updateDeposit(const Deposit&);
+
+	void deleteById(uint id);
+
+private:
+	static void initialize();
+
+	Deposit* buildDeposit(const QSqlQuery&) const;
+
+	DepositDAO() = default;
 };
 
 

@@ -9,11 +9,12 @@
 
 const Money Deposit::maxDepoSum = 50'000'000;
 
-Deposit::Deposit(QString name, QDate startDate, QDate endDate, Money initialBalance, double interest) :
-		_name(std::move(name)), _startDate(QDate::currentDate()), _endDate(endDate), _sum(initialBalance),
-		_interest(interest) {}
+Deposit::Deposit(QString name, Money initialBalance, double interest, QDate endDate,
+				 QDate startDate, uint id) : _name(std::move(name)), _sum(initialBalance), _interest(interest),
+											 _startDate(startDate), _endDate(endDate), _id(id) {}
 
-Deposit::Deposit(const Deposit& d) : _id(d._id), _earnings(d.earnings()), _sum(d.sum()) {}
+Deposit::Deposit(const Deposit& d) : _id(d._id), _name(d._name), _sum(d.sum()), _interest(d.interest()),
+									 _startDate(d.startDate()), _endDate(d.endDate()) {}
 
 uint Deposit::id() const {
 	return _id;
@@ -25,10 +26,6 @@ void Deposit::replenish(Money amount) {
 
 Money Deposit::sum() const {
 	return _sum;
-}
-
-Money Deposit::earnings() const {
-	return _earnings;
 }
 
 double Deposit::interest() const {
@@ -57,6 +54,13 @@ void Deposit::setName(QString newName) {
 }
 
 void Deposit::cancel() {
-    // TODO implement
+	// TODO implement
 }
 
+std::ostream& operator<<(std::ostream& os, const Deposit& deposit) {
+	os << "_id: " << deposit.id() << " _name: " << deposit.name().toStdString() << " _sum: " << deposit.sum()
+	   << " _interest: "
+	   << deposit.interest() << " _startDate: " << deposit.startDate().toString().toStdString()
+	   << " _endDate: " << deposit.endDate().toString().toStdString();
+	return os;
+}

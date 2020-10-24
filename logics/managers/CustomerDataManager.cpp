@@ -29,8 +29,7 @@ void CustomerDataManager::withdraw(Money amount) {
 }
 
 bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {
-    // TODO: do we need amount + amount * interest?
-	return _customer->creditLimit() <= amount * interest;
+	return _customer->creditLimit() <= amount * interest / 12;
 }
 
 // TODO return amount
@@ -62,7 +61,8 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
 
 uint CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
 	// todo: same stuff with DB as with credit
-	Deposit* depo = new Deposit(std::move(name), QDate(), QDate().addMonths(months), initialBalance, interest);
+	Deposit* depo = new Deposit(std::move(name), initialBalance, interest,
+								QDate::currentDate(), QDate::currentDate().addMonths(months));
 	_customer->addDeposit(depo);
 	return -1;
 }

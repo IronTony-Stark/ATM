@@ -7,7 +7,7 @@
 
 #include <QString>
 #include "logics/bank_services/Credit.h"
-
+#include <QSqlQuery>
 #include <QtCore/QHash>
 #include <logics/bank_services/Credit.h>
 
@@ -27,6 +27,8 @@ public:
 
 private:
 	static void initialize();
+
+	Credit* buildCredit(const QSqlQuery&) const;
 
 	CreditDAO() = default;
 };

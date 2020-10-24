@@ -8,25 +8,25 @@
 
 #include <QtCore/QDateTime>
 #include <logics/utils/Money.h>
+#include <ostream>
 
 class Deposit {
 public:
 	// TODO add cancel
 	static const Money maxDepoSum;
 
-	Deposit(QString name, QDate startDate, QDate endDate, Money initialBalance, double interest);
+	Deposit(QString name, Money initialBalance, double interest, QDate endDate,
+			QDate startDate = QDate::currentDate(), uint id = -1);
 
 	Deposit(const Deposit&);
 
-	uint id() const;
+	[[nodiscard]] uint id() const;
 
 	void replenish(Money amount);
 
 	void cancel();
 
 	[[nodiscard]] Money sum() const;
-
-	[[nodiscard]] Money earnings() const;
 
 	[[nodiscard]] const QString& name() const;
 
@@ -47,12 +47,12 @@ private:
 
 	uint _id;
 	QString _name;
-	double _interest;
 	Money _sum;
-	Money _earnings = 0;
+	double _interest;
 	const QDate _startDate;
 	const QDate _endDate;
 };
 
+std::ostream& operator<<(std::ostream& os, const Deposit& deposit);
 
 #endif //ATM_DEPOSIT_H
