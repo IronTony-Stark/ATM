@@ -6,6 +6,7 @@
 #define ATM_STARTWINDOW_H
 
 #include <QWidget>
+#include <views/clock/widgets/Clock.h>
 #include "views/main/controller/ControllerLogicSettable.h"
 #include "views/registration/RegistrationWindow.h"
 #include "views/mainMenu/MainMenuWindow.h"
@@ -24,14 +25,12 @@ public:
 
     void setController(ControllerLogicSettable* logicSettable);
 
+    void setClock(Clock*);
+
 private:
     Ui::StartWindow* _ui;
     ControllerLogicSettable* _logicSettable = nullptr;
-    OperationManager _operationManager = OperationManager{
-			CustomerDataManager(), TimeDrivenEventsHandler(),
-			CustomerDAO(),
-			CreditDAO::getInstance(), DepositDAO(), PaymentDAO()
-	};
+    OperationManager _operationManager;
     RegistrationWindow _registrationWindow;
     MainMenuWindow _mainMenuWindow;
     int _pinAttempts = 3;

@@ -1,8 +1,6 @@
 #include "views/main/MainWindow.h"
 
 #include <QApplication>
-#include <logics/utils/Money.h>
-#include <iostream>
 #include <QtWidgets/QStyleFactory>
 #include<QDebug>
 #include <QStyle>

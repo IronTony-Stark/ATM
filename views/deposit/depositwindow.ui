@@ -32,13 +32,6 @@
          </property>
         </widget>
        </item>
-       <item>
-        <widget class="QPushButton" name="btnBackToMainMenu">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageOpenDeposit">
@@ -59,132 +52,42 @@
        <item>
         <widget class="DepositWidget" name="widgetOpenDepositDeposit" native="true"/>
        </item>
-       <item>
-        <widget class="QPushButton" name="btnOpenDepositOpen">
-         <property name="text">
-          <string>Open</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnOpenDepositCancel">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageMyDeposits">
-      <layout class="QVBoxLayout" name="verticalLayout_3">
-       <item alignment="Qt::AlignHCenter">
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="2" column="0" rowspan="3">
+        <widget class="QListWidget" name="listDeposits"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="editMyDepositsReplenish"/>
+       </item>
+       <item row="2" column="1">
+        <widget class="DepositWidget" name="widgetMyDepositsDeposit" native="true"/>
+       </item>
+       <item row="3" column="1">
+        <widget class="QLabel" name="labelMyDepositsReplenish">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
+         <property name="text">
+          <string>Replenish amount</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2" alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="labelMyDepositsTitle">
          <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
          <property name="text">
           <string>My Deposits</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QListWidget" name="listDeposits"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyDepositsBack">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pageMyDeposit">
-      <layout class="QVBoxLayout" name="verticalLayout_4">
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="labelMyDepositTitle">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>MyDepositName</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="DepositWidget" name="widgetMyDepositDeposit" native="true"/>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyDepositReplenish">
-         <property name="text">
-          <string>Replenish</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyDepositCancel">
-         <property name="text">
-          <string>Cancel</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnMyDepositBack">
-         <property name="text">
-          <string>Back</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-     <widget class="QWidget" name="pageReplenish">
-      <layout class="QVBoxLayout" name="verticalLayout_5">
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="labelReplenishHowMuch">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>How much</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="editReplenishHowMuch"/>
-       </item>
-       <item alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="labelReplenishError">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>Error: </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnReplenishSubmit">
-         <property name="text">
-          <string>Submit</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btnReplenishCancel">
-         <property name="text">
-          <string>Cancel</string>
          </property>
         </widget>
        </item>

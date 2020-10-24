@@ -18,6 +18,7 @@
 #include <data_access/CreditDAO.h>
 #include <data_access/DepositDAO.h>
 #include <data_access/PaymentDAO.h>
+#include <views/clock/widgets/Clock.h>
 
 class OperationManager {
 private:
@@ -29,14 +30,16 @@ private:
     const CreditDAO _creditDao;
     const DepositDAO _depositDao;
     const PaymentDAO _paymentDao;
+    Clock* _clock;
 
 public:
-
     OperationManager(
             CustomerDataManager manager,
-            const TimeDrivenEventsHandler handler,
-            const CustomerDAO customerDao,
-            const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao);
+            TimeDrivenEventsHandler handler,
+            CustomerDAO customerDao,
+            CreditDAO creditDao,
+            DepositDAO depositDao,
+            PaymentDAO paymentDao);
 
     bool authorizeCustomer(const QString&, unsigned short);
     void blockCustomer(const QString&);
@@ -61,6 +64,8 @@ public:
     QList<RegularPayment* const> getAllPayments();
     void setPayment(const QString&, uint, const QString&, const QDateTime&);
     void cancelPayment(uint id);
+
+    void setClock(Clock*);
 };
 
 
