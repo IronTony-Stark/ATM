@@ -64,8 +64,8 @@ void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
 }
 
 
-QList<Credit* const> OperationManager::getAllCredits() {
-    return _creditDao.getAll();
+QList<Credit*> OperationManager::getAllCredits() {
+	return _creditDao.getAll();
 }
 
 void OperationManager::takeCredit(const QString& name,

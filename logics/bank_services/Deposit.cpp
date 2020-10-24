@@ -10,7 +10,8 @@
 const Money Deposit::maxDepoSum = 50'000'000;
 
 Deposit::Deposit(QString name, QDate startDate, QDate endDate, Money initialBalance, double interest) :
-		_name(std::move(name)), _startDate(), _endDate(endDate), _sum(initialBalance), _interest(interest) {}
+		_name(std::move(name)), _startDate(QDate::currentDate()), _endDate(endDate), _sum(initialBalance),
+		_interest(interest) {}
 
 Deposit::Deposit(const Deposit& d) : _id(d._id), _earnings(d.earnings()), _sum(d.sum()) {}
 

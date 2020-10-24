@@ -8,18 +8,21 @@
 
 #include <QtCore/QDateTime>
 #include <logics/utils/Money.h>
+#include <ostream>
 
 class Credit {
 public:
 	static double creditLimitOfIncome;
 
-	const double _interest;
-
 	Credit(QString name, Money creditBody, double interest, Money payment);
+
+	Credit(uint id, QString name, Money creditBody, double interest, Money payment, Money bankIncome, QDate _dateTaken);
 
 	Credit(const Credit&);
 
 	uint id() const;
+
+	double interest() const;
 
 	[[nodiscard]] const QString& name() const;
 
@@ -39,16 +42,20 @@ public:
 
 	Credit& operator=(const Credit&) = delete;
 
+	// friend std::ostream& operator<<(std::ostream& os, const Credit& credit);
+
 private:
 	friend class CreditDAO;
 
 	uint _id;
 	QString _name;
 	Money _creditBody;
-	Money _bankIncome = 0;
+	double _interest;
 	Money _payment;
+	Money _bankIncome = 0;
 	QDate _dateTaken;
 };
 
+std::ostream& operator<<(std::ostream& os, const Credit& credit);
 
 #endif //ATM_CREDIT_H

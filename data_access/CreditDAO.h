@@ -13,13 +13,17 @@
 
 class CreditDAO {
 public:
-	QList<Credit* const> getAll() const;
+	static CreditDAO& getInstance();
+
+	QList<Credit*> getAll() const;
 
 	Credit* getById(uint id) const;
 
-	static CreditDAO& getInstance();
-
 	Credit& saveCredit(Credit&);
+
+	boolean updateCredit(const Credit&);
+
+	void deleteById(uint id);
 
 private:
 	static void initialize();

@@ -11,6 +11,7 @@
 #include <QtSql>
 //#include <QSqlDatabase>
 #include <QMessageBox>
+#include <iostream>
 
 int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
@@ -26,8 +27,23 @@ int main(int argc, char* argv[]) {
 		return -1;
 	}
 
-//    Credit credit("myName", Money(50.23), 0.1, Money(4.90));
-//    CreditDAO::getInstance().saveCredit(credit);
+//	Credit credit("myName", Money(50.23), 0.2, Money(4.90));
+//	CreditDAO::getInstance().saveCredit(credit);
+//
+//	Credit* pCredit = CreditDAO::getInstance().getById(1);
+//	std::cout << *pCredit << std::endl;
+//	delete pCredit;
+//
+//	QList<Credit*> credits = CreditDAO::getInstance().getAll();
+//	for (auto cred : credits) {
+//		std::cout << *cred << std::endl;
+//	}
+//
+//	credit.setName("updated name");
+//	if (!CreditDAO::getInstance().updateCredit(credit))
+//		qDebug() << "failed to update";
+//
+//	CreditDAO::getInstance().deleteById(1);
 
 	return QApplication::exec();
 }

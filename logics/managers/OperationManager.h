@@ -41,27 +41,36 @@ public:
             DepositDAO depositDao,
             PaymentDAO paymentDao);
 
-    bool authorizeCustomer(const QString&, unsigned short);
-    void blockCustomer(const QString&);
-    // pinCode
-    ushort registerCustomer(const CustomerVerificationData&);
+	bool authorizeCustomer(const QString&, unsigned short);
 
-    void replenish(uint);
-    void withdraw(unsigned int);
-    void transfer(const QString&, uint);
+	void blockCustomer(const QString&);
 
-    QList<Credit* const> getAllCredits();
-    void takeCredit(const QString&, uint, uint, uint, const QDateTime&, const QDateTime&);
-    void repayCredit(uint id);
+	// pinCode
+	ushort registerCustomer(const CustomerVerificationData&);
 
-    QList<Deposit* const> getAllDeposits();
-    void startDeposit(const QString&, uint, uint, const QDateTime&, const QDateTime&, double);
-    void cancelDeposit(uint);
-    void replenishDeposit(uint, uint);
+	void replenish(uint);
 
-    int endDeposit() { return -1; };
+	void withdraw(unsigned int);
 
-    QList<RegularPayment* const> getAllPayments();
+	void transfer(const QString&, uint);
+
+	QList<Credit*> getAllCredits();
+
+	void takeCredit(const QString&, uint, uint, uint, const QDateTime&, const QDateTime&);
+
+	void repayCredit(uint id);
+
+	QList<Deposit* const> getAllDeposits();
+
+	void startDeposit(const QString&, uint, uint, const QDateTime&, const QDateTime&, double);
+
+	void cancelDeposit(uint);
+
+	void replenishDeposit(uint, uint);
+
+	int endDeposit() { return -1; };
+
+	QList<RegularPayment* const> getAllPayments();
     void setPayment(const QString&, uint, const QString&, const QDateTime&);
     void cancelPayment(uint id);
 

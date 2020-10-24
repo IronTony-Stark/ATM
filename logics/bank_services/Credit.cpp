@@ -10,12 +10,19 @@ double Credit::creditLimitOfIncome = 0.45;
 
 Credit::Credit(QString name, Money creditBody, double interest, Money payment) :
 		_name(std::move(name)), _creditBody(creditBody), _interest(interest), _payment(payment),
-		_dateTaken(QDate()) {
+		_dateTaken(QDate::currentDate()) {
 	// todo: check if a person can afford a new credit
 }
 
 Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _payment(c._payment),
 								  _bankIncome(c._interest) {
+
+}
+
+Credit::Credit(uint id, QString name, Money creditBody, double interest, Money payment, Money bankIncome,
+			   QDate dateTaken) : _id(id), _name(std::move(name)), _creditBody(creditBody), _interest(interest),
+								  _payment(payment), _bankIncome(bankIncome),
+								  _dateTaken(dateTaken.year(), dateTaken.month(), dateTaken.day()) {
 
 }
 
@@ -62,4 +69,14 @@ const QDate& Credit::dateTaken() const {
 	return _dateTaken;
 }
 
+double Credit::interest() const {
+	return _interest;
+}
+
+std::ostream& operator<<(std::ostream& os, const Credit& credit) {
+	os << "_id: " << credit.id() << " _name: " << credit.name().toStdString() << " _creditBody: " << credit.creditBody()
+	   << " _interest: " << credit.interest() << " _payment: " << credit.payment() << " _bankIncome: "
+	   << credit.bankIncome() << " _dateTaken: " << credit.dateTaken().toString().toStdString();
+	return os;
+}
 
