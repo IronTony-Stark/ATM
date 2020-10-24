@@ -7,12 +7,17 @@
 
 #include <QLCDNumber>
 #include <QDateTime>
+#include "ClockListener.h"
 
 class Clock : public QLCDNumber {
 Q_OBJECT
 
 public:
     explicit Clock(QWidget* parent = nullptr);
+
+    void subscribe(ClockListener*);
+    void unsubscribe(ClockListener*);
+    void notifyListeners(const QDateTime&);
 
 protected:
     void mouseDoubleClickEvent(QMouseEvent* event) override;
@@ -22,6 +27,7 @@ private slots:
 
 private:
     QDateTime* _custom = nullptr;
+    std::list<ClockListener*> _clockListeners;
 
     void displayTime(const QDateTime&);
 };

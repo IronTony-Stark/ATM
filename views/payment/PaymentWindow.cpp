@@ -3,34 +3,23 @@
 //
 
 #include <QtWidgets/QMessageBox>
+#include <utility>
+#include <views/exceptions/AbsentNavigationDestination.h>
 #include "PaymentWindow.h"
 #include "gui/ui_paymentwindow.h"
+#include "Windows.h"
+#include "commands/IncludeAllCommands.h"
 
-// TODO setupPayments should be called each time a user navigates to MyPaymentsWindow
 PaymentWindow::PaymentWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::PaymentWindow),
-        _operationManager(operationManager) {
+        _operationManager(operationManager),
+        _messageDisplay(*this),
+        _paymentPageLogic(*this),
+        _createPaymentPageLogic(*this),
+        _myPaymentsPageLogic(*this) {
     _ui->setupUi(this);
 
-    connect(_ui->btnCreatePayment, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnCreatePayment);
-    connect(_ui->btnMyPayments, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnMyPayments);
-
-    connect(_ui->btnCreatePaymentCreate, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnCreatePaymentCreate);
-    connect(_ui->btnMyPaymentCancelPayment, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnMyPaymentCancelPayment);
-
-    connect(_ui->btnCreatePaymentCancel, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnBackToPaymentMenu);
-    connect(_ui->btnMyPaymentsBack, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnBackToPaymentMenu);
-    connect(_ui->btnMyPaymentBack, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnBackToMyPayments);
-
-    connect(_ui->btnBackToMainMenu, &QPushButton::clicked,
-            this, &PaymentWindow::onBtnBackToMainMenuClicked);
+    setupCommands();
 
     setupListPayments();
 }
@@ -39,38 +28,8 @@ PaymentWindow::~PaymentWindow() {
     delete _ui;
 }
 
-void PaymentWindow::onBtnCreatePayment() {
-    _ui->stackedWidget->setCurrentIndex(1);
-}
-
-void PaymentWindow::onBtnMyPayments() {
-    _ui->stackedWidget->setCurrentIndex(2);
-}
-
-void PaymentWindow::onBtnCreatePaymentCreate() {
-    QString name;
-    uint amount;
-    QString receiver;
-    QDateTime when;
-    std::tie(name, amount, receiver, when) = _ui->widgetCreatePaymentPayment->data();
-    try {
-        _operationManager.setPayment(name, amount, receiver, when);
-        _ui->stackedWidget->setCurrentIndex(0);
-    } catch (const std::exception& e) {
-        QMessageBox::critical(this, "ATM", e.what());
-    }
-}
-
-void PaymentWindow::onBtnBackToPaymentMenu() {
-    _ui->stackedWidget->setCurrentIndex(0);
-}
-
-void PaymentWindow::onBtnBackToMainMenuClicked() {
-    emit signalBtnBackToMainMenuClicked();
-}
-
 void PaymentWindow::setupListPayments() {
-    // TODO payments
+    // TODO getAllPayments
 //    std::pair<RegularPayment*, int> payments = _operationManager.getAllPayments();
 //    delete[] _payments;
 //    _payments = payments.first;
@@ -92,14 +51,40 @@ void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem* item) {
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
-void PaymentWindow::onBtnBackToMyPayments() {
-    _ui->stackedWidget->setCurrentIndex(2);
+void PaymentWindow::navigate(int destination) {
+    switch (destination) {
+        case PAYMENT_MENU:
+            _ui->stackedWidget->setCurrentIndex(0);
+            _logicSettable->setLogic(&_paymentPageLogic);
+            break;
+        case CREATE_PAYMENT:
+            _ui->stackedWidget->setCurrentIndex(1);
+            _logicSettable->setLogic(&_createPaymentPageLogic);
+            break;
+        case MY_PAYMENTS:
+            _ui->stackedWidget->setCurrentIndex(2);
+            _logicSettable->setLogic(&_myPaymentsPageLogic);
+            break;
+        case MAIN_MENU:
+            emit signalBtnBackToMainMenuClicked();
+            break;
+        default:
+            throw AbsentNavigationDestination(&"PaymentWindow navigate "[destination]);
+    }
 }
 
-// TODO pass payment id
-void PaymentWindow::onBtnMyPaymentCancelPayment() {
-    _operationManager.cancelPayment(0);
-    _ui->stackedWidget->setCurrentIndex(2);
+void PaymentWindow::setupCommands() {
+    std::shared_ptr<Command> createPayment(new CreatePaymentCommand(
+            *this, _operationManager, *_ui->widgetCreatePaymentPayment, _messageDisplay));
+    _createPaymentPageLogic.setEnterCommand(createPayment);
+
+    std::shared_ptr<Command> cancelPayment(new CancelPaymentCommand(
+            _operationManager));
+    _myPaymentsPageLogic.setClearCommand(cancelPayment);
+}
+
+void PaymentWindow::setupPaymentItem(RegularPayment&) {
+
 }
 
 void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {
@@ -107,9 +92,53 @@ void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {
 }
 
 void PaymentWindow::setLogicActive() {
-    _logicSettable->setLogic(this);
+    _logicSettable->setLogic(&_paymentPageLogic);
 }
 
-void PaymentWindow::setupPaymentItem(RegularPayment&) {
+// PaymentPageLogic
+PaymentWindow::PaymentPageLogic::PaymentPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
 
+void PaymentWindow::PaymentPageLogic::onBtn0Clicked() {
+    _navigatable.navigate(CREATE_PAYMENT);
+}
+
+void PaymentWindow::PaymentPageLogic::onBtn1Clicked() {
+    _navigatable.navigate(MY_PAYMENTS);
+}
+
+void PaymentWindow::PaymentPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(MAIN_MENU);
+}
+
+// CreatePaymentPageLogic
+PaymentWindow::CreatePaymentPageLogic::CreatePaymentPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
+
+void PaymentWindow::CreatePaymentPageLogic::onBtnEnterClicked() {
+    _enterCommand->execute();
+}
+
+void PaymentWindow::CreatePaymentPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(PAYMENT_MENU);
+}
+
+void PaymentWindow::CreatePaymentPageLogic::setEnterCommand(std::shared_ptr<Command> command) {
+    _enterCommand = std::move(command);
+}
+
+// MyPaymentsPageLogic
+PaymentWindow::MyPaymentsPageLogic::MyPaymentsPageLogic(Navigatable& navigatable) :
+        _navigatable(navigatable) {}
+
+void PaymentWindow::MyPaymentsPageLogic::onBtnClearClicked() {
+    _clearCommand->execute();
+}
+
+void PaymentWindow::MyPaymentsPageLogic::onBtnCancelClicked() {
+    _navigatable.navigate(PAYMENT_MENU);
+}
+
+void PaymentWindow::MyPaymentsPageLogic::setClearCommand(std::shared_ptr<Command> command) {
+    _clearCommand = std::move(command);
 }

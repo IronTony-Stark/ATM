@@ -3,10 +3,10 @@
 //
 
 #include <QtCore/QString>
-#include "BtnReplenishCommand.h"
+#include "ReplenishCommand.h"
 #include "views/transaction/Windows.h"
 
-BtnReplenishCommand::BtnReplenishCommand(
+ReplenishCommand::ReplenishCommand(
         Navigatable& navigatable,
         OperationManager& operationManager,
         QLineEdit& editHowMuch) :
@@ -14,7 +14,7 @@ BtnReplenishCommand::BtnReplenishCommand(
         _operationManager(operationManager),
         _editHowMuch(editHowMuch) {}
 
-void BtnReplenishCommand::execute() {
+void ReplenishCommand::execute() {
     QString amountStr = _editHowMuch.text();
     uint amount = _editHowMuch.text().toUInt();
     _operationManager.replenish(amount);

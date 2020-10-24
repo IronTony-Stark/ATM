@@ -41,7 +41,6 @@ void RegistrationWindow::onBtnEnterClicked() {
         // TODO CardType : ABankFee::STANDARD
 //        QString cardType = _ui->comboCardType->currentText();
         try {
-            // TODO income
             ushort pin = _operationManager.registerCustomer(CustomerVerificationData(name, taxNumber, 0, phone, ABankFee::STANDARD));
             _ui->labelPin->setText(QString::number(pin));
             _ui->stackedWidget->setCurrentIndex(CARD);

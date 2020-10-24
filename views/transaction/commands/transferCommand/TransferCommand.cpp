@@ -3,10 +3,10 @@
 //
 
 #include <QtCore/QString>
-#include "BtnTransferCommand.h"
+#include "TransferCommand.h"
 #include "views/transaction/Windows.h"
 
-BtnTransferCommand::BtnTransferCommand(
+TransferCommand::TransferCommand(
         Navigatable& navigatable,
         OperationManager& operationManager,
         QLineEdit& editHowMuch,
@@ -18,7 +18,7 @@ BtnTransferCommand::BtnTransferCommand(
         _editToWhom(editToWhom),
         _messageDisplay(messageDisplay) {}
 
-void BtnTransferCommand::execute() {
+void TransferCommand::execute() {
     QString to = _editToWhom.text();
     uint amount = _editHowMuch.text().toUInt();
     try {

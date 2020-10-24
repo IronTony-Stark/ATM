@@ -3,10 +3,10 @@
 //
 
 #include <QtCore/QString>
-#include "BtnWithdrawCommand.h"
+#include "WithdrawCommand.h"
 #include "views/transaction/Windows.h"
 
-BtnWithdrawCommand::BtnWithdrawCommand(
+WithdrawCommand::WithdrawCommand(
         Navigatable& navigatable,
         OperationManager& operationManager,
         QLineEdit& editHowMuch,
@@ -16,7 +16,7 @@ BtnWithdrawCommand::BtnWithdrawCommand(
         _editHowMuch(editHowMuch),
         _messageDisplay(messageDisplay) {}
 
-void BtnWithdrawCommand::execute() {
+void WithdrawCommand::execute() {
     uint amount = _editHowMuch.text().toUInt();
     try {
         _operationManager.withdraw(amount);

@@ -2,19 +2,19 @@
 // Created by Iron Tony on 23/10/2020.
 //
 
-#ifndef ATM_BTNREPLENISHCOMMAND_H
-#define ATM_BTNREPLENISHCOMMAND_H
+#ifndef ATM_REPLENISHCOMMAND_H
+#define ATM_REPLENISHCOMMAND_H
 
 #include <views/Command.h>
 #include <views/Navigatable.h>
 #include <logics/managers/OperationManager.h>
 #include <QtWidgets/QLineEdit>
 
-class BtnReplenishCommand : public Command {
+class ReplenishCommand : public Command {
 public:
-    explicit BtnReplenishCommand(Navigatable& navigatable,
-                                 OperationManager& operationManager,
-                                 QLineEdit& editHowMuch);
+    explicit ReplenishCommand(Navigatable& navigatable,
+                              OperationManager& operationManager,
+                              QLineEdit& editHowMuch);
 
     void execute() override;
 
@@ -25,4 +25,4 @@ private:
 };
 
 
-#endif //ATM_BTNREPLENISHCOMMAND_H
+#endif //ATM_REPLENISHCOMMAND_H
