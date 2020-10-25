@@ -12,11 +12,10 @@
 
 class Customer {
 public:
-    const QString _taxNumber;
-	const QString _phoneNumber;
-//	const QString _passportCode;
+	const QString _taxNumber;
 
-	Customer(QString  name, QString  taxNum, QString  phoneNum, const Money revenue);
+	Customer(QString name, QString taxNum, QString phoneNum, const Money revenue);
+
 
 	[[nodiscard]] const QString& name() const;
 
@@ -27,6 +26,8 @@ public:
 	void setRevenue(const Money&);
 
 	[[nodiscard]] const Money& creditLimit() const;
+
+	[[nodiscard]] const QString& phoneNumber() const;
 
 	[[nodiscard]] const QList<Card*>& cards() const;
 
@@ -49,9 +50,11 @@ public:
 	~Customer();
 
 private:
+
 	QString _name;
 	Money _revenue;
 	Money _creditLimit;
+	const QString _phoneNumber;
 	QList<Card*> _cards;
 	QList<Credit*> _credits; // sum is under 45% of income
 	QList<Deposit*> _deposits; // sum is up to 50 * 10^6 UAH
@@ -59,7 +62,7 @@ private:
 	template<typename Identifiable>
 	uint findIndex(const QList<Identifiable>& list, uint id) {
 		for (int i = 0; i < list.length(); i++) {
-            if (list[i]->id() == id) {
+			if (list[i]->id() == id) {
 				return i;
 			}
 		}

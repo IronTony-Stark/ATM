@@ -17,7 +17,7 @@ StartWindow::StartWindow(QWidget* parent) :
 		QWidget(parent), _ui(new Ui::StartWindow),
 		_operationManager(CustomerDataManager(),
 						  TimeDrivenEventsHandler(),
-						  CustomerDAO(),
+						  CustomerDAO::getInstance(),
 						  CreditDAO::getInstance(),
 						  DepositDAO::getInstance(),
 						  PaymentDAO()),

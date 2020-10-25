@@ -5,7 +5,7 @@
 #include "BankFeeProvider.h"
 
 
-const ABankFee& BankFeeProvider::getBankFee(ABankFee::FeeType feeType) {
+const ABankFee& BankFeeProvider::getBankFee(ABankFee::CardType feeType) {
 	if (!fees.contains(feeType))
 		switch (feeType) {
 			case ABankFee::STANDARD:
@@ -33,5 +33,6 @@ BankFeeProvider::~BankFeeProvider() {
 	auto iter = fees.begin();
 	while (iter != fees.end()) {
 		delete iter.value();
+		iter++;
 	}
 }

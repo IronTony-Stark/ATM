@@ -9,16 +9,13 @@
 #include "logics/bank_fees/BankFeeProvider.h"
 #include "logics/utils/general.h"
 
-Card::Card(ABankFee::FeeType feeType, Customer& customer, QString& pin, QString name,Money balance) :
-        _cardType(feeType), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)),
-        _customer(customer), _pin(pin),
-        _name(std::move(name)), _balance(balance) {
-    // TODO get id from database
-    _id = -1;
+Card::Card(QString id, ABankFee::CardType feeType, QString pin, Money balance) :
+		_id(std::move(id)), _cardType(feeType), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)),
+		_pin(std::move(pin)), _balance(balance) {
 }
 
 Card::Card(const Card& c) : _id(c._id), _bankFee(c._bankFee), _cardType(c._cardType),
-                            _balance(c._balance), _customer(c._customer) {}
+							_balance(c._balance) {}
 
 Money Card::balance() const {
     return _balance;
@@ -37,7 +34,7 @@ Money Card::replenish(Money amount) {
 	return _balance;
 }
 
-uli Card::id() const {
+QString Card::id() const {
 	return _id;
 }
 
@@ -45,14 +42,6 @@ Money Card::transfer(const QString& recipient, Money amount) {
 	Money transferSum = amount / (1 + _bankFee.transferFee());
 	// todo: get card recipient from DB and send money there
 	return transferSum;
-}
-
-const QString& Card::name() const {
-	return _name;
-}
-
-void Card::setName(QString newName) {
-	_name = std::move(newName);
 }
 
 const QString& Card::pin() const {
@@ -64,14 +53,10 @@ const QString& Card::regeneratePin() {
 }
 
 const QString& Card::number() const {
-    // TODO return real number
-    return QString();
+	return _id;
 }
 
-const ABankFee::FeeType Card::cardType() const {
-    return _cardType;
+const ABankFee::CardType Card::cardType() const {
+	return _cardType;
 }
-
-
-
 

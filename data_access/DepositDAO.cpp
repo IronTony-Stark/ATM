@@ -3,6 +3,7 @@
 //
 
 #include "DepositDAO.h"
+#include "CustomerDAO.h"
 #include <QDebug>
 
 DepositDAO& DepositDAO::getInstance() {
@@ -13,19 +14,19 @@ DepositDAO& DepositDAO::getInstance() {
 
 void DepositDAO::initialize() {
 	static bool isInitialized = false;
-	if (!QSqlDatabase::database().isOpen()) return;
-	if (isInitialized) return;
+	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
+
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS deposit "
 						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, sum DECIMAL, interest DECIMAL, "
 						  "start_date TEXT, end_date TEXT);");
-	qDebug() << "creation of a table is successful: " << createQuery.isActive();
+	qDebug() << "creation of a 'deposit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }
 
 Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 	QSqlQuery createQuery(QSqlDatabase::database());
-	createQuery.prepare(QString("INSERT INTO deposit (name, sum, interest, start_date, end_date) "
-								"VALUES (:name, :sum, :interest, :start_date, :end_date);"));
+	createQuery.prepare("INSERT INTO deposit (name, sum, interest, start_date, end_date) "
+						"VALUES (:name, :sum, :interest, :start_date, :end_date);");
 	createQuery.bindValue(":name", deposit.name());
 	createQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	createQuery.bindValue(":interest", deposit.interest());
@@ -38,7 +39,7 @@ Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 
 QList<Deposit*> DepositDAO::getAll() const {
 	// Using SELECT * is not recommended because the order of the fields in the query is undefined.
-	QSqlQuery findAllQuery("SELECT id, name, sum, interest, start_date, end_date FROM deposit");
+	QSqlQuery findAllQuery("SELECT id, name, sum, interest, start_date, end_date FROM deposit;");
 	QList<Deposit*> res;
 	while (findAllQuery.next()) {
 		Deposit* deposit = buildDeposit(findAllQuery);
@@ -71,7 +72,7 @@ Deposit* DepositDAO::buildDeposit(const QSqlQuery& queryRes) const {
 boolean DepositDAO::updateDeposit(const Deposit& deposit) {
 	QSqlQuery updQuery;
 	updQuery.prepare("UPDATE deposit SET name = :name, sum = :sum, interest = :interest, "
-					 "start_date = :start_date, end_date = :end_date WHERE id = :id");
+					 "start_date = :start_date, end_date = :end_date WHERE id = :id;");
 	updQuery.bindValue(":name", deposit.name());
 	updQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	updQuery.bindValue(":interest", deposit.interest());
@@ -83,6 +84,6 @@ boolean DepositDAO::updateDeposit(const Deposit& deposit) {
 
 void DepositDAO::deleteById(uint id) {
 	QSqlQuery deleteQuery;
-	deleteQuery.prepare(QString("DELETE FROM deposit WHERE id = %1").arg(id));
+	deleteQuery.prepare(QString("DELETE FROM deposit WHERE id = %1;").arg(id));
 	deleteQuery.exec();
 }

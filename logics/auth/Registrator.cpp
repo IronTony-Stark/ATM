@@ -28,10 +28,10 @@ ushort Registrator::registerCustomer(const CustomerVerificationData& verificatio
 
     ushort pin = generatePin();
     const QString number = generateCardNumber();
-    Card* newCard = new Card(verificationData.getCardType(), *newCustomer, reinterpret_cast<QString&>(pin), number, 0);
+	Card* newCard = new Card(number, verificationData.getCardType(), reinterpret_cast<QString&>(pin));
     newCustomer->addCard(newCard);
 
-    _customerDao.save(customer);
+	_customerDao.saveCustomer(*customer);
     return pin;
 }
 

@@ -153,7 +153,7 @@ add_executable(ATM
         views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.h
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.cpp
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.h
-        )
+        data_access/CardDAO.cpp data_access/CardDAO.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

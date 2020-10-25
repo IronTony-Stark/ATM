@@ -11,14 +11,14 @@
 
 class BankFeeProvider {
 public:
-	const ABankFee& getBankFee(ABankFee::FeeType);
+	const ABankFee& getBankFee(ABankFee::CardType);
 
 	static BankFeeProvider& getInstance();
 
 	~BankFeeProvider();
 
 private:
-	QHash<ABankFee::FeeType, ABankFee*> fees;
+	QHash<ABankFee::CardType, ABankFee*> fees;
 };
 
 

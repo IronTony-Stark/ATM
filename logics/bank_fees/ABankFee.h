@@ -6,7 +6,7 @@
 #define ATM_BANKFEE_H
 
 struct ABankFee {
-	enum FeeType {
+	enum CardType {
 		STANDARD,
 		UNIVERSAL,
 		GOLDEN,

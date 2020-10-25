@@ -19,11 +19,11 @@ public:
 
 	Credit* getById(uint id) const;
 
-	Credit& saveCredit(Credit&);
+	Credit& saveCredit(Credit&) const;
 
-	boolean updateCredit(const Credit&);
+	boolean updateCredit(const Credit&) const;
 
-	void deleteById(uint id);
+	void deleteById(uint id) const;
 
 private:
 	static void initialize();

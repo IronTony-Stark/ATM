@@ -3,6 +3,7 @@
 //
 
 #include "CreditDAO.h"
+#include "CustomerDAO.h"
 #include <QVariant>
 #include <QDebug>
 
@@ -14,19 +15,19 @@ CreditDAO& CreditDAO::getInstance() {
 
 void CreditDAO::initialize() {
 	static bool isInitialized = false;
-	if (!QSqlDatabase::database().isOpen()) return;
-	if (isInitialized) return;
+	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
+
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS credit "
 						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, credit_body DECIMAL, interest DECIMAL, "
 						  "payment DECIMAL, bank_income DECIMAL, date_taken TEXT);");
-	qDebug() << "creation of a table is successful: " << createQuery.isActive();
+	qDebug() << "creation of a 'credit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }
 
-Credit& CreditDAO::saveCredit(Credit& credit) {
-	QSqlQuery createQuery(QSqlDatabase::database());
-	createQuery.prepare(QString("INSERT INTO credit (name, credit_body, interest, payment, bank_income, date_taken) "
-								"VALUES (:name, :credit_body, :interest, :payment, :bank_income, :date_taken);"));
+Credit& CreditDAO::saveCredit(Credit& credit) const {
+	QSqlQuery createQuery;
+	createQuery.prepare("INSERT INTO credit (name, credit_body, interest, payment, bank_income, date_taken) "
+						"VALUES (:name, :credit_body, :interest, :payment, :bank_income, :date_taken);");
 	createQuery.bindValue(":name", credit.name());
 	createQuery.bindValue(":credit_body", static_cast<double>(credit.creditBody()));
 	createQuery.bindValue(":interest", credit._interest);
@@ -70,7 +71,7 @@ Credit* CreditDAO::buildCredit(const QSqlQuery& query) const {
 					  QDate::fromString(query.value(6).toString()));;
 }
 
-boolean CreditDAO::updateCredit(const Credit& credit) {
+boolean CreditDAO::updateCredit(const Credit& credit) const {
 	QSqlQuery updQuery;
 	updQuery.prepare("UPDATE credit SET name = :name, credit_body = :credit_body, interest = :interest, "
 					 "payment = :payment, bank_income = :bank_income, date_taken = :date_taken WHERE id = :id");
@@ -84,7 +85,7 @@ boolean CreditDAO::updateCredit(const Credit& credit) {
 	return updQuery.exec();
 }
 
-void CreditDAO::deleteById(uint id) {
+void CreditDAO::deleteById(uint id) const {
 	QSqlQuery deleteQuery;
 	deleteQuery.prepare(QString("DELETE FROM credit WHERE id = %1").arg(id));
 	deleteQuery.exec();

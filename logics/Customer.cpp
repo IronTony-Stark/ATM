@@ -27,20 +27,24 @@ const QString& Customer::name() const {
 }
 
 const Money& Customer::revenue() const {
-    return _revenue;
+	return _revenue;
 }
 
 void Customer::setRevenue(const Money& m) {
-    _revenue = m;
-    _creditLimit = _revenue * Credit::creditLimitOfIncome;
+	_revenue = m;
+	_creditLimit = _revenue * Credit::creditLimitOfIncome;
+}
+
+const QString& Customer::phoneNumber() const {
+	return _phoneNumber;
 }
 
 const Money& Customer::creditLimit() const {
-    return _creditLimit;
+	return _creditLimit;
 }
 
 const QList<Card*>& Customer::cards() const {
-    return _cards;
+	return _cards;
 }
 
 const QList<Credit*>& Customer::credits() const {

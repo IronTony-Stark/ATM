@@ -15,16 +15,16 @@ private:
     QString& _taxNumber;
     int _income;
     QString& _phoneNumber;
-    ABankFee::FeeType _cardType;
+	ABankFee::CardType _cardType;
 
 public:
 
     CustomerVerificationData(
-            QString& name,
-            QString& taxNumber,
-            int income,
-            QString& phoneNumber,
-            ABankFee::FeeType cardType
+			QString& name,
+			QString& taxNumber,
+			int income,
+			QString& phoneNumber,
+			ABankFee::CardType cardType
     ) : _name(name), _taxNumber(taxNumber), _income(income), _phoneNumber(phoneNumber), _cardType(cardType) {};
 
     const QString& getName() const { return _name; }
@@ -33,7 +33,7 @@ public:
 
     int getIncome() const { return _income; };
 
-    const ABankFee::FeeType getCardType() const {return _cardType;}
+	const ABankFee::CardType getCardType() const { return _cardType; }
 
     const QString& getPhoneNumber() const { return _phoneNumber; }
 
