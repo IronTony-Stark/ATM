@@ -9,7 +9,9 @@
 #include <QtSql>
 #include <data_access/DepositDAO.h>
 #include <data_access/CardDAO.h>
+#include <data_access/PaymentDAO.h>
 #include <iostream>
+#include <logics/bank_services/RegularPayment.h>
 
 int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
@@ -29,6 +31,7 @@ int main(int argc, char* argv[]) {
 		CreditDAO::getInstance();
 		DepositDAO::getInstance();
 		CustomerDAO::getInstance();
+		PaymentDAO::getInstance();
 	}
 
 	// tests/demo
@@ -85,6 +88,13 @@ int main(int argc, char* argv[]) {
 	CustomerDAO::getInstance().addCredit(customer->_taxNumber, 999);
 	customer->setName("new Name for customer");
     CustomerDAO::getInstance().updateCustomerCore(*customer);
-	*/
+
+    RegularPayment payment("important payment", 50, "Vasyl'", "Petro", 20);
+    PaymentDAO::getInstance().save(payment);
+    QList<RegularPayment*> col = PaymentDAO::getInstance().getAll();
+    auto* res = PaymentDAO::getInstance().getById(1);
+	PaymentDAO::getInstance().removePayment(1);
+    */
+
 	return QApplication::exec();
 }

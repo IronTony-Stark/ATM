@@ -7,13 +7,26 @@
 
 
 #include <logics/bank_services/RegularPayment.h>
+#include <QtSql/QSqlQuery>
 
 class PaymentDAO {
 public:
-    QList<RegularPayment> getAll() const;
-    RegularPayment* const getById(uint id) const;
-    void save(RegularPayment*) const;
-    void deleteRP(RegularPayment*) const;
+	static PaymentDAO& getInstance();
+
+	void save(RegularPayment&) const;
+
+	QList<RegularPayment*> getAll() const;
+
+	RegularPayment* const getById(uint id) const;
+
+	void removePayment(uint id) const;
+
+private:
+	static void initialize();
+
+	RegularPayment* buildPayment(const QSqlQuery&) const;
+
+	PaymentDAO() = default;
 };
 
 

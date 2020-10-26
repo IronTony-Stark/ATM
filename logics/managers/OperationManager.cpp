@@ -134,7 +134,7 @@ void OperationManager::setPayment(const QString& name, uint amount, const QStrin
 
     RegularPayment* const pPayment = new RegularPayment(name, amount, _customerDataManager.card().number(), receiver,
                                                         when.date().day());
-    _paymentDao.save(pPayment);
+    _paymentDao.save(*pPayment);
 }
 
 void OperationManager::cancelPayment(uint id) {

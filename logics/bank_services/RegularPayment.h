@@ -11,7 +11,9 @@
 
 class RegularPayment {
 public:
-	RegularPayment(QString name, Money amount, QString sender, QString receiver, uint dayOfMonth);
+	RegularPayment(QString name, Money amount, QString sender, QString receiver, uint dayOfMonth, uint id = -1);
+
+	uint id() const;
 
 	const QString& name() const;
 
@@ -24,6 +26,9 @@ public:
 	uint dayOfMonth() const;
 
 private:
+	friend class PaymentDAO;
+
+	uint _id;
 	QString _name;
 	Money _amount;
 	QString _sender;

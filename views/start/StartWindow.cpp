@@ -20,7 +20,7 @@ StartWindow::StartWindow(QWidget* parent) :
 						  CustomerDAO::getInstance(),
 						  CreditDAO::getInstance(),
 						  DepositDAO::getInstance(),
-						  PaymentDAO()),
+						  PaymentDAO::getInstance()),
 		_registrationWindow(_operationManager),
 		_mainMenuWindow(_operationManager) {
     _ui->setupUi(this);
