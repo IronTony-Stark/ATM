@@ -33,9 +33,13 @@ public:
 	 */
 	std::pair<Money, Money> withdraw(Money);
 
+	void withdrawFree(Money);
+
 	Money replenish(Money);
 
-	Money transfer(const QString& recipient, Money amount);
+	void replenishFree(Money);
+
+	std::pair<Money, Money> transfer(const QString& recipient, Money amount);
 
 	const QString& pin() const;
 

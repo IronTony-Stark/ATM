@@ -33,7 +33,7 @@ public:
 
 	void addCard(Card*);
 
-	void removeCard(uint);
+	void removeCard(const QString&);
 
 	[[nodiscard]] const QList<Credit*>& credits() const;
 
@@ -61,6 +61,16 @@ private:
 
 	template<typename Identifiable>
 	uint findIndex(const QList<Identifiable>& list, uint id) {
+		for (int i = 0; i < list.length(); i++) {
+			if (list[i]->id() == id) {
+				return i;
+			}
+		}
+		return -1;
+	}
+
+	template<typename SIdentifiable>
+	uint findCardIndex(const QList<SIdentifiable>& list, const QString& id) {
 		for (int i = 0; i < list.length(); i++) {
 			if (list[i]->id() == id) {
 				return i;

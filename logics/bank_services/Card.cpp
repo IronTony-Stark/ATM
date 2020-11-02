@@ -5,7 +5,7 @@
 #include <logics/exceptions/NotEnoughMoneyException.h>
 
 #include <utility>
-#include "Card.h"
+#include <data_access/CardDAO.h>
 #include "logics/bank_fees/BankFeeProvider.h"
 #include "logics/utils/general.h"
 
@@ -38,10 +38,16 @@ QString Card::id() const {
 	return _id;
 }
 
-Money Card::transfer(const QString& recipient, Money amount) {
+std::pair<Money, Money> Card::transfer(const QString& recipient, Money amount) {
 	Money transferSum = amount / (1 + _bankFee.transferFee());
-	// todo: get card recipient from DB and send money there
-	return transferSum;
+	if (_balance < amount) throw NotEnoughMoneyException(_balance, amount);
+	_balance -= transferSum;
+
+	Card* recEntity = CardDAO::getInstance().getById(recipient);
+	recEntity->replenishFree(amount);
+	CardDAO::getInstance().updateCard(*recEntity);
+	delete recEntity;
+	return std::pair(transferSum, amount);
 }
 
 const QString& Card::pin() const {
@@ -58,5 +64,14 @@ const QString& Card::number() const {
 
 const ABankFee::CardType Card::cardType() const {
 	return _cardType;
+}
+
+void Card::withdrawFree(Money m) {
+	if (m > _balance) throw NotEnoughMoneyException(_balance, m);
+	_balance -= m;
+}
+
+void Card::replenishFree(Money m) {
+	_balance += m;
 }
 

@@ -26,15 +26,15 @@ public:
 
 	void addCard(const QString& customerId, const QString& cardId) const;
 
-	void removeCard(const QString& customerId, const QString& cardId) const;
+	void removeCard(const QString& cardId) const;
 
 	void addCredit(const QString& customerId, uint creditId) const;
 
-	void removeCredit(const QString& customerId, uint creditId) const;
+	void removeCredit(uint creditId) const;
 
 	void addDeposit(const QString& customerId, uint depositId) const;
 
-	void removeDeposit(const QString& customerId, uint depositId) const;
+	void removeDeposit(uint depositId) const;
 
 private:
 	static void initialize();
@@ -42,8 +42,7 @@ private:
 	void addAuxiliary(const QString& targetTable, const QString& targetProp, const QVariant& customerId,
 					  const QVariant& propValue) const;
 
-	void removeAuxiliary(const QString& targetTable, const QString& targetProp, const QVariant& customerId,
-						 const QVariant& propValue) const;
+	void removeAuxiliary(const QString& targetTable, const QString& targetProp, const QVariant& propValue) const;
 
 	CustomerDAO() = default;
 };

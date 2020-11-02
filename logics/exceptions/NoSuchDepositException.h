@@ -13,7 +13,7 @@
 class NoSuchDepositException : NoSuchCustomerPossessionException {
 public:
 	NoSuchDepositException(QString customerId, uint depositId) :
-			NoSuchCustomerPossessionException(std::move(customerId), depositId, "DEPOSIT") {};
+			NoSuchCustomerPossessionException(std::move(customerId), QString::number(depositId), "DEPOSIT") {};
 };
 
 

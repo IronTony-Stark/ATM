@@ -53,10 +53,6 @@ void Deposit::setName(QString newName) {
 	_name = std::move(newName);
 }
 
-void Deposit::cancel() {
-	// TODO implement
-}
-
 std::ostream& operator<<(std::ostream& os, const Deposit& deposit) {
 	os << "_id: " << deposit.id() << " _name: " << deposit.name().toStdString() << " _sum: " << deposit.sum()
 	   << " _interest: "

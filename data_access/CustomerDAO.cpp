@@ -131,24 +131,24 @@ void CustomerDAO::addCard(const QString& customerId, const QString& cardId) cons
 	addAuxiliary("customer_card", "card_id", customerId, cardId);
 }
 
-void CustomerDAO::removeCard(const QString& customerId, const QString& cardId) const {
-	removeAuxiliary("customer_card", "card_id", customerId, QString("'%1'").arg(cardId));
+void CustomerDAO::removeCard(const QString& cardId) const {
+	removeAuxiliary("customer_card", "card_id", QString("'%1'").arg(cardId));
 }
 
 void CustomerDAO::addCredit(const QString& customerId, uint creditId) const {
 	addAuxiliary("customer_credit", "credit_id", customerId, creditId);
 }
 
-void CustomerDAO::removeCredit(const QString& customerId, uint creditId) const {
-	removeAuxiliary("customer_credit", "credit_id", customerId, creditId);
+void CustomerDAO::removeCredit(uint creditId) const {
+	removeAuxiliary("customer_credit", "credit_id", creditId);
 }
 
 void CustomerDAO::addDeposit(const QString& customerId, uint depositId) const {
 	addAuxiliary("customer_deposit", "deposit_id", customerId, depositId);
 }
 
-void CustomerDAO::removeDeposit(const QString& customerId, uint depositId) const {
-	removeAuxiliary("customer_deposit", "deposit_id", customerId, depositId);
+void CustomerDAO::removeDeposit(uint depositId) const {
+	removeAuxiliary("customer_deposit", "deposit_id", depositId);
 }
 
 void
@@ -163,11 +163,9 @@ CustomerDAO::addAuxiliary(const QString& targetTable, const QString& targetProp,
 }
 
 void
-CustomerDAO::removeAuxiliary(const QString& targetTable, const QString& targetProp,
-							 const QVariant& customerId, const QVariant& propValue) const {
-	QString strQuery = QString("DELETE FROM %1 WHERE customer_id = '%2' AND %3 = %4;")
+CustomerDAO::removeAuxiliary(const QString& targetTable, const QString& targetProp, const QVariant& propValue) const {
+	QString strQuery = QString("DELETE FROM %1 WHERE %2 = %3;")
 			.arg(targetTable)
-			.arg(customerId.toString())
 			.arg(targetProp)
 			.arg(propValue.toString());
 	QSqlQuery deleteQuery(strQuery);

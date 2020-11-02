@@ -11,7 +11,6 @@ double Credit::creditLimitOfIncome = 0.45;
 Credit::Credit(QString name, Money creditBody, double interest, Money payment) :
 		_name(std::move(name)), _creditBody(creditBody), _interest(interest), _payment(payment),
 		_dateTaken(QDate::currentDate()) {
-	// todo: check if a person can afford a new credit
 }
 
 Credit::Credit(const Credit& c) : _id(c._id), _creditBody(c._creditBody), _interest(c._interest), _payment(c._payment),

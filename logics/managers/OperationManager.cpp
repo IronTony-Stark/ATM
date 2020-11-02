@@ -77,7 +77,7 @@ void OperationManager::takeCredit(const QString& name,
     int interest = CreditConditions::creditingOptions.value(period);
     const Money& debt = Money(amount);
     if (_customerDataManager.canAffordCredit(debt, period)) {
-        _customerDataManager.replenish(_customerDataManager.takeCredit(debt, name, interest));
+        _customerDataManager.takeCredit(debt, name, interest);
     } else
         throw NotEnoughMoneyException(_customerDataManager.balance(), debt);
 }
@@ -102,14 +102,13 @@ void OperationManager::startDeposit(
         double percentage) {
     if (_customerDataManager.canOpenDeposit(amount)) {
         _customerDataManager.openDeposit(amount, name, percentage, period);
-        _customerDataManager.withdraw(amount);
     } else
         throw DepositMaxSumReachedException("You have reached max sum on deposits.");
 }
 
 void OperationManager::cancelDeposit(uint id) {
     Deposit* pDeposit = _depositDao.getById(id);
-    pDeposit->cancel();
+//    todo: pDeposit->cancel();
 }
 
 void OperationManager::replenishDeposit(uint id, uint amount) {

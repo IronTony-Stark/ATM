@@ -15,7 +15,7 @@
 class NoSuchCreditException : NoSuchCustomerPossessionException {
 public:
 	NoSuchCreditException(QString customerId, uint creditId) :
-			NoSuchCustomerPossessionException(std::move(customerId), creditId, "CREDIT") {};
+			NoSuchCustomerPossessionException(std::move(customerId), QString::number(creditId), "CREDIT") {};
 };
 
 //std::ostream& operator<<(std::ostream&, const NoSuchCreditException&);

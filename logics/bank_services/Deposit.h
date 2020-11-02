@@ -12,7 +12,6 @@
 
 class Deposit {
 public:
-	// TODO add cancel
 	static const Money maxDepoSum;
 
 	Deposit(QString name, Money initialBalance, double interest, QDate endDate,
@@ -23,8 +22,6 @@ public:
 	[[nodiscard]] uint id() const;
 
 	void replenish(Money amount);
-
-	void cancel();
 
 	[[nodiscard]] Money sum() const;
 

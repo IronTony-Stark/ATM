@@ -14,8 +14,11 @@ public:
 
 	Card& card() const;
 
-    Customer* const getCustomerByTaxNumber(const QString&) const;
-    Customer* const getCustomerByCardNumber(const QString& cardNumber) const;
+	void setCard(Card* card);
+
+	Customer* const getCustomerByTaxNumber(const QString&) const;
+
+	Customer* const getCustomerByCardNumber(const QString& cardNumber) const;
 
 	Money balance() const;
 
@@ -25,13 +28,13 @@ public:
 
 	bool canAffordCredit(Money amount, double interest) const;
 
-	uint takeCredit(Money debt, QString name, double interest);
+	Money takeCredit(Money debt, QString name, double interest);
 
 	bool repayCredit(Money amount, uint creditId);
 
 	bool canOpenDeposit(Money potentialBalance) const;
 
-	uint openDeposit(Money initialBalance, QString name, double interest, uint months);
+	Money openDeposit(Money initialBalance, QString name, double interest, uint months);
 
 	void replenishDeposit(Money amount, uint depoId);
 

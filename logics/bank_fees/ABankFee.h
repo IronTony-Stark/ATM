@@ -5,6 +5,8 @@
 #ifndef ATM_BANKFEE_H
 #define ATM_BANKFEE_H
 
+#include <logics/utils/Money.h>
+
 struct ABankFee {
 	enum CardType {
 		STANDARD,
@@ -19,29 +21,32 @@ struct ABankFee {
 
 	[[nodiscard]] double transferFee() const { return _transferFee; }
 
+	[[nodiscard]] Money cardPayment() const { return _cardPayment; }
+
 protected:
-	explicit ABankFee(double replenish, double withdraw, double transfer) :
-			_replenishFee(replenish), _withdrawFee(withdraw), _transferFee(transfer) {}
+	explicit ABankFee(double replenish, double withdraw, double transfer, Money cardPayment) :
+			_replenishFee(replenish), _withdrawFee(withdraw), _transferFee(transfer), _cardPayment(cardPayment) {}
 
 	const double _replenishFee;
 	const double _withdrawFee;
 	const double _transferFee;
+	const Money _cardPayment;
 };
 
 struct StandardFee : ABankFee {
-	StandardFee() : ABankFee(1, 2, 3) {}
+	StandardFee() : ABankFee(0.05, 0.05, 0.04, 0) {}
 };
 
 struct UniversalFee : ABankFee {
-	UniversalFee() : ABankFee(1, 2, 3) {}
+	UniversalFee() : ABankFee(0.04, 0.045, 0.03, 50) {}
 };
 
 struct GoldenFee : ABankFee {
-	GoldenFee() : ABankFee(1, 2, 3) {}
+	GoldenFee() : ABankFee(0.03, 0.035, 0.03, 65) {}
 };
 
 struct PlatinumFee : ABankFee {
-	PlatinumFee() : ABankFee(1, 2, 3) {}
+	PlatinumFee() : ABankFee(0, 0.02, 0.012, 80) {}
 };
 
 #endif //ATM_BANKFEE_H

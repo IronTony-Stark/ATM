@@ -13,7 +13,7 @@
 
 class NoSuchCardException : NoSuchCustomerPossessionException {
 public:
-	NoSuchCardException(QString customerId, uint cardId) :
+	NoSuchCardException(QString customerId, const QString& cardId) :
 			NoSuchCustomerPossessionException(std::move(customerId), cardId, "CARD") {}
 };
 

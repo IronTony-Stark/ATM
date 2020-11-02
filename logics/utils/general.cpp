@@ -11,8 +11,8 @@ QDate addDates(const QDate& d1, const QDate& d2) {
 }
 
 QDate subtractDates(const QDate& d1, const QDate& d2) {
-	//todo: implement
-	throw std::runtime_error("not implemented exception");
+	qint64 diff = d1.toJulianDay() - d2.toJulianDay();
+	return QDate().addDays(diff);
 }
 
 QString generatePin() {

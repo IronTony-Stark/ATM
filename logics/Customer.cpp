@@ -10,16 +10,20 @@
 #include <logics/exceptions/NoSuchCardException.h>
 #include <logics/exceptions/NoSuchCreditException.h>
 #include <logics/exceptions/NoSuchDepositException.h>
+#include <data_access/CardDAO.h>
+#include <data_access/CustomerDAO.h>
+#include <data_access/CreditDAO.h>
+#include <data_access/DepositDAO.h>
 
 Customer::Customer(QString name, QString taxNum, QString phoneNum, const Money revenue) :
-        _name(std::move(name)), _taxNumber(std::move(taxNum)), _phoneNumber(std::move(phoneNum)),
-        _revenue(revenue),
-        _creditLimit(revenue * Credit::creditLimitOfIncome) {
+		_name(std::move(name)), _taxNumber(std::move(taxNum)), _phoneNumber(std::move(phoneNum)),
+		_revenue(revenue),
+		_creditLimit(revenue * Credit::creditLimitOfIncome) {
 
 }
 
 void Customer::setName(const QString& newName) {
-    _name = newName;
+	_name = newName;
 }
 
 const QString& Customer::name() const {
@@ -56,39 +60,37 @@ const QList<Deposit*>& Customer::deposits() const {
 }
 
 void Customer::addCard(Card* c) {
-    _cards.append(c);
-    // todo: dao
+	_cards.append(c);
+	CardDAO::getInstance().saveCard(*c);
+	CustomerDAO::getInstance().addCard(_taxNumber, c->id());
 }
 
-void Customer::removeCard(uint id) {
-    int index = findIndex(_cards, id);
-    if (index == -1) throw NoSuchCardException(_taxNumber, id);
-    _cards.removeAt(index);
-    //todo: dao
+void Customer::removeCard(const QString& id) {
+	int index = findCardIndex(_cards, id);
+	if (index == -1) throw NoSuchCardException(_taxNumber, id);
+	_cards.removeAt(index);
+	CardDAO::getInstance().deleteById(id);
+	CustomerDAO::getInstance().removeCard(id);
 }
 
 void Customer::addCredit(Credit* c) {
-    _credits.append(c);
-    //todo: dao
+	_credits.append(c);
 }
 
 void Customer::removeCredit(uint id) {
-    int index = findIndex(_credits, id);
-    if (index == -1) throw NoSuchCreditException(_taxNumber, id);
-    _credits.removeAt(index);
-    //todo: dao
+	int index = findIndex(_credits, id);
+	if (index == -1) throw NoSuchCreditException(_taxNumber, id);
+	_credits.removeAt(index);
 }
 
 void Customer::addDeposit(Deposit* d) {
-    _deposits.append(d);
-    // todo: dao
+	_deposits.append(d);
 }
 
 void Customer::removeDeposit(uint id) {
-    int index = findIndex(_deposits, id);
-    if (index == -1) throw NoSuchDepositException(_taxNumber, id);
-    _deposits.removeAt(index);
-    //todo: dao
+	int index = findIndex(_deposits, id);
+	if (index == -1) throw NoSuchDepositException(_taxNumber, id);
+	_deposits.removeAt(index);
 }
 
 

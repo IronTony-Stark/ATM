@@ -9,6 +9,10 @@
 #include <logics/exceptions/NoSuchDepositException.h>
 
 #include <utility>
+#include <data_access/CustomerDAO.h>
+#include <data_access/CardDAO.h>
+#include <data_access/DepositDAO.h>
+#include <data_access/CreditDAO.h>
 #include "CustomerDataManager.h"
 
 const Customer& CustomerDataManager::customer() const {
@@ -32,11 +36,13 @@ bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {
 	return _customer->creditLimit() <= amount * interest / 12;
 }
 
-// TODO return amount
-uint CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
-	// todo: take next free id from db and save data to db
-	_customer->addCredit(new Credit(std::move(name), debt, interest, debt * interest / 12));
-	return -1;
+Money CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
+	Credit* credit = new Credit(std::move(name), debt, interest, debt * interest / 12);
+	_customer->addCredit(credit);
+	CreditDAO::getInstance().saveCredit(*credit);
+	CustomerDAO::getInstance().addCredit(_customer->_taxNumber, credit->id());
+	_bankCard->replenishFree(debt);
+	return _bankCard->balance();
 }
 
 bool CustomerDataManager::repayCredit(Money amount, uint creditId) {
@@ -49,7 +55,17 @@ bool CustomerDataManager::repayCredit(Money amount, uint creditId) {
 	if (selected == nullptr) throw NoSuchCreditException(_customer->_taxNumber, creditId);
 	if (selected->payment() != amount) throw CreditRepayOverheadException(selected->payment(), amount);
 
-	return selected->debt() == 0;
+	if (selected->debt() > amount) {
+		selected->replenish(amount);
+		return false;
+	} else {
+		Money diff = amount - selected->debt();
+		_customer->removeCredit(selected->id());
+		CreditDAO::getInstance().deleteById(selected->id());
+		CustomerDAO::getInstance().removeCredit(selected->id());
+		_bankCard->replenishFree(diff);
+		return true;
+	}
 }
 
 bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
@@ -59,12 +75,14 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
 	return (totalDepositBalance + potentialBalance) < Deposit::maxDepoSum;
 }
 
-uint CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
-	// todo: same stuff with DB as with credit
+Money CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
 	Deposit* depo = new Deposit(std::move(name), initialBalance, interest,
 								QDate::currentDate(), QDate::currentDate().addMonths(months));
 	_customer->addDeposit(depo);
-	return -1;
+	_bankCard->withdrawFree(initialBalance);
+	DepositDAO::getInstance().saveDeposit(*depo);
+	CustomerDAO::getInstance().removeDeposit(depo->id());
+	return _bankCard->balance();
 }
 
 void CustomerDataManager::replenishDeposit(Money amount, uint depoId) {
@@ -76,6 +94,7 @@ void CustomerDataManager::replenishDeposit(Money amount, uint depoId) {
 		}
 	if (deposit == nullptr) throw NoSuchDepositException(_customer->_taxNumber, depoId);
 	deposit->replenish(amount);
+	DepositDAO::getInstance().updateDeposit(*deposit);
 }
 
 void CustomerDataManager::closeDeposit(uint depoId) {
@@ -88,6 +107,8 @@ void CustomerDataManager::closeDeposit(uint depoId) {
 	if (deposit == nullptr) throw NoSuchDepositException(_customer->_taxNumber, depoId);
 	_bankCard->replenish(deposit->sum());
 	_customer->removeDeposit(depoId);
+	DepositDAO::getInstance().deleteById(depoId);
+	CustomerDAO::getInstance().removeDeposit(depoId);
 }
 
 QString CustomerDataManager::getPin() const {
@@ -95,19 +116,23 @@ QString CustomerDataManager::getPin() const {
 }
 
 QString CustomerDataManager::changePin() {
-	return _bankCard->regeneratePin();
+	_bankCard->regeneratePin();
+	CardDAO::getInstance().updateCard(*_bankCard);
+	return _bankCard->pin();
 }
 
 Card& CustomerDataManager::card() const {
-    return *_bankCard;
+	return *_bankCard;
 }
 
-
-// TODO implement
-Customer* const CustomerDataManager::getCustomerByTaxNumber(const QString&) const {
-    return nullptr;
+Customer* const CustomerDataManager::getCustomerByTaxNumber(const QString& id) const {
+	return CustomerDAO::getInstance().getById(id);
 }
 
 Customer* const CustomerDataManager::getCustomerByCardNumber(const QString& cardNumber) const {
-    return nullptr;
+	return CustomerDAO::getInstance().getCustomerByCardId(cardNumber);
+}
+
+void CustomerDataManager::setCard(Card* card) {
+	_bankCard = card;
 }
