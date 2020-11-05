@@ -7,8 +7,9 @@
 
 #include <QDebug>
 #include <logics/exceptions/CustomerRegistrationException.h>
+#include <logics/utils/general.h>
 
-ushort Registrator::registerCustomer(const CustomerVerificationData& verificationData) const {
+QString Registrator::registerCustomer(const CustomerVerificationData& verificationData) const {
     Customer* const customer = _customerDataManager.getCustomerByTaxNumber(verificationData.getTaxNumber());
     if (customer != nullptr) {
         QList<Card*> cards = customer->cards();
@@ -26,7 +27,7 @@ ushort Registrator::registerCustomer(const CustomerVerificationData& verificatio
             verificationData.getPhoneNumber(),
             verificationData.getIncome());
 
-    ushort pin = generatePin();
+    QString pin = genPin();
     const QString number = generateCardNumber();
 	Card* newCard = new Card(number, verificationData.getCardType(), reinterpret_cast<QString&>(pin));
     newCustomer->addCard(newCard);
@@ -35,13 +36,18 @@ ushort Registrator::registerCustomer(const CustomerVerificationData& verificatio
     return pin;
 }
 
-int Registrator::generatePin() {
-    QRandomGenerator generator;
-    generator.seed(QDateTime::currentSecsSinceEpoch());
-    return generator.bounded(1000, 10000);
+QString Registrator::genPin() {
+    return generatePin();
 }
 
 const QString Registrator::generateCardNumber() {
-    // TODO generate real number
-    return QString("1234");
+    QString cardNumber("4441");
+    
+    QRandomGenerator generator;
+    generator.seed(QDateTime::currentSecsSinceEpoch());
+    
+    for (int i = 0; i < 12; ++i) {
+        cardNumber += QString::number(generator.bounded(10));
+    }
+    return cardNumber;
 }

@@ -2,10 +2,10 @@
 
 #include <QApplication>
 #include <QtWidgets/QStyleFactory>
-#include<QDebug>
+#include <QDebug>
 #include <QStyle>
 #include <logics/auth/Registrator.h>
-#include "../ATM/data_access/CreditDAO.h"
+#include <data_access/CreditDAO.h>
 #include <QtSql>
 #include <data_access/DepositDAO.h>
 #include <data_access/CardDAO.h>
@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 	w.show();
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("../ATM/db_file/bank_database.sqlite");
+	db.setDatabaseName("../MOOP_ATM/db_file/bank_database.sqlite");
 	if (!db.open()) {
 		qDebug() << db.lastError().text();
 		return -1;

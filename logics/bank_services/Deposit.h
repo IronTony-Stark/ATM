@@ -10,7 +10,7 @@
 #include <logics/utils/Money.h>
 #include <ostream>
 
-class Deposit {
+class   Deposit {
 public:
 	static const Money maxDepoSum;
 
