@@ -8,6 +8,8 @@
 #include <data_access/CardDAO.h>
 #include "logics/bank_fees/BankFeeProvider.h"
 #include "logics/utils/general.h"
+#include "Card.h"
+
 
 Card::Card(QString id, ABankFee::CardType feeType, QString pin, Money balance) :
 		_id(std::move(id)), _cardType(feeType), _bankFee(BankFeeProvider::getInstance().getBankFee(feeType)),
@@ -73,5 +75,10 @@ void Card::withdrawFree(Money m) {
 
 void Card::replenishFree(Money m) {
 	_balance += m;
+}
+
+bool Card::canWithdraw(Money amount) const {
+	Money withdrawSum = amount * _bankFee.withdrawFee();
+	return withdrawSum <= _balance;
 }
 

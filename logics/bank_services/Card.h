@@ -27,6 +27,8 @@ public:
 
 	[[nodiscard]] Money balance() const;
 
+	bool canWithdraw(Money amount) const;
+
 	/**
 	 *if balance is sufficient then subtracts else throws exception
 	 * @return <remainder, actual_withdrawal_sum>
