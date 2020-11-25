@@ -110,6 +110,20 @@ Customer* CustomerDAO::getCustomerByCardId(const QString& id) const {
 	return getById(selectCustomerIdQuery.value(0).toString());
 }
 
+Customer* CustomerDAO::getCustomerByCredit(uint creditId) const {
+	QSqlQuery selectCustomerIdQuery(
+			QString("SELECT customer_id FROM customer_credit WHERE customer_credit = '%1';").arg(creditId));
+	if (!selectCustomerIdQuery.next()) return nullptr;
+	return getById(selectCustomerIdQuery.value(0).toString());
+}
+
+Customer* CustomerDAO::getCustomerByDepositId(uint depoId) const {
+	QSqlQuery selectCustomerIdQuery(
+			QString("SELECT customer_id FROM customer_deposit WHERE deposit_id = '%1';").arg(depoId));
+	if (!selectCustomerIdQuery.next()) return nullptr;
+	return getById(selectCustomerIdQuery.value(0).toString());
+}
+
 bool CustomerDAO::updateCustomerCore(const Customer& customer) const {
 	QSqlQuery updateQuery;
 	updateQuery.prepare(QString("UPDATE customer SET name = :name, phoneNum = :phoneNum, revenue = :revenue "

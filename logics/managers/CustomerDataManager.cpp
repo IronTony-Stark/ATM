@@ -13,6 +13,7 @@
 #include <data_access/CardDAO.h>
 #include <data_access/DepositDAO.h>
 #include <data_access/CreditDAO.h>
+#include <logics/exceptions/NoSuchCardException.h>
 #include "CustomerDataManager.h"
 
 const Customer& CustomerDataManager::customer() const {
@@ -81,7 +82,7 @@ Money CustomerDataManager::openDeposit(Money initialBalance, QString name, doubl
 	_customer->addDeposit(depo);
 	_bankCard->withdrawFree(initialBalance);
 	DepositDAO::getInstance().saveDeposit(*depo);
-	CustomerDAO::getInstance().removeDeposit(depo->id());
+	CustomerDAO::getInstance().addDeposit(_customer->_taxNumber, depo->id());
 	return _bankCard->balance();
 }
 
@@ -133,6 +134,30 @@ Customer* const CustomerDataManager::getCustomerByCardNumber(const QString& card
 	return CustomerDAO::getInstance().getCustomerByCardId(cardNumber);
 }
 
+Customer* CustomerDataManager::getCustomerByCredit(uint creditId) const {
+	return CustomerDAO::getInstance().getCustomerByCredit(creditId);
+}
+
+Customer* CustomerDataManager::getCustomerByDepositId(uint depoId) const {
+	return CustomerDAO::getInstance().getCustomerByDepositId(depoId);
+}
+
 void CustomerDataManager::setCard(Card* card) {
 	_bankCard = card;
 }
+
+void CustomerDataManager::replenishByCardId(QString& cardId, Money amount) {
+	Card* card = CardDAO::getInstance().getById(cardId);
+	if (card == nullptr) throw NoSuchCardException(QString::number(-1), cardId);
+	card->replenish(amount);
+	CardDAO::getInstance().updateCard(*card);
+}
+
+void CustomerDataManager::withdrawByCardId(QString& cardId, Money amount) {
+	Card* card = CardDAO::getInstance().getById(cardId);
+	if (card == nullptr) throw NoSuchCardException(QString::number(-1), cardId);
+	if (!card->canWithdraw(amount)) throw NotEnoughMoneyException(card->balance(), amount);
+	card->withdraw(amount);
+	CardDAO::getInstance().updateCard(*card);
+}
+

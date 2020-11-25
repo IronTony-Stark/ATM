@@ -18,13 +18,21 @@ public:
 
 	Customer* const getCustomerByTaxNumber(const QString&) const;
 
-	Customer* const getCustomerByCardNumber(const QString& cardNumber) const;
+	Customer* const getCustomerByCardNumber(const QString&) const;
+
+	Customer* getCustomerByCredit(uint) const;
+
+	Customer* getCustomerByDepositId(uint) const;
 
 	Money balance() const;
 
 	void replenish(Money amount);
 
+	static void replenishByCardId(QString& cardId, Money amount);
+
 	void withdraw(Money amount);
+
+	static void withdrawByCardId(QString& cardId, Money amount);
 
 	bool canAffordCredit(Money amount, double interest) const;
 

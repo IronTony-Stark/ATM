@@ -20,6 +20,10 @@ public:
 
 	Customer* getCustomerByCardId(const QString& id) const;
 
+	Customer* getCustomerByCredit(uint creditId) const;
+
+	Customer* getCustomerByDepositId(uint depoId) const;
+
 	bool updateCustomerCore(const Customer&) const;
 
 	void deleteById(QString id) const;
