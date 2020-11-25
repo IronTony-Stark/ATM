@@ -10,7 +10,7 @@
 #include "OperationManager.h"
 
 // todo withdraw, transfer, register, takeCredit, repayCredit, replenishDeposit, startDeposit, setPayment can throw std::exception
-bool OperationManager::authorizeCustomer(const QString& cardNumber, unsigned short pinCode) {
+bool OperationManager::authorizeCustomer(const QString& cardNumber, const QString& pinCode) {
     Customer* const customer = _customerDataManager.getCustomerByCardNumber(cardNumber);
     if (customer == nullptr)
         return false;
@@ -63,6 +63,7 @@ void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
     transfer(_customerDataManager.card().number(), cardNumberTo, amount);
 }
 
+// TODO get all credits for the authorized user, not for all users
 QList<Credit*> OperationManager::getAllCredits() {
     return _creditDao.getAll();
 }

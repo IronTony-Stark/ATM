@@ -56,18 +56,26 @@ void StartWindow::onBtn1Clicked() {
 void StartWindow::onBtnCardClicked() {
     if (state() == START) {
         _ui->stackedWidget->setCurrentIndex(INSERT_CARD);
+        _pinAttempts = 3;
+        _ui->editCardNumber->setText("");
+        _ui->editPin->setText("");
+        _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
     }
 }
 
 void StartWindow::onBtnEnterClicked() {
     if (state() == INSERT_CARD) {
         QString number = _ui->editCardNumber->text();
-        ushort pin = _ui->editPin->text().toUShort();
+        QString pin = _ui->editPin->text();
+
         if (_operationManager.authorizeCustomer(number, pin)) {
             _mainMenuWindow.setLogicActive();
             _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
         } else if (--_pinAttempts == 0) {
+            // TODO navigate to start if card is blocked
             _operationManager.blockCustomer(number);
+        } else {
+            _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
         }
     }
 }

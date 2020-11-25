@@ -39,7 +39,7 @@ private:
 public:
     OperationManager(CustomerDataManager manager);
 
-	bool authorizeCustomer(const QString&, unsigned short);
+	bool authorizeCustomer(const QString&, const QString&);
 
 	void blockCustomer(const QString&);
 
