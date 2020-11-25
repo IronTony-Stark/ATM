@@ -20,22 +20,24 @@
 #include <data_access/PaymentDAO.h>
 #include <views/clock/widgets/Clock.h>
 
+class TimeDrivenEventsHandler;
+
 class OperationManager {
 private:
     CustomerDataManager _customerDataManager;
-    const TimeDrivenEventsHandler _timeDrivenEventsHandler;
     const Authorizer _authorizer;
     const Registrator _registrator;
 
     const CreditDAO _creditDao;
     const DepositDAO _depositDao;
     const PaymentDAO _paymentDao;
-    Clock* _clock;
+
+    Clock* _clock = nullptr;
+    TimeDrivenEventsHandler* _timeDrivenEventsHandler = nullptr;
 
 public:
     OperationManager(
             CustomerDataManager manager,
-            TimeDrivenEventsHandler handler,
             CustomerDAO customerDao,
             CreditDAO creditDao,
             DepositDAO depositDao,
@@ -46,12 +48,15 @@ public:
 	void blockCustomer(const QString&);
 
 	// pinCode
-	ushort registerCustomer(const CustomerVerificationData&);
+	QString registerCustomer(const CustomerVerificationData&);
 
+	static void replenish(const QString& cardNumber, const Money&);
 	void replenish(uint);
 
+    static void withdraw(const QString& cardNumber, const Money&);
 	void withdraw(unsigned int);
 
+    static void transfer(const QString&, const QString&, const Money&);
 	void transfer(const QString&, uint);
 
 	QList<Credit*> getAllCredits();
@@ -70,7 +75,7 @@ public:
 
 	int endDeposit() { return -1; };
 
-	QList<RegularPayment* const> getAllPayments();
+	QList<RegularPayment*> getAllPayments();
     void setPayment(const QString&, uint, const QString&, const QDateTime&);
     void cancelPayment(uint id);
 

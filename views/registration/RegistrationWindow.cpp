@@ -41,9 +41,10 @@ void RegistrationWindow::onBtnEnterClicked() {
         // TODO CardType : ABankFee::STANDARD
 //        QString cardType = _ui->comboCardType->currentText();
         try {
-            ushort pin = _operationManager.registerCustomer(CustomerVerificationData(name, taxNumber, 0, phone, ABankFee::STANDARD));
-            _ui->labelPin->setText(QString::number(pin));
+            QString pin = _operationManager.registerCustomer(CustomerVerificationData(name, taxNumber, 0, phone, ABankFee::STANDARD));
+            _ui->labelPin->setText(pin);
             _ui->stackedWidget->setCurrentIndex(CARD);
+
         } catch (const std::exception& e) {
             QMessageBox::critical(this, tr("ATM"), tr(e.what()));
         }

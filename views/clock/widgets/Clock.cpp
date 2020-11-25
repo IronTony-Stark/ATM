@@ -28,6 +28,7 @@ void Clock::showDateTime() {
 
 void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
     SetDialog dialog;
+    // TODO set time to now
     dialog.setModal(true);
     int result = dialog.exec();
     delete _custom;
@@ -41,6 +42,7 @@ void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
 }
 
 void Clock::displayTime(const QDateTime& datetime) {
+    notifyListeners(datetime);
     QString text = datetime.toString("hh:mm:ss  dd-MM-yy");
     if ((datetime.time().second() % 2) == 0) {
         text[2] = ' ';
@@ -58,7 +60,7 @@ void Clock::unsubscribe(ClockListener* clockListener) {
 }
 
 void Clock::notifyListeners(const QDateTime& newTime) {
-    for (auto& clockListener : _clockListeners) {
+    for (ClockListener* clockListener : _clockListeners) {
         clockListener->onTimeChanged(newTime);
     }
 }

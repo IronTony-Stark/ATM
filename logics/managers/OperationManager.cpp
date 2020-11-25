@@ -6,6 +6,7 @@
 #include <logics/exceptions/NotEnoughMoneyException.h>
 #include <logics/bank_fees/CreditConditions.h>
 #include <logics/exceptions/DepositMaxSumReachedException.h>
+#include <data_access/CardDAO.h>
 #include "OperationManager.h"
 
 // todo withdraw, transfer, register, takeCredit, repayCredit, replenishDeposit, startDeposit, setPayment can throw std::exception
@@ -29,7 +30,7 @@ void OperationManager::blockCustomer(const QString& cardNumber) {
     throw std::exception();
 }
 
-ushort OperationManager::registerCustomer(const CustomerVerificationData& verificationData) {
+QString OperationManager::registerCustomer(const CustomerVerificationData& verificationData) {
     return _registrator.registerCustomer(verificationData);
 }
 
@@ -42,31 +43,30 @@ void OperationManager::withdraw(unsigned int howMuch) {
     _customerDataManager.withdraw(Money(howMuch));
 }
 
-void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
-    const Money money = Money(amount);
-    if (_customerDataManager.balance() < money + _customerDataManager.card()._bankFee.transferFee())
-        throw NotEnoughMoneyException(_customerDataManager.balance(), money);
-
-    Customer* const customer = _customerDataManager.getCustomerByCardNumber(cardNumberTo);
+void OperationManager::transfer(const QString& cardNumberFrom, const QString& cardNumberTo, const Money& amount) {
+    Customer* const customer = CustomerDAO::getInstance().getCustomerByCardId(cardNumberTo);
     if (customer == nullptr)
         throw std::exception();
 //        throw NoSuchCardException(_customerDataManager.customer().);
 
-    _customerDataManager.card().transfer(cardNumberTo, amount);
-
-//    const QList<Card*>& cards = customer->cards();
-//    for (uint i = 0; i < cards.count(); ++i) {
-//        if (cards[i]->number() == cardNumberTo){
-//            _customerDataManager.withdraw(money);
-//            cards[i]->transfer(money);
-//        }
-//    }
+    Card* cardFrom = CardDAO::getInstance().getById(cardNumberFrom);
+    const std::pair<Money, Money>& pair = cardFrom->transfer(cardNumberTo, amount);
+    cardFrom->withdrawFree(pair.first); // Money with fee
 }
 
+
+//void OperationManager::transfer(const QString& cardNumberFrom, const QString& cardNumberTo, uint amount) {
+//    transfer(cardNumberFrom, cardNumberTo, Money(amount));
+//};
+
+void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
+    transfer(_customerDataManager.card().number(), cardNumberTo, amount);
+}
 
 QList<Credit*> OperationManager::getAllCredits() {
-	return _creditDao.getAll();
+    return _creditDao.getAll();
 }
+
 
 void OperationManager::takeCredit(const QString& name,
                                   uint amount,
@@ -92,9 +92,8 @@ void OperationManager::repayCredit(uint id) {
         throw NotEnoughMoneyException(_customerDataManager.balance(), pCredit->payment());
 }
 
-
 QList<Deposit*> OperationManager::getAllDeposits() {
-	return _depositDao.getAll();
+    return _depositDao.getAll();
 }
 
 void OperationManager::startDeposit(
@@ -105,6 +104,7 @@ void OperationManager::startDeposit(
     } else
         throw DepositMaxSumReachedException("You have reached max sum on deposits.");
 }
+
 
 void OperationManager::cancelDeposit(uint id) {
     Deposit* pDeposit = _depositDao.getById(id);
@@ -120,11 +120,8 @@ void OperationManager::replenishDeposit(uint id, uint amount) {
     throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
 }
 
-
-QList<RegularPayment* const> OperationManager::getAllPayments() {
-//    return _paymentDao.getAll();
-// TODO after DAO implemented
-    return QList<RegularPayment* const>();
+QList<RegularPayment*> OperationManager::getAllPayments() {
+    return _paymentDao.getAll();
 }
 
 void OperationManager::setPayment(const QString& name, uint amount, const QString& receiver, const QDateTime& when) {
@@ -141,21 +138,30 @@ void OperationManager::cancelPayment(uint id) {
 }
 
 OperationManager::OperationManager(
-		CustomerDataManager manager,
-		TimeDrivenEventsHandler handler,
-		const CustomerDAO customerDao,
-		const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao) :
-		_customerDataManager(manager), _timeDrivenEventsHandler(handler),
-		_creditDao(creditDao), _depositDao(depositDao), _paymentDao(paymentDao),
-		_authorizer(Authorizer{_customerDataManager}),
-		_registrator(Registrator{_customerDataManager, customerDao}) {
+        CustomerDataManager manager,
+        const CustomerDAO customerDao,
+        const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao) :
+        _customerDataManager(manager),
+        _creditDao(creditDao), _depositDao(depositDao), _paymentDao(paymentDao),
+        _authorizer(Authorizer{_customerDataManager}),
+        _registrator(Registrator{_customerDataManager, customerDao}),
+        _timeDrivenEventsHandler(nullptr),
+        _clock(nullptr){
+    _timeDrivenEventsHandler = new TimeDrivenEventsHandler(this);
 }
 
 void OperationManager::setClock(Clock* clock) {
-	_clock = clock;
+    _clock = clock;
+    _clock->subscribe(_timeDrivenEventsHandler);
 }
 
+void OperationManager::replenish(const QString& cardNumber, const Money&) {
+    // TODO replenish by card
+}
 
+void OperationManager::withdraw(const QString& cardNumber, const Money&) {
+    // TODO withdraw by card
+}
 
 
 

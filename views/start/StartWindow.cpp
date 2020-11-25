@@ -16,7 +16,6 @@ enum Windows {
 StartWindow::StartWindow(QWidget* parent) :
 		QWidget(parent), _ui(new Ui::StartWindow),
 		_operationManager(CustomerDataManager(),
-						  TimeDrivenEventsHandler(),
 						  CustomerDAO::getInstance(),
 						  CreditDAO::getInstance(),
 						  DepositDAO::getInstance(),
@@ -87,5 +86,5 @@ int StartWindow::state() {
 }
 
 void StartWindow::setClock(Clock* clock) {
-    _operationManager.setClock(clock);
+    _operationManager.setClock(clock); // TODO remove
 }

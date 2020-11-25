@@ -15,14 +15,14 @@ private:
     const CustomerDataManager& _customerDataManager;
     const CustomerDAO& _customerDao;
 
-    static int generatePin();
+    static QString genPin();
     static const QString generateCardNumber();
 
 public:
     explicit Registrator(const CustomerDataManager& customerDataManager, const CustomerDAO& customerDao) :
             _customerDataManager(customerDataManager), _customerDao(customerDao) {}
 
-    ushort registerCustomer(const CustomerVerificationData& verificationData) const;
+    QString registerCustomer(const CustomerVerificationData& verificationData) const;
 };
 
 
