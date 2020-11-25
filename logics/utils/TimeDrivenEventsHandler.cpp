@@ -30,7 +30,8 @@ void TimeDrivenEventsHandler::onTimeChanged(const QDateTime& dateTime) {
 }
 
 void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
-    DepositDAO depositDao = DepositDAO::getInstance();
+    DepositDAO& depositDao = DepositDAO::getInstance();
+//    CustomerDAO& customerDao = CustomerDAO::getInstance();
     const QList<Deposit*>& deposits = depositDao.getAll();
     for (Deposit* deposit: deposits) {
         if (deposit->endDate() <= dateTime.date()) {
