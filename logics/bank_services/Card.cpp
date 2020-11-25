@@ -49,7 +49,7 @@ std::pair<Money, Money> Card::transfer(const QString& recipient, Money amount) {
 	recEntity->replenishFree(amount);
 	CardDAO::getInstance().updateCard(*recEntity);
 	delete recEntity;
-	return std::pair(transferSum, amount);
+    return std::pair<Money, Money>(transferSum, amount);
 }
 
 const QString& Card::pin() const {
