@@ -31,11 +31,12 @@ void TimeDrivenEventsHandler::onTimeChanged(const QDateTime& dateTime) {
 
 void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
     DepositDAO& depositDao = DepositDAO::getInstance();
-//    CustomerDAO& customerDao = CustomerDAO::getInstance();
     const QList<Deposit*>& deposits = depositDao.getAll();
     for (Deposit* deposit: deposits) {
         if (deposit->endDate() <= dateTime.date()) {
-            // TODO increase deposit sum
+            double interestPerSecond = deposit->interest() / 365 / 24 / 3600;
+            deposit->replenish(deposit->sum()*interestPerSecond);
+            depositDao.updateDeposit(*deposit);
         }
     }
 }
