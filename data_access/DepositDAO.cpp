@@ -64,8 +64,8 @@ Deposit* DepositDAO::buildDeposit(const QSqlQuery& queryRes) const {
 	return new Deposit(queryRes.value(1).toString(),
 					   Money(queryRes.value(2).toDouble()),
 					   queryRes.value(3).toDouble(),
-					   QDate::fromString(queryRes.value(4).toString()),
-					   QDate::fromString(queryRes.value(5).toString()),
+					   QDate::fromString(queryRes.value(4).toString(), "yyyy-MM-dd"),
+					   QDate::fromString(queryRes.value(5).toString(), "yyyy-MM-dd"),
 					   queryRes.value(0).toUInt());
 }
 

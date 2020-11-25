@@ -141,19 +141,21 @@ void OperationManager::cancelPayment(uint id) {
 }
 
 OperationManager::OperationManager(
-        CustomerDataManager manager,
-        TimeDrivenEventsHandler handler,
-        const CustomerDAO customerDao,
-        const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao) :
-        _customerDataManager(manager), _timeDrivenEventsHandler(handler),
-        _creditDao(creditDao), _depositDao(depositDao), _paymentDao(paymentDao),
-        _authorizer(Authorizer{_customerDataManager}),
-        _registrator(Registrator{_customerDataManager, customerDao}) {
+		CustomerDataManager manager,
+		TimeDrivenEventsHandler handler,
+		const CustomerDAO customerDao,
+		const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao) :
+		_customerDataManager(manager), _timeDrivenEventsHandler(handler),
+		_creditDao(creditDao), _depositDao(depositDao), _paymentDao(paymentDao),
+		_authorizer(Authorizer{_customerDataManager}),
+		_registrator(Registrator{_customerDataManager, customerDao}) {
 }
 
 void OperationManager::setClock(Clock* clock) {
-    _clock = clock;
-};
+	_clock = clock;
+}
+
+
 
 
 

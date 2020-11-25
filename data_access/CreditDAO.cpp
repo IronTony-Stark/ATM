@@ -68,7 +68,7 @@ Credit* CreditDAO::buildCredit(const QSqlQuery& query) const {
 					  query.value(3).toDouble(),
 					  Money(query.value(4).toDouble()),
 					  Money(query.value(5).toDouble()),
-					  QDate::fromString(query.value(6).toString()));;
+					  QDate::fromString(query.value(6).toString(), "yyyy-MM-dd"));
 }
 
 boolean CreditDAO::updateCredit(const Credit& credit) const {
