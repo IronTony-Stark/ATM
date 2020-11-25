@@ -14,15 +14,15 @@ enum Windows {
 };
 
 StartWindow::StartWindow(QWidget* parent) :
-		QWidget(parent), _ui(new Ui::StartWindow),
-		_operationManager(CustomerDataManager(),
-						  TimeDrivenEventsHandler(),
-						  CustomerDAO::getInstance(),
-						  CreditDAO::getInstance(),
-						  DepositDAO::getInstance(),
-						  PaymentDAO::getInstance()),
-		_registrationWindow(_operationManager),
-		_mainMenuWindow(_operationManager) {
+        QWidget(parent), _ui(new Ui::StartWindow),
+        _operationManager(CustomerDataManager(),
+                          TimeDrivenEventsHandler(),
+                          CustomerDAO::getInstance(),
+                          CreditDAO::getInstance(),
+                          DepositDAO::getInstance(),
+                          PaymentDAO::getInstance()),
+        _registrationWindow(_operationManager),
+        _mainMenuWindow(_operationManager) {
     _ui->setupUi(this);
 
     _ui->stackedWidget->addWidget(&_registrationWindow);
@@ -61,18 +61,26 @@ void StartWindow::onBtn1Clicked() {
 void StartWindow::onBtnCardClicked() {
     if (state() == START) {
         _ui->stackedWidget->setCurrentIndex(INSERT_CARD);
+        _pinAttempts = 3;
+        _ui->editCardNumber->setText("");
+        _ui->editPin->setText("");
+        _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
     }
 }
 
 void StartWindow::onBtnEnterClicked() {
     if (state() == INSERT_CARD) {
         QString number = _ui->editCardNumber->text();
-        ushort pin = _ui->editPin->text().toUShort();
+        QString pin = _ui->editPin->text();
+
         if (_operationManager.authorizeCustomer(number, pin)) {
             _mainMenuWindow.setLogicActive();
             _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
         } else if (--_pinAttempts == 0) {
+            // TODO navigate to start of card is blocked
             _operationManager.blockCustomer(number);
+        } else {
+            _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
         }
     }
 }

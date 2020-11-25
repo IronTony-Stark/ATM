@@ -92,9 +92,8 @@ private:
     OperationManager& _operationManager;
     MessageDisplay _messageDisplay;
 
-    Credit* _credits = nullptr;
-    int _creditsLen = 0;
-    int _selectedCredit = -1;
+    QList<Credit*> _credits;
+    Credit* _selectedCredit = nullptr;
 
     CreditPageLogic _creditPageLogic;
     TakeCreditPageLogic _takeCreditPageLogic;
@@ -103,7 +102,6 @@ private:
 
     void setupCommands();
     void setupListCredits();
-    void setupCreditItem(Credit&);
 };
 
 #endif // ATM_CREDITWINDOW_H

@@ -19,6 +19,12 @@ public:
     ~CreditWidget() override;
 
     std::tuple<QString, uint, uint, uint, QDateTime, QDateTime> data();
+    void setup(const Credit& credit);
+    void setReadOnly(bool value);
+    void clear();
+
+private slots:
+    void onPeriodChanged();
 
 private:
     Ui::CreditWidget* _ui;
