@@ -19,10 +19,12 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, unsigned sho
         if (cards[i]->number() == cardNumber) {
             if (cards[i]->pin() == pinCode) {
                 _authorizer.authorizeCustomer(customer, cards[i]);
+                delete customer;
                 return true;
             }
         }
     }
+    delete customer;
     return false;
 }
 
@@ -47,19 +49,15 @@ void OperationManager::transfer(const QString& cardNumberFrom, const QString& ca
     Customer* const customer = CustomerDAO::getInstance().getCustomerByCardId(cardNumberTo);
     if (customer == nullptr)
         throw std::runtime_error("card number'" + cardNumberFrom.toStdString() + "' not found in database.");
-//        throw NoSuchCardException(_customerDataManager.customer().);
 
     Card* cardFrom = CardDAO::getInstance().getById(cardNumberFrom);
     const std::pair<Money, Money>& pair = cardFrom->transfer(cardNumberTo, amount);
     cardFrom->withdrawFree(pair.second); // Money after subtracting fee
     CardDAO::getInstance().updateCard(*cardFrom);
     delete cardFrom;
+    delete customer;
 }
 
-
-//void OperationManager::transfer(const QString& cardNumberFrom, const QString& cardNumberTo, uint amount) {
-//    transfer(cardNumberFrom, cardNumberTo, Money(amount));
-//};
 
 void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
     transfer(_customerDataManager.card().number(), cardNumberTo, amount);
@@ -86,12 +84,16 @@ void OperationManager::takeCredit(const QString& name,
 
 void OperationManager::repayCredit(uint id) {
     Credit* pCredit = _creditDao.getById(id);
+    const Money& requested = pCredit->payment();
     // TODO is this right?
-    if (_customerDataManager.balance() >= pCredit->payment()) {
-        pCredit->replenish(pCredit->payment());
-        _customerDataManager.withdraw(pCredit->payment());
-    } else
-        throw NotEnoughMoneyException(_customerDataManager.balance(), pCredit->payment());
+    if (_customerDataManager.balance() >= requested) {
+        pCredit->replenish(requested);
+        _customerDataManager.withdraw(requested);
+        delete pCredit;
+    } else {
+        delete pCredit;
+        throw NotEnoughMoneyException(_customerDataManager.balance(), requested);
+    }
 }
 
 QList<Deposit*> OperationManager::getAllDeposits() {
@@ -111,6 +113,7 @@ void OperationManager::startDeposit(
 void OperationManager::cancelDeposit(uint id) {
     Deposit* pDeposit = _depositDao.getById(id);
 //    todo: pDeposit->cancel();
+    delete pDeposit;
 }
 
 void OperationManager::replenishDeposit(uint id, uint amount) {
@@ -118,8 +121,11 @@ void OperationManager::replenishDeposit(uint id, uint amount) {
     if (_customerDataManager.balance() >= amount) {
         pDeposit->replenish(amount);
         _customerDataManager.withdraw(amount);
+        delete pDeposit;
+    } else {
+        delete pDeposit;
+        throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
     }
-    throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
 }
 
 QList<RegularPayment*> OperationManager::getAllPayments() {
@@ -133,22 +139,24 @@ void OperationManager::setPayment(const QString& name, uint amount, const QStrin
     RegularPayment* const pPayment = new RegularPayment(name, amount, _customerDataManager.card().number(), receiver,
                                                         when.date().day());
     _paymentDao.save(*pPayment);
+    delete pPayment;
 }
 
 void OperationManager::cancelPayment(uint id) {
-
+    _paymentDao.removePayment(id);
 }
 
-OperationManager::OperationManager(
-        CustomerDataManager manager,
-        const CustomerDAO customerDao,
-        const CreditDAO creditDao, const DepositDAO depositDao, const PaymentDAO paymentDao) :
+OperationManager::OperationManager(CustomerDataManager manager) :
         _customerDataManager(manager),
-        _creditDao(creditDao), _depositDao(depositDao), _paymentDao(paymentDao),
+
+        _creditDao(CreditDAO::getInstance()), _depositDao(DepositDAO::getInstance()),
+        _paymentDao(PaymentDAO::getInstance()), _customerDao(CustomerDAO::getInstance()),
+
         _authorizer(Authorizer{_customerDataManager}),
-        _registrator(Registrator{_customerDataManager, customerDao}),
+        _registrator(Registrator{_customerDataManager, _customerDao}),
+
         _timeDrivenEventsHandler(nullptr),
-        _clock(nullptr){
+        _clock(nullptr) {
     _timeDrivenEventsHandler = new TimeDrivenEventsHandler(this);
 }
 
@@ -157,12 +165,14 @@ void OperationManager::setClock(Clock* clock) {
     _clock->subscribe(_timeDrivenEventsHandler);
 }
 
-void OperationManager::replenish(const QString& cardNumber, const Money&) {
-    // TODO replenish by card
-}
+int OperationManager::endDeposit(const uint depositId) {
+    Deposit* pDeposit = _depositDao.getById(depositId);
+    Customer* pCustomer = _customerDataManager.getCustomerByDepositId(depositId);
 
-void OperationManager::withdraw(const QString& cardNumber, const Money&) {
-    // TODO withdraw by card
+    // TODO replenish to card
+
+    delete pDeposit;
+    delete pCustomer;
 }
 
 

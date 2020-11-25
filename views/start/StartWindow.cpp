@@ -14,14 +14,10 @@ enum Windows {
 };
 
 StartWindow::StartWindow(QWidget* parent) :
-		QWidget(parent), _ui(new Ui::StartWindow),
-		_operationManager(CustomerDataManager(),
-						  CustomerDAO::getInstance(),
-						  CreditDAO::getInstance(),
-						  DepositDAO::getInstance(),
-						  PaymentDAO::getInstance()),
-		_registrationWindow(_operationManager),
-		_mainMenuWindow(_operationManager) {
+        QWidget(parent), _ui(new Ui::StartWindow),
+        _operationManager(CustomerDataManager()),
+        _registrationWindow(_operationManager),
+        _mainMenuWindow(_operationManager) {
     _ui->setupUi(this);
 
     _ui->stackedWidget->addWidget(&_registrationWindow);
