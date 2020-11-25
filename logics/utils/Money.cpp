@@ -2,6 +2,7 @@
 // Created by Andrew on 02-Oct-20.
 //
 
+#include <cmath>
 #include "Money.h"
 #include "general.h"
 
@@ -12,7 +13,7 @@ Money::Money(uint m) : _intPart(m), _decPart(0) {
 Money::Money(int m) : _intPart(m), _decPart(0) {
 }
 
-Money::Money(double m) : _intPart(static_cast<int>(m)), _decPart(static_cast<int>(sgn(m) * abs(m * 100 - m))) {
+Money::Money(double m) : _intPart(static_cast<int>(m)), _decPart(static_cast<int>(sgn(m) * abs((m - _intPart) * 100))) {
 }
 
 Money::Money(int intPart, int decPart) : _intPart(intPart), _decPart(decPart) {

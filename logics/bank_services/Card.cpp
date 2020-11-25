@@ -24,7 +24,7 @@ Money Card::balance() const {
 }
 
 std::pair<Money, Money> Card::withdraw(Money amount) {
-    Money withdrawSum = amount * _bankFee.withdrawFee();
+    Money withdrawSum = amount * (1 + _bankFee.withdrawFee());
     if (withdrawSum > _balance) throw NotEnoughMoneyException(_balance, withdrawSum);
 	_balance -= withdrawSum;
 	return {_balance, withdrawSum};

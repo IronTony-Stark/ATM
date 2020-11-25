@@ -9,8 +9,9 @@
 
 const Money Deposit::maxDepoSum = 50'000'000;
 
-Deposit::Deposit(QString name, Money initialBalance, double interest, QDate endDate,
-				 QDate startDate, uint id) : _name(std::move(name)), _sum(initialBalance), _interest(interest),
+Deposit::Deposit(QString ownerCard, QString name, Money initialBalance, double interest, QDate endDate,
+				 QDate startDate, uint id) : _ownerCard(std::move(ownerCard)), _name(std::move(name)),
+											 _sum(initialBalance), _interest(interest),
 											 _startDate(startDate), _endDate(endDate), _id(id) {}
 
 Deposit::Deposit(const Deposit& d) : _id(d._id), _name(d._name), _sum(d.sum()), _interest(d.interest()),
@@ -51,6 +52,10 @@ const QString& Deposit::name() const {
 void Deposit::setName(QString newName) {
 	if (newName.isEmpty()) throw std::invalid_argument("new name is empty");
 	_name = std::move(newName);
+}
+
+const QString& Deposit::ownerCard() const {
+	return _ownerCard;
 }
 
 std::ostream& operator<<(std::ostream& os, const Deposit& deposit) {

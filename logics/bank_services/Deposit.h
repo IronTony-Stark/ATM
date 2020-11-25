@@ -10,16 +10,18 @@
 #include <logics/utils/Money.h>
 #include <ostream>
 
-class   Deposit {
+class Deposit {
 public:
 	static const Money maxDepoSum;
 
-	Deposit(QString name, Money initialBalance, double interest, QDate endDate,
+	Deposit(QString ownerCard, QString name, Money initialBalance, double interest, QDate endDate,
 			QDate startDate = QDate::currentDate(), uint id = -1);
 
 	Deposit(const Deposit&);
 
 	[[nodiscard]] uint id() const;
+
+	const QString& ownerCard() const;
 
 	void replenish(Money amount);
 
@@ -43,6 +45,7 @@ private:
 	friend class DepositDAO;
 
 	uint _id;
+	const QString _ownerCard;
 	QString _name;
 	Money _sum;
 	double _interest;

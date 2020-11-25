@@ -10,14 +10,14 @@
 #include <ostream>
 
 struct Money {
-	uint _intPart;
-	uint _decPart;
+	long int _intPart;
+	long int _decPart;
 
 	[[nodiscard]] int sign() const;
 
 	Money(uint);
 
-    Money(int);
+	Money(int);
 
 	Money(double);
 

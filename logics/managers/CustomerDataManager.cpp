@@ -77,7 +77,7 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
 }
 
 Money CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
-	Deposit* depo = new Deposit(std::move(name), initialBalance, interest,
+	Deposit* depo = new Deposit(_bankCard->id(), std::move(name), initialBalance, interest,
 								QDate::currentDate(), QDate::currentDate().addMonths(months));
 	_customer->addDeposit(depo);
 	_bankCard->withdrawFree(initialBalance);

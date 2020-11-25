@@ -14,16 +14,16 @@
 #include <logics/bank_services/RegularPayment.h>
 
 int main(int argc, char* argv[]) {
-    QApplication a(argc, argv);
-    QApplication::setStyle(QStyleFactory::create("Fusion"));
-    qDebug() << QApplication::style()->objectName();
-    MainWindow w;
-    w.show();
+	QApplication a(argc, argv);
+	QApplication::setStyle(QStyleFactory::create("Fusion"));
+	qDebug() << QApplication::style()->objectName();
+	MainWindow w;
+	w.show();
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("../MOOP_ATM/db_file/bank_database.sqlite");
-    if (!db.open()) {
-        qDebug() << db.lastError().text();
+	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+	db.setDatabaseName("../ATM/db_file/bank_database.sqlite");
+	if (!db.open()) {
+		qDebug() << db.lastError().text();
 		return -1;
 	} else {
 		// trigger initializations after the db connection is established
@@ -34,10 +34,21 @@ int main(int argc, char* argv[]) {
 		PaymentDAO::getInstance();
 	}
 
-	Credit* c = CreditDAO::getInstance().getById(1);
+//	Card card("1", ABankFee::STANDARD, "0000", 8000);
+////    CardDAO::getInstance().updateCard(card);
 
-//    qDebug() << QDate().currentDate();
-//    QDate qd = QDate::fromString("2020-11-25", "yyyy-MM-dd");
+//    Money m(12.34);
+
+//    card.withdrawFree(1000);
+//    card.replenishFree(1200);
+	QList<Deposit*> depos = DepositDAO::getInstance().getAll();
+
+
+
+
+
+
+
 
 	// tests/demo
 	/*
@@ -101,5 +112,5 @@ int main(int argc, char* argv[]) {
 	PaymentDAO::getInstance().removePayment(1);
 	*/
 
-    return QApplication::exec();
+	return QApplication::exec();
 }

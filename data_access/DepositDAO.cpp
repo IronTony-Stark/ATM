@@ -17,16 +17,17 @@ void DepositDAO::initialize() {
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS deposit "
-						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, sum DECIMAL, interest DECIMAL, "
-						  "start_date TEXT, end_date TEXT);");
+						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, owner_card TEXT, name TEXT, sum DECIMAL, "
+						  "interest DECIMAL, start_date TEXT, end_date TEXT);");
 	qDebug() << "creation of a 'deposit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }
 
 Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 	QSqlQuery createQuery(QSqlDatabase::database());
-	createQuery.prepare("INSERT INTO deposit (name, sum, interest, start_date, end_date) "
-						"VALUES (:name, :sum, :interest, :start_date, :end_date);");
+	createQuery.prepare("INSERT INTO deposit (owner_card, name, sum, interest, start_date, end_date) "
+						"VALUES (:owner_card, :name, :sum, :interest, :start_date, :end_date);");
+	createQuery.bindValue(":owner_card", deposit.ownerCard());
 	createQuery.bindValue(":name", deposit.name());
 	createQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	createQuery.bindValue(":interest", deposit.interest());
@@ -39,7 +40,7 @@ Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 
 QList<Deposit*> DepositDAO::getAll() const {
 	// Using SELECT * is not recommended because the order of the fields in the query is undefined.
-	QSqlQuery findAllQuery("SELECT id, name, sum, interest, start_date, end_date FROM deposit;");
+	QSqlQuery findAllQuery("SELECT id, owner_card, name, sum, interest, start_date, end_date FROM deposit;");
 	QList<Deposit*> res;
 	while (findAllQuery.next()) {
 		Deposit* deposit = buildDeposit(findAllQuery);
@@ -50,7 +51,7 @@ QList<Deposit*> DepositDAO::getAll() const {
 
 Deposit* DepositDAO::getById(uint id) const {
 	QSqlQuery findQuery;
-	findQuery.prepare("SELECT id, name, sum, interest, start_date, end_date "
+	findQuery.prepare("SELECT id, owner_card, name, sum, interest, start_date, end_date "
 					  "FROM deposit WHERE id = ?;");
 	findQuery.bindValue(0, QVariant(id));
 	findQuery.exec();
@@ -62,10 +63,11 @@ Deposit* DepositDAO::getById(uint id) const {
 
 Deposit* DepositDAO::buildDeposit(const QSqlQuery& queryRes) const {
 	return new Deposit(queryRes.value(1).toString(),
-					   Money(queryRes.value(2).toDouble()),
-					   queryRes.value(3).toDouble(),
-					   QDate::fromString(queryRes.value(4).toString(), "yyyy-MM-dd"),
+					   queryRes.value(2).toString(),
+					   Money(queryRes.value(3).toDouble()),
+					   queryRes.value(4).toDouble(),
 					   QDate::fromString(queryRes.value(5).toString(), "yyyy-MM-dd"),
+					   QDate::fromString(queryRes.value(6).toString(), "yyyy-MM-dd"),
 					   queryRes.value(0).toUInt());
 }
 
