@@ -25,7 +25,7 @@ void TimeDrivenEventsHandler::onTimeChanged(const QDateTime& dateTime) {
         _isPayed = false;
     if (!_isPayed && dateTime.time() >= QTime(10, 0))
         payPayments();
-    increaseDeposits(dateTime);
+//    increaseDeposits(dateTime);
     qDebug() << "click " << dateTime.time().second();
 }
 

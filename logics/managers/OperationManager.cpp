@@ -46,12 +46,14 @@ void OperationManager::withdraw(unsigned int howMuch) {
 void OperationManager::transfer(const QString& cardNumberFrom, const QString& cardNumberTo, const Money& amount) {
     Customer* const customer = CustomerDAO::getInstance().getCustomerByCardId(cardNumberTo);
     if (customer == nullptr)
-        throw std::exception();
+        throw std::runtime_error("card number'" + cardNumberFrom.toStdString() + "' not found in database.");
 //        throw NoSuchCardException(_customerDataManager.customer().);
 
     Card* cardFrom = CardDAO::getInstance().getById(cardNumberFrom);
     const std::pair<Money, Money>& pair = cardFrom->transfer(cardNumberTo, amount);
-    cardFrom->withdrawFree(pair.first); // Money with fee
+    cardFrom->withdrawFree(pair.second); // Money after subtracting fee
+    CardDAO::getInstance().updateCard(*cardFrom);
+    delete cardFrom;
 }
 
 

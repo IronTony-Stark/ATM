@@ -43,10 +43,9 @@ QString Card::id() const {
 std::pair<Money, Money> Card::transfer(const QString& recipient, Money amount) {
 	Money transferSum = amount / (1 + _bankFee.transferFee());
 	if (_balance < amount) throw NotEnoughMoneyException(_balance, amount);
-	_balance -= transferSum;
 
 	Card* recEntity = CardDAO::getInstance().getById(recipient);
-	recEntity->replenishFree(amount);
+	recEntity->replenishFree(transferSum);
 	CardDAO::getInstance().updateCard(*recEntity);
 	delete recEntity;
     return std::pair<Money, Money>(transferSum, amount);
