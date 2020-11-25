@@ -21,10 +21,10 @@ CreditWindow::CreditWindow(OperationManager& operationManager, QWidget* parent) 
     _ui->setupUi(this);
 
     _ui->labelTakeCreditLimit->setText(QString::number(Credit::creditLimitOfIncome));
+    _ui->widgetTakeCreditCredit->setReadOnly(false);
+    _ui->widgetMyCreditCredit->setReadOnly(true);
 
     setupCommands();
-
-    setupListCredits();
 }
 
 CreditWindow::~CreditWindow() {
@@ -33,9 +33,7 @@ CreditWindow::~CreditWindow() {
 
 void CreditWindow::onListCreditsItemClicked(QListWidgetItem* item) {
     int index = _ui->listCredits->row(item);
-    _selectedCredit = index;
-    Credit& credit = _credits[index];
-    setupCreditItem(credit);
+    _selectedCredit = _credits[index];
     navigate(MY_CREDIT);
 }
 
@@ -46,14 +44,18 @@ void CreditWindow::navigate(int destination) {
             _logicSettable->setLogic(&_creditPageLogic);
             break;
         case TAKE_CREDIT:
+            _ui->widgetTakeCreditCredit->clear();
             _ui->stackedWidget->setCurrentIndex(1);
             _logicSettable->setLogic(&_takeCreditPageLogic);
             break;
         case MY_CREDITS:
+            setupListCredits();
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myCreditsPageLogic);
             break;
         case MY_CREDIT:
+            assert(_selectedCredit != nullptr);
+            _ui->widgetMyCreditCredit->setup(*_selectedCredit);
             _ui->stackedWidget->setCurrentIndex(3);
             _logicSettable->setLogic(&_myCreditPageLogic);
             break;
@@ -75,21 +77,13 @@ void CreditWindow::setupCommands() {
     _myCreditPageLogic.setEnterCommand(repayCreditCommand);
 }
 
-// TODO setup credit item
-void CreditWindow::setupCreditItem(Credit&) {
-
-}
-
 void CreditWindow::setupListCredits() {
-    // TODO getAllCredits
-//    std::pair<Credit*, int> credits = _operationManager.getAllCredits();
-//    delete[] _credits;
-//    _credits = credits.first;
-//    _creditsLen = credits.second;
-//
-//    for (int i = 0; i < _creditsLen; ++i) {
-//        new QListWidgetItem(QString::number(i), _ui->listCredits);
-//    }
+    _ui->listCredits->clear();
+    _credits = _operationManager.getAllCredits();
+
+    for (auto& credit : _credits) {
+        new QListWidgetItem(credit->name(), _ui->listCredits);
+    }
 
     connect(_ui->listCredits, &QListWidget::itemClicked,
             this, &CreditWindow::onListCreditsItemClicked);

@@ -31,29 +31,25 @@ private:
     const CreditDAO _creditDao;
     const DepositDAO _depositDao;
     const PaymentDAO _paymentDao;
+    const CustomerDAO _customerDao;
 
     Clock* _clock = nullptr;
     TimeDrivenEventsHandler* _timeDrivenEventsHandler = nullptr;
 
 public:
-    OperationManager(
-            CustomerDataManager manager,
-            CustomerDAO customerDao,
-            CreditDAO creditDao,
-            DepositDAO depositDao,
-            PaymentDAO paymentDao);
+    OperationManager(CustomerDataManager manager);
 
-	bool authorizeCustomer(const QString&, unsigned short);
+	bool authorizeCustomer(const QString&, const QString&);
 
 	void blockCustomer(const QString&);
 
 	// pinCode
 	QString registerCustomer(const CustomerVerificationData&);
 
-	static void replenish(const QString& cardNumber, const Money&);
+	//static void replenish(const QString& cardNumber, const Money&);
 	void replenish(uint);
 
-    static void withdraw(const QString& cardNumber, const Money&);
+    //static void withdraw(const QString& cardNumber, const Money&);
 	void withdraw(unsigned int);
 
     static void transfer(const QString&, const QString&, const Money&);
@@ -73,7 +69,7 @@ public:
 
 	void replenishDeposit(uint, uint);
 
-	int endDeposit() { return -1; };
+	int endDeposit(uint);
 
 	QList<RegularPayment*> getAllPayments();
     void setPayment(const QString&, uint, const QString&, const QDateTime&);
