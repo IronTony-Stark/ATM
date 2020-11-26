@@ -6,11 +6,18 @@
 
 void Authorizer::authorizeCustomer(Customer* const customer, Card* const card) const {
     if (_customerDataManager._customer != nullptr){
-        delete _customerDataManager._customer;
+        Customer* prevCustomer = _customerDataManager._customer;
+        _customerDataManager._customer = customer;
+        delete prevCustomer;
+        _customerDataManager._bankCard = nullptr;
+    } else {
         _customerDataManager._customer = customer;
     }
     if (_customerDataManager._bankCard != nullptr){
-        delete _customerDataManager._bankCard;
+        Card* prevCard = _customerDataManager._bankCard;
+        _customerDataManager._bankCard = card;
+        delete prevCard;
+    } else {
         _customerDataManager._bankCard = card;
     }
 }

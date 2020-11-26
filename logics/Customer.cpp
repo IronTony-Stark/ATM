@@ -98,7 +98,6 @@ Customer::~Customer() {
     releaseMemory(_cards);
     releaseMemory(_credits);
     releaseMemory(_deposits);
-
 }
 
 template<typename Pointer>

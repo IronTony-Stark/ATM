@@ -29,10 +29,12 @@ QString Registrator::registerCustomer(const CustomerVerificationData& verificati
 
     QString pin = genPin();
     const QString number = generateCardNumber();
-	Card* newCard = new Card(number, verificationData.getCardType(), reinterpret_cast<QString&>(pin));
+	Card* newCard = new Card(number, verificationData.getCardType(), pin);
     newCustomer->addCard(newCard);
 
 	_customerDao.saveCustomer(*customer);
+	delete customer;
+	delete newCard;
     return pin;
 }
 
