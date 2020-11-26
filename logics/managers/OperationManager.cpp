@@ -19,7 +19,6 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, const QStrin
         if (cards[i]->number() == cardNumber) {
             if (cards[i]->pin() == pinCode) {
                 _authorizer.authorizeCustomer(customer, cards[i]);
-                delete customer;
                 return true;
             }
         }
@@ -174,6 +173,16 @@ int OperationManager::endDeposit(const uint depositId) {
 
     delete pDeposit;
     delete pCustomer;
+
+    return depositId;
+}
+
+Money OperationManager::getCurrentCustomerCreditLimit() {
+    return _customerDataManager.customer().creditLimit();
+}
+
+Money OperationManager::getInsertedCardBalance() {
+    return _customerDataManager.balance();
 }
 
 
