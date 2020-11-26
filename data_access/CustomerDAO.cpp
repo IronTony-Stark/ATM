@@ -79,9 +79,9 @@ Customer* CustomerDAO::getById(const QString& id) const {
 	QSqlQuery selectQuery(QString("SELECT name, phoneNum, revenue FROM customer WHERE id = '%1';").arg(id));
 	if (!selectQuery.next()) return nullptr;
 
-	Customer* customer = new Customer(id, selectQuery.value(0).toString(),
-									  selectQuery.value(1).toString(),
-									  Money(selectQuery.value(2).toDouble()));
+	Customer* customer = new Customer(selectQuery.value(0).toString(), id,
+                                       selectQuery.value(1).toString(),
+                                       Money(selectQuery.value(2).toDouble()));
 
 	QSqlQuery selectCardsQuery(QString("SELECT card_id FROM customer_card WHERE customer_id = '%1';").arg(id));
 	while (selectCardsQuery.next()) {

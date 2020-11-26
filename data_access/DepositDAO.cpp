@@ -62,13 +62,13 @@ Deposit* DepositDAO::getById(uint id) const {
 }
 
 Deposit* DepositDAO::buildDeposit(const QSqlQuery& queryRes) const {
-	return new Deposit(queryRes.value(1).toString(),
-					   queryRes.value(2).toString(),
-					   Money(queryRes.value(3).toDouble()),
-					   queryRes.value(4).toDouble(),
-					   QDate::fromString(queryRes.value(5).toString(), "yyyy-MM-dd"),
-					   QDate::fromString(queryRes.value(6).toString(), "yyyy-MM-dd"),
-					   queryRes.value(0).toUInt());
+    return new Deposit(queryRes.value(1).toString(),
+                       queryRes.value(2).toString(),
+                       Money(queryRes.value(3).toDouble()),
+                       queryRes.value(4).toDouble(),
+                       QDate::fromString(queryRes.value(6).toString(), "yyyy-MM-dd"),
+                       QDate::fromString(queryRes.value(5).toString(), "yyyy-MM-dd"),
+                       queryRes.value(0).toUInt());
 }
 
 boolean DepositDAO::updateDeposit(const Deposit& deposit) {
