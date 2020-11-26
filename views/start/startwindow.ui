@@ -125,7 +125,7 @@ color: black</string>
           <number>50</number>
          </property>
          <item row="0" column="0">
-          <widget class="QLabel" name="label_2">
+          <widget class="QLabel" name="labelCardNumber">
            <property name="text">
             <string>Card Number</string>
            </property>
@@ -135,7 +135,7 @@ color: black</string>
           <widget class="QLineEdit" name="editCardNumber"/>
          </item>
          <item row="1" column="0">
-          <widget class="QLabel" name="label_3">
+          <widget class="QLabel" name="labelPin">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
              <horstretch>0</horstretch>
@@ -148,7 +148,11 @@ color: black</string>
           </widget>
          </item>
          <item row="1" column="1">
-          <widget class="QLineEdit" name="editPin"/>
+          <widget class="QLineEdit" name="editPin">
+           <property name="echoMode">
+            <enum>QLineEdit::Password</enum>
+           </property>
+          </widget>
          </item>
         </layout>
        </item>
