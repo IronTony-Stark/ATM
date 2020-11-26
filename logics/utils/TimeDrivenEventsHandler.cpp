@@ -36,10 +36,10 @@ void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
     qDebug() << "Deposits count: " << deposits.count();
     for (Deposit* deposit: deposits) {
         if (deposit->endDate() <= dateTime.date()) {
-            double interestPerSecond = deposit->interest() / 365 / 24 / 3600;
-            const Money& incomePerSecond = deposit->sum() * interestPerSecond;
-            qDebug() << deposit->name() << incomePerSecond.operator double();
-            deposit->replenish(incomePerSecond);
+            double interestPerMinute = deposit->interest() / 365 / 24 / 60;
+            const Money& incomePerMinute = deposit->sum() * interestPerMinute;
+            qDebug() << deposit->name() << ": " << incomePerMinute.operator double();
+            deposit->replenish(incomePerMinute);
             depositDao.updateDeposit(*deposit);
         }
     }
