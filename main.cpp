@@ -4,24 +4,22 @@
 #include <QtWidgets/QStyleFactory>
 #include <QDebug>
 #include <QStyle>
-#include <logics/auth/Registrator.h>
-#include <data_access/CreditDAO.h>
 #include <QtSql>
-#include <data_access/DepositDAO.h>
-#include <data_access/CardDAO.h>
-#include <data_access/PaymentDAO.h>
-#include <iostream>
-#include <logics/bank_services/RegularPayment.h>
+#include "logics/auth/Registrator.h"
+#include "data_access/CreditDAO.h"
+#include "data_access/DepositDAO.h"
+#include "data_access/CardDAO.h"
+#include "data_access/PaymentDAO.h"
 
 int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	qDebug() << QApplication::style()->objectName();
-	MainWindow w;
+	QMainWindow w;
 	w.show();
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("../ATM/db_file/bank_database.sqlite");
+	db.setDatabaseName("../MOOP_ATM/db_file/bank_database.sqlite");
 	if (!db.open()) {
 		qDebug() << db.lastError().text();
 		return -1;
@@ -33,22 +31,6 @@ int main(int argc, char* argv[]) {
 		CustomerDAO::getInstance();
 		PaymentDAO::getInstance();
 	}
-
-//	Card card("1", ABankFee::STANDARD, "0000", 8000);
-////    CardDAO::getInstance().updateCard(card);
-
-//    Money m(12.34);
-
-//    card.withdrawFree(1000);
-//    card.replenishFree(1200);
-	QList<Deposit*> depos = DepositDAO::getInstance().getAll();
-
-
-
-
-
-
-
 
 	// tests/demo
 	/*

@@ -13,14 +13,15 @@ Money::Money(uint m) : _intPart(m), _decPart(0) {
 Money::Money(int m) : _intPart(m), _decPart(0) {
 }
 
-Money::Money(double m) : _intPart(static_cast<int>(m)), _decPart(static_cast<int>(sgn(m) * abs((m - _intPart) * 100))) {
+Money::Money(double m) : _intPart(static_cast<long int>(m)),
+						 _decPart(static_cast<long int>(sgn(m) * abs((m - _intPart) * 100))) {
 }
 
 Money::Money(int intPart, int decPart) : _intPart(intPart), _decPart(decPart) {
 }
 
 int Money::sign() const {
-	assert(sgn(_intPart) != -sgn(_decPart));
+	assert(sgn(_intPart) != -sgn(_decPart) || _intPart == 0 && _decPart == 0);
 	return sgn(_intPart) == 0 ? sgn(_decPart) : sgn(_intPart);
 }
 
@@ -51,8 +52,13 @@ Money& Money::operator-=(const Money& m) {
 }
 
 Money& Money::operator*=(double koef) {
-	_intPart *= koef;
-	_decPart *= koef;
+	double tempIntPart = koef * _intPart;
+	_intPart = static_cast<long int>(tempIntPart);
+
+	double tempDecPart = koef * _decPart;
+	tempDecPart += sgn(_intPart) * abs(tempIntPart - _intPart) * 100;
+	_decPart = static_cast<long int>(tempDecPart);
+
 	return *this;
 }
 

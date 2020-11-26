@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.14)
-project(ATM)
+project(MOOP_ATM)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -19,7 +19,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-add_executable(ATM
+add_executable(MOOP_ATM
         main.cpp
         logics/bank_fees/ABankFee.h
         logics/bank_fees/BankFeeProvider.cpp

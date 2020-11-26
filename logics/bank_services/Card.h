@@ -47,6 +47,10 @@ public:
 
 	const QString& number() const;
 
+	bool isBlocked() const;
+
+	void block();
+
 	const ABankFee::CardType cardType() const;
 
 	const QString& regeneratePin();
@@ -57,6 +61,7 @@ private:
 	QString _id;
 	QString _pin;
 	Money _balance;
+	bool _isBlocked = false;
 };
 
 
