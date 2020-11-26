@@ -37,9 +37,9 @@ std::tuple<QString, uint, uint, uint, QDateTime, QDateTime> CreditWidget::data()
     QString name = _ui->editName->text();
     uint amount = _ui->editSum->text().toUInt();
     uint period = _ui->comboPeriod->currentText().toUInt();
-    uint interest = CreditConditions::creditingOptions.value(period);
     QDateTime start = QDateTime::currentDateTime();
     QDateTime end = start.addMonths(period);
+    uint interest = _ui->labelInterestValue->text().toUInt();
 
     return std::tuple<QString, uint, uint, uint, QDateTime, QDateTime>(name, amount, period, interest, start, end);
 }
@@ -68,12 +68,12 @@ void CreditWidget::clear() {
     _ui->editSum->setText("");
     _ui->comboPeriod->setCurrentIndex(0);
     _ui->labelStartValue->setText(QDate::currentDate().toString(dateFormat));
-    int period = _ui->comboPeriod->currentText().toUInt();
-    _ui->labelEndValue->setText(QDate::currentDate().addMonths(period).toString(dateFormat));
+    onPeriodChanged();
 }
 
 void CreditWidget::onPeriodChanged() {
     int period = _ui->comboPeriod->currentText().toUInt();
     _ui->labelEndValue->setText(QDate::currentDate().addMonths(period).toString(dateFormat));
+    _ui->labelInterestValue->setText(QString::number(CreditConditions::creditingOptions.value(period)));
 }
 

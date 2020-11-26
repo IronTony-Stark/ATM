@@ -90,5 +90,5 @@ int StartWindow::state() {
 }
 
 void StartWindow::setClock(Clock* clock) {
-    _operationManager.setClock(clock); // TODO remove
+    _operationManager.setClock(clock);
 }
