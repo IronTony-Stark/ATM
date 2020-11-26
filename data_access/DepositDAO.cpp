@@ -17,8 +17,8 @@ void DepositDAO::initialize() {
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS deposit "
-						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, owner_card TEXT, name TEXT, sum DECIMAL, "
-						  "interest DECIMAL, start_date TEXT, end_date TEXT);");
+						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, owner_card TEXT, name TEXT, sum REAL, "
+						  "interest REAL, start_date TEXT, end_date TEXT);");
 	qDebug() << "creation of a 'deposit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }

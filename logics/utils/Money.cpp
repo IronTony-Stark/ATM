@@ -26,7 +26,7 @@ int Money::sign() const {
 }
 
 Money::operator double() const {
-	return static_cast<double>(_intPart) + static_cast<double>(_decPart);
+    return static_cast<double>(_intPart) + static_cast<double>(_decPart) / 100;
 }
 
 Money& Money::operator+=(const Money& m) {

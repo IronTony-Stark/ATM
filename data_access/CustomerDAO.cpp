@@ -17,7 +17,7 @@ void CustomerDAO::initialize() {
 	static bool isInitialized = false;
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS customer "
-						  "(id TEXT PRIMARY KEY, name TEXT, phoneNum TEXT, revenue DECIMAL);");
+						  "(id TEXT PRIMARY KEY, name TEXT, phoneNum TEXT, revenue REAL);");
 	qDebug() << "creation of a 'customer' table is successful: " << createQuery.isActive();
 
 	QSqlQuery createCustomerCardQuery("CREATE TABLE IF NOT EXISTS customer_card (customer_id TEXT, card_id TEXT, "
