@@ -14,6 +14,7 @@
 #include "logics/managers/OperationManager.h"
 
 class Command;
+class RegularPayment;
 
 namespace Ui {
     class PaymentWindow;
@@ -83,9 +84,8 @@ private:
     OperationManager& _operationManager;
     MessageDisplay _messageDisplay;
 
-    RegularPayment* _payments = nullptr;
-    int _paymentsLen = 0;
-    int _selectedPayment = -1;
+    QList<RegularPayment*> _payments;
+    RegularPayment* _selectedPayment = nullptr;
 
     PaymentPageLogic _paymentPageLogic;
     CreatePaymentPageLogic _createPaymentPageLogic;
@@ -93,7 +93,6 @@ private:
 
     void setupCommands();
     void setupListPayments();
-    void setupPaymentItem(RegularPayment&);
 };
 
 #endif // ATM_PAYMENTWINDOW_H

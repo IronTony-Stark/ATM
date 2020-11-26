@@ -19,9 +19,10 @@ DepositWindow::DepositWindow(OperationManager& operationManager, QWidget* parent
         _myDepositsPageLogic(*this) {
     _ui->setupUi(this);
 
-    setupCommands();
+    _ui->widgetOpenDepositDeposit->setReadOnly(false);
+    _ui->widgetMyDepositsDeposit->setReadOnly(true);
 
-    setupListDeposits();
+    setupCommands();
 }
 
 DepositWindow::~DepositWindow() {
@@ -30,9 +31,8 @@ DepositWindow::~DepositWindow() {
 
 void DepositWindow::onListDepositsItemClicked(QListWidgetItem* item) {
     int index = _ui->listDeposits->row(item);
-    _selectedDeposit = index;
-    Deposit& deposit = _deposits[index];
-    setupDepositItem(deposit);
+    _selectedDeposit = _deposits[index];
+    _ui->widgetMyDepositsDeposit->setup(*_selectedDeposit);
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
@@ -43,10 +43,12 @@ void DepositWindow::navigate(int destination) {
             _logicSettable->setLogic(&_depositPageLogic);
             break;
         case OPEN_DEPOSIT:
+            _ui->widgetOpenDepositDeposit->clear();
             _ui->stackedWidget->setCurrentIndex(1);
             _logicSettable->setLogic(&_openDepositPageLogic);
             break;
         case MY_DEPOSITS:
+            setupListDeposits();
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myDepositsPageLogic);
             break;
@@ -73,15 +75,12 @@ void DepositWindow::setupCommands() {
 }
 
 void DepositWindow::setupListDeposits() {
-    // TODO getAllDeposits
-//    std::pair<Deposit*, int> deposits = _operationManager.getAllDeposits();
-//    delete[] _deposits;
-//    _deposits = deposits.first;
-//    _depositsLen = deposits.second;
-//
-//    for (int i = 0; i < _depositsLen; ++i) {
-//        new QListWidgetItem(QString::number(i), _ui->listDeposits);
-//    }
+    _ui->listDeposits->clear();
+    _deposits = _operationManager.getAllDeposits();
+
+    for (auto& deposit : _deposits) {
+        new QListWidgetItem(deposit->name(), _ui->listDeposits);
+    }
 
     connect(_ui->listDeposits, &QListWidget::itemClicked,
             this, &DepositWindow::onListDepositsItemClicked);
@@ -93,10 +92,6 @@ void DepositWindow::setController(ControllerLogicSettable* logicSettable) {
 
 void DepositWindow::setLogicActive() {
     _logicSettable->setLogic(&_depositPageLogic);
-}
-
-void DepositWindow::setupDepositItem(Deposit&) {
-
 }
 
 // DepositPageLogic

@@ -23,6 +23,8 @@ public:
     QTime getTime();
     QDate getDate();
 
+    void setDateTime(const QDateTime&);
+
 private:
     Ui::SetDialog* _ui;
 };

@@ -20,8 +20,6 @@ PaymentWindow::PaymentWindow(OperationManager& operationManager, QWidget* parent
     _ui->setupUi(this);
 
     setupCommands();
-
-    setupListPayments();
 }
 
 PaymentWindow::~PaymentWindow() {
@@ -29,15 +27,12 @@ PaymentWindow::~PaymentWindow() {
 }
 
 void PaymentWindow::setupListPayments() {
-    // TODO getAllPayments
-//    std::pair<RegularPayment*, int> payments = _operationManager.getAllPayments();
-//    delete[] _payments;
-//    _payments = payments.first;
-//    _paymentsLen = payments.second;
-//
-//    for (int i = 0; i < _paymentsLen; ++i) {
-//        new QListWidgetItem(QString::number(i), _ui->listPayments);
-//    }
+    _ui->listPayments->clear();
+    _payments = _operationManager.getAllPayments();
+
+    for (auto& payment : _payments) {
+        new QListWidgetItem(payment->name(), _ui->listPayments);
+    }
 
     connect(_ui->listPayments, &QListWidget::itemClicked,
             this, &PaymentWindow::onListPaymentsItemClicked);
@@ -45,9 +40,7 @@ void PaymentWindow::setupListPayments() {
 
 void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem* item) {
     int index = _ui->listPayments->row(item);
-    _selectedPayment = index;
-    RegularPayment& payment = _payments[index];
-    setupPaymentItem(payment);
+    _selectedPayment = _payments[index];
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
@@ -62,6 +55,7 @@ void PaymentWindow::navigate(int destination) {
             _logicSettable->setLogic(&_createPaymentPageLogic);
             break;
         case MY_PAYMENTS:
+            setupListPayments();
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myPaymentsPageLogic);
             break;
@@ -81,10 +75,6 @@ void PaymentWindow::setupCommands() {
     std::shared_ptr<Command> cancelPayment(new CancelPaymentCommand(
             _operationManager));
     _myPaymentsPageLogic.setClearCommand(cancelPayment);
-}
-
-void PaymentWindow::setupPaymentItem(RegularPayment&) {
-
 }
 
 void PaymentWindow::setController(ControllerLogicSettable* logicSettable) {

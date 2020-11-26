@@ -20,6 +20,7 @@ CreditWindow::CreditWindow(OperationManager& operationManager, QWidget* parent) 
         _myCreditPageLogic(*this) {
     _ui->setupUi(this);
 
+    // TODO creditLimit
     _ui->labelTakeCreditLimit->setText(QString::number(Credit::creditLimitOfIncome));
     _ui->widgetTakeCreditCredit->setReadOnly(false);
     _ui->widgetMyCreditCredit->setReadOnly(true);

@@ -16,6 +16,9 @@ namespace Ui {
     class StartWindow;
 }
 
+// TODO info window
+// TODO password text
+// TODO typedef for names
 class StartWindow : public QWidget, public ControllerLogic {
 Q_OBJECT
 
