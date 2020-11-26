@@ -13,6 +13,8 @@ enum Windows {
     MAIN_MENU,
 };
 
+#include "views/validator/Validators.h"
+
 StartWindow::StartWindow(QWidget* parent) :
         QWidget(parent), _ui(new Ui::StartWindow),
         _operationManager(CustomerDataManager()),
@@ -22,6 +24,11 @@ StartWindow::StartWindow(QWidget* parent) :
 
     _ui->stackedWidget->addWidget(&_registrationWindow);
     _ui->stackedWidget->addWidget(&_mainMenuWindow);
+
+    _ui->editCardNumber->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(cardNumberRegex), this));
+    _ui->editPin->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(pinRegex), this));
 
     connect(&_registrationWindow, &RegistrationWindow::signalBtnCancelClicked,
             this, &StartWindow::onBtnCancelClicked);
@@ -65,6 +72,15 @@ void StartWindow::onBtnCardClicked() {
 
 void StartWindow::onBtnEnterClicked() {
     if (state() == INSERT_CARD) {
+        if (!_ui->editCardNumber->hasAcceptableInput()) {
+            QMessageBox::critical(this, "ATM", "Card Number is invalid");
+            return;
+        }
+        if (!_ui->editPin->hasAcceptableInput()) {
+            QMessageBox::critical(this, "ATM", "Pin is invalid");
+            return;
+        }
+
         QString number = _ui->editCardNumber->text();
         QString pin = _ui->editPin->text();
 
@@ -90,5 +106,5 @@ int StartWindow::state() {
 }
 
 void StartWindow::setClock(Clock* clock) {
-    _operationManager.setClock(clock); // TODO remove
+    _operationManager.setClock(clock);
 }

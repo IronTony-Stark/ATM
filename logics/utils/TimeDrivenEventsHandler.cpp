@@ -13,6 +13,7 @@ void TimeDrivenEventsHandler::payPayments() {
     qDebug() << "Paying for payments";
     const QList<RegularPayment*>& payments = PaymentDAO::getInstance().getAll();
     for (RegularPayment* payment: payments) {
+        // TODO check for card was blocked
         if (payment->dayOfMonth() == QDateTime::currentDateTime().date().day()) {
             OperationManager::transfer(payment->sender(), payment->receiver(), payment->amount());
         }
@@ -32,10 +33,13 @@ void TimeDrivenEventsHandler::onTimeChanged(const QDateTime& dateTime) {
 void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
     DepositDAO& depositDao = DepositDAO::getInstance();
     const QList<Deposit*>& deposits = depositDao.getAll();
+    qDebug() << "Deposits count: " << deposits.count();
     for (Deposit* deposit: deposits) {
         if (deposit->endDate() <= dateTime.date()) {
             double interestPerSecond = deposit->interest() / 365 / 24 / 3600;
-            deposit->replenish(deposit->sum()*interestPerSecond);
+            const Money& incomePerSecond = deposit->sum() * interestPerSecond;
+            qDebug() << deposit->name() << incomePerSecond.operator double();
+            deposit->replenish(incomePerSecond);
             depositDao.updateDeposit(*deposit);
         }
     }

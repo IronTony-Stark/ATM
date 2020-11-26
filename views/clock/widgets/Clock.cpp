@@ -26,9 +26,10 @@ void Clock::showDateTime() {
     }
 }
 
+#ifdef QT_DEBUG
 void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
     SetDialog dialog;
-    // TODO set time to now
+    dialog.setDateTime(_custom != nullptr ? *_custom : QDateTime::currentDateTime());
     dialog.setModal(true);
     int result = dialog.exec();
     delete _custom;
@@ -40,6 +41,7 @@ void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
         notifyListeners(QDateTime::currentDateTime());
     }
 }
+#endif
 
 void Clock::displayTime(const QDateTime& datetime) {
     notifyListeners(datetime);

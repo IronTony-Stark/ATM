@@ -13,6 +13,7 @@ namespace Ui {
     class MainWindow;
 }
 
+// TODO disable btns that cannot be used
 class MainWindow : public QMainWindow, public ControllerLogicSettable, public ControllerLogic {
 Q_OBJECT
 

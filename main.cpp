@@ -15,7 +15,7 @@ int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	qDebug() << QApplication::style()->objectName();
-	QMainWindow w;
+    MainWindow w;
 	w.show();
 
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");

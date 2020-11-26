@@ -35,6 +35,9 @@ private:
     void onBtnCancelClicked() override;
     void onBtnCardClicked() override;
 
+    ABankFee::CardType getCardType();
+    void clear();
+
     int state();
 };
 

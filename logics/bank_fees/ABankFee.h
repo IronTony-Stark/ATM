@@ -6,6 +6,7 @@
 #define ATM_BANKFEE_H
 
 #include <logics/utils/Money.h>
+#include <unordered_map>
 
 struct ABankFee {
 	enum CardType {
@@ -14,6 +15,8 @@ struct ABankFee {
 		GOLDEN,
 		PLATINUM
 	};
+
+    static const std::unordered_map<std::string, CardType> CARD_TYPES;
 
 	[[nodiscard]] double replenishFee() const { return _replenishFee; }
 

@@ -2,8 +2,6 @@
 // Created by Iron Tony on 20/10/2020.
 //
 
-// TODO edit check for ill-formed input
-
 #include <QtWidgets/QMessageBox>
 #include <utility>
 #include "TransactionWindow.h"

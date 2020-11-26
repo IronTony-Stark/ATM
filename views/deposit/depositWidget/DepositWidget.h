@@ -6,6 +6,7 @@
 #define ATM_DEPOSITWIDGET_H
 
 #include <QWidget>
+#include <logics/bank_services/Deposit.h>
 
 namespace Ui {
     class DepositWidget;
@@ -18,8 +19,13 @@ public:
     explicit DepositWidget(QWidget* parent = nullptr);
     ~DepositWidget() override;
 
-    // TODO typedef names
     std::tuple<QString, uint, uint, QDateTime, QDateTime, double> data();
+    void setup(const Deposit&);
+    void setReadOnly(bool);
+    void clear();
+
+private slots:
+    void onPeriodChanged();
 
 private:
     Ui::DepositWidget* _ui;

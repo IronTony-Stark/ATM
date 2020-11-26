@@ -43,6 +43,10 @@ public:
 
 	void blockCustomer(const QString&);
 
+	Money getCurrentCustomerCreditLimit();
+
+	Money getInsertedCardBalance();
+
 	// pinCode
 	QString registerCustomer(const CustomerVerificationData&);
 

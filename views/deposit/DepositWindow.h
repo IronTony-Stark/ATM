@@ -85,9 +85,8 @@ private:
     OperationManager& _operationManager;
     MessageDisplay _messageDisplay;
 
-    Deposit* _deposits = nullptr;
-    int _depositsLen = 0;
-    int _selectedDeposit = -1;
+    QList<Deposit*> _deposits;
+    Deposit* _selectedDeposit = nullptr;
 
     DepositPageLogic _depositPageLogic;
     OpenDepositPageLogic _openDepositPageLogic;
@@ -95,7 +94,6 @@ private:
 
     void setupCommands();
     void setupListDeposits();
-    void setupDepositItem(Deposit&);
 };
 
 #endif // ATM_DEPOSITWINDOW_H

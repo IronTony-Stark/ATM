@@ -154,7 +154,7 @@ add_executable(MOOP_ATM
         views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.h
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.cpp
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.h
-        data_access/CardDAO.cpp data_access/CardDAO.h)
+        data_access/CardDAO.cpp data_access/CardDAO.h logics/bank_fees/ABankFee.cpp views/validator/Validators.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

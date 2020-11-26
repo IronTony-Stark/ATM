@@ -27,4 +27,10 @@ QDate SetDialog::getDate() {
     return _ui->editDate->date();
 }
 
+void SetDialog::setDateTime(const QDateTime& dateTime) {
+    _ui->editDate->setDate(dateTime.date());
+    _ui->editTime->setTime(dateTime.time());
+}
+
+
 
