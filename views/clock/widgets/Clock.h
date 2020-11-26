@@ -20,7 +20,9 @@ public:
     void notifyListeners(const QDateTime&);
 
 protected:
+#ifdef QT_DEBUG
     void mouseDoubleClickEvent(QMouseEvent* event) override;
+#endif
 
 private slots:
     void showDateTime();

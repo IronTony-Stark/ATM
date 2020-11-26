@@ -6,7 +6,6 @@
 #include "views/clock/setdialog/SetDialog.h"
 #include <QTimer>
 
-// TODO if debug enable time set
 Clock::Clock(QWidget* parent) : QLCDNumber(parent) {
     setSegmentStyle(Filled);
     setDigitCount(18);
@@ -27,6 +26,7 @@ void Clock::showDateTime() {
     }
 }
 
+#ifdef QT_DEBUG
 void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
     SetDialog dialog;
     dialog.setDateTime(_custom != nullptr ? *_custom : QDateTime::currentDateTime());
@@ -41,6 +41,7 @@ void Clock::mouseDoubleClickEvent(QMouseEvent* event) {
         notifyListeners(QDateTime::currentDateTime());
     }
 }
+#endif
 
 void Clock::displayTime(const QDateTime& datetime) {
     notifyListeners(datetime);
