@@ -18,8 +18,8 @@ void CreditDAO::initialize() {
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS credit "
-						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, credit_body DECIMAL, interest DECIMAL, "
-						  "payment DECIMAL, bank_income DECIMAL, date_taken TEXT);");
+						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, credit_body REAL, interest REAL, "
+						  "payment REAL, bank_income REAL, date_taken TEXT);");
 	qDebug() << "creation of a 'credit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }

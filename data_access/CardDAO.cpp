@@ -18,7 +18,7 @@ void CardDAO::initialize() {
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS card "
-						  "(id TEXT PRIMARY KEY, card_type TEXT, pin TEXT, balance DECIMAL, is_blocked INTEGER);");
+						  "(id TEXT PRIMARY KEY, card_type TEXT, pin TEXT, balance REAL, is_blocked INTEGER);");
 	qDebug() << "creation of the 'card' table is successful: " << createQuery.isActive();
 	isInitialized = true;
 }

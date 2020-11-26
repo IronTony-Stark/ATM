@@ -18,7 +18,7 @@ void PaymentDAO::initialize() {
 	static bool isInitialized = false;
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS payment (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, "
-						  "amount DECIMAL, sender_id TEXT, receiver_id TEXT, day_of_month INTEGER);");
+						  "amount REAL, sender_id TEXT, receiver_id TEXT, day_of_month INTEGER);");
 	qDebug() << "creation of table 'payment' is successful: " << createQuery.isActive();
 	isInitialized = true;
 }

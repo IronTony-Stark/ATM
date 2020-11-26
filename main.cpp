@@ -70,10 +70,10 @@ int main(int argc, char* argv[]) {
 
 	DepositDAO::getInstance().deleteById(1);
 
-	Card* card = new Card(QString("cardCode"), ABankFee::CardType(0), QString("0000"));
+	Card* card = new Card(QString("cardCode"), ABankFee::CardType(0), QString("0000"), 12.34);
 	CardDAO::getInstance().saveCard(*card);
-	Card* restored = CardDAO::getInstance().getById(card->id());
-	restored->replenish(Money(500));
+    Card* restored = CardDAO::getInstance().getById(card->id());
+    restored->replenish(500);
 	CardDAO::getInstance().updateCard(*restored);
 	CardDAO::getInstance().deleteById("cardCode");
 
