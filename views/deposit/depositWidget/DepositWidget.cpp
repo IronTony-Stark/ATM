@@ -4,14 +4,21 @@
 
 #include <logics/bank_fees/DepositConditions.h>
 #include <QtCore/QDateTime>
+#include <QtWidgets/QMessageBox>
 #include "DepositWidget.h"
 #include "gui/ui_depositwidget.h"
+#include "views/validator/Validators.h"
 
 static const char* const dateFormat = "dd.MM.yyyy";
 
 DepositWidget::DepositWidget(QWidget* parent) :
         QWidget(parent), _ui(new Ui::DepositWidget) {
     _ui->setupUi(this);
+
+    _ui->editName->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(objectNameRegex), this));
+    _ui->editSum->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(amountRegex), this));
 
     // Fills comboPeriod with available periods sorted asc
     const QHash<Month, Interest>& options = DepositConditions::depositingOptions;
@@ -74,4 +81,19 @@ void DepositWidget::onPeriodChanged() {
     int period = _ui->comboPeriod->currentText().toUInt();
     _ui->labelEndValue->setText(QDate::currentDate().addMonths(period).toString(dateFormat));
     _ui->labelInterestValue->setText(QString::number(DepositConditions::depositingOptions.value(period)));
+}
+
+bool DepositWidget::validateInput() {
+    QString message;
+    if (!_ui->editName->hasAcceptableInput())
+        message = "Deposit's name is invalid";
+    else if (!_ui->editSum->hasAcceptableInput())
+        message = "Amount is invalid";
+
+    if (!message.isEmpty()) {
+        QMessageBox::critical(this, "ATM", message);
+        return false;
+    }
+
+    return true;
 }

@@ -16,6 +16,9 @@ CreatePaymentCommand::CreatePaymentCommand(
         _messageDisplay(messageDisplay) {}
 
 void CreatePaymentCommand::execute() {
+    if (!_paymentWidget.validateInput())
+        return;
+
     QString name;
     uint amount;
     QString receiver;

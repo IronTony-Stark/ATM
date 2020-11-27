@@ -16,6 +16,9 @@ OpenDepositCommand::OpenDepositCommand(
         _messageDisplay(messageDisplay) {}
 
 void OpenDepositCommand::execute() {
+    if (!_depositWidget.validateInput())
+        return;
+
     QString name;
     uint amount;
     uint period;

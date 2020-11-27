@@ -30,21 +30,21 @@
    <item row="1" column="0">
     <widget class="QLabel" name="labelHowMuch">
      <property name="text">
-      <string>How much</string>
+      <string>Amount</string>
      </property>
     </widget>
    </item>
    <item row="2" column="0">
     <widget class="QLabel" name="labelToWhome">
      <property name="text">
-      <string>To Whome</string>
+      <string>Receiver</string>
      </property>
     </widget>
    </item>
    <item row="3" column="0">
     <widget class="QLabel" name="labelWhen">
      <property name="text">
-      <string>When</string>
+      <string>Time</string>
      </property>
     </widget>
    </item>

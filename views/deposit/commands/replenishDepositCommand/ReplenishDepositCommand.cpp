@@ -13,6 +13,11 @@ ReplenishDepositCommand::ReplenishDepositCommand(
         _messageDisplay(messageDisplay) {}
 
 void ReplenishDepositCommand::execute() {
+    if (!_replenishAmount.hasAcceptableInput()) {
+        _messageDisplay.show("Replenish amount is invalid");
+        return;
+    }
+
     uint amount = _replenishAmount.text().toUInt();
     try {
         _operationManager.replenishDeposit(-1, amount);

@@ -20,6 +20,8 @@ public:
 
     std::tuple<QString, uint, QString, QDateTime> data();
 
+    bool validateInput();
+
 private:
     Ui::PaymentWidget* _ui;
 };

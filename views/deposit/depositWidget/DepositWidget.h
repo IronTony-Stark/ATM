@@ -23,6 +23,7 @@ public:
     void setup(const Deposit&);
     void setReadOnly(bool);
     void clear();
+    bool validateInput();
 
 private slots:
     void onPeriodChanged();

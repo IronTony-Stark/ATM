@@ -8,12 +8,18 @@
 #include <QtWidgets/QMessageBox>
 #include "CreditWidget.h"
 #include "gui/ui_creditwidget.h"
+#include "views/validator/Validators.h"
 
 static const char* const dateFormat = "dd.MM.yyyy";
 
 CreditWidget::CreditWidget(QWidget* parent) :
         QWidget(parent), _ui(new Ui::CreditWidget) {
     _ui->setupUi(this);
+
+    _ui->editName->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(objectNameRegex), this));
+    _ui->editSum->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(amountRegex), this));
 
     // Fills comboPeriod with available periods sorted asc
     const QHash<Month, Interest>& options = CreditConditions::creditingOptions;
@@ -82,7 +88,7 @@ bool CreditWidget::validateInput() {
     QString message;
     if (!_ui->editName->hasAcceptableInput())
         message = "Credit's name is invalid";
-    else if (_ui->editSum->hasAcceptableInput())
+    else if (!_ui->editSum->hasAcceptableInput())
         message = "Amount is invalid";
 
     if (!message.isEmpty()) {
