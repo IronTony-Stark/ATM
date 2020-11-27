@@ -132,12 +132,12 @@ QList<RegularPayment*> OperationManager::getAllPayments() {
     return _paymentDao.getAll();
 }
 
-void OperationManager::setPayment(const QString& name, uint amount, const QString& receiver, const QDateTime& when) {
+void OperationManager::setPayment(const QString& name, uint amount, const QString& receiver, const uint& day) {
     if (_customerDataManager.balance() < amount)
         throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
 
     RegularPayment* const pPayment = new RegularPayment(name, amount, _customerDataManager.card().number(), receiver,
-                                                        when.date().day());
+                                                        day);
     _paymentDao.save(*pPayment);
     delete pPayment;
 }
