@@ -191,7 +191,7 @@
          <item>
           <widget class="QPushButton" name="btnTakeCard">
            <property name="text">
-            <string>Take Your New Card</string>
+            <string>|Card| Take Your New Card</string>
            </property>
           </widget>
          </item>

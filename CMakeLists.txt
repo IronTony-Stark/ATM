@@ -21,64 +21,8 @@ set(CMAKE_AUTORCC ON)
 
 add_executable(MOOP_ATM
         main.cpp
-        logics/bank_fees/ABankFee.h
-        logics/bank_fees/BankFeeProvider.cpp
-        logics/bank_fees/BankFeeProvider.h
-        logics/bank_fees/CreditConditions.cpp
-        logics/bank_fees/CreditConditions.h
-        logics/bank_fees/DepositConditions.cpp
-        logics/bank_fees/DepositConditions.h
-        logics/bank_services/Card.cpp
-        logics/bank_services/Card.h
-        logics/bank_services/Credit.cpp
-        logics/bank_services/Credit.h
-        logics/bank_services/Deposit.cpp
-        logics/bank_services/Deposit.h
-        logics/bank_services/RegularPayment.cpp
-        logics/bank_services/RegularPayment.h
-        logics/Customer.cpp
-        logics/Customer.h
-        logics/utils/Money.cpp
-        logics/utils/Money.h
-        logics/utils/general.h
-        logics/utils/general.cpp
-        logics/utils/TimeDrivenEventsHandler.cpp
-        logics/utils/TimeDrivenEventsHandler.h
-        logics/exceptions/NotEnoughMoneyException.cpp
-        logics/exceptions/NotEnoughMoneyException.h
-        logics/exceptions/NoSuchCardException.h
-        logics/exceptions/NoSuchCreditException.h
-        logics/exceptions/NoSuchDepositException.h
-        logics/exceptions/NoSuchCustomerPossessionException.cpp
-        logics/exceptions/NoSuchCustomerPossessionException.h
-        logics/exceptions/CreditRepayOverheadException.cpp
-        logics/exceptions/CreditRepayOverheadException.h
-        logics/exceptions/CustomerRegistrationException.cpp
-        logics/exceptions/CustomerRegistrationException.h
-        logics/exceptions/CustomerAuthorizationException.cpp
-        logics/exceptions/CustomerAuthorizationException.h
-        logics/exceptions/DepositMaxSumReachedException.cpp
-        logics/exceptions/DepositMaxSumReachedException.h
-        logics/managers/CustomerDataManager.cpp
-        logics/managers/CustomerDataManager.h
-        logics/managers/OperationManager.cpp
-        logics/managers/OperationManager.h
-        logics/auth/Authorizer.cpp
-        logics/auth/Authorizer.h
-        logics/auth/Registrator.cpp
-        logics/auth/Registrator.h
-        logics/auth/CustomerVerificationData.cpp
-        logics/auth/CustomerVerificationData.h
-        data_access/CustomerDAO.cpp
-        data_access/CustomerDAO.h
-        data_access/CreditDAO.cpp
-        data_access/CreditDAO.h
-        data_access/DepositDAO.cpp
-        data_access/DepositDAO.h
-        data_access/PaymentDAO.cpp
-        data_access/PaymentDAO.h
 
-        #       Views
+        # Views
         views/transaction/Windows.h
         views/credit/Windows.h
         views/deposit/Windows.h
@@ -154,7 +98,69 @@ add_executable(MOOP_ATM
         views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.h
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.cpp
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.h
-        data_access/CardDAO.cpp data_access/CardDAO.h logics/bank_fees/ABankFee.cpp views/validator/Validators.h logics/exceptions/BlockedCardException.h)
+        views/validator/Validators.h
+
+        # Logics
+        logics/bank_fees/ABankFee.h
+        logics/bank_fees/BankFeeProvider.cpp
+        logics/bank_fees/BankFeeProvider.h
+        logics/bank_fees/CreditConditions.cpp
+        logics/bank_fees/CreditConditions.h
+        logics/bank_fees/DepositConditions.cpp
+        logics/bank_fees/DepositConditions.h
+        logics/bank_fees/ABankFee.cpp
+        logics/bank_services/Card.cpp
+        logics/bank_services/Card.h
+        logics/bank_services/Credit.cpp
+        logics/bank_services/Credit.h
+        logics/bank_services/Deposit.cpp
+        logics/bank_services/Deposit.h
+        logics/bank_services/RegularPayment.cpp
+        logics/bank_services/RegularPayment.h
+        logics/Customer.cpp
+        logics/Customer.h
+        logics/utils/Money.cpp
+        logics/utils/Money.h
+        logics/utils/general.h
+        logics/utils/general.cpp
+        logics/utils/TimeDrivenEventsHandler.cpp
+        logics/utils/TimeDrivenEventsHandler.h
+        logics/exceptions/NotEnoughMoneyException.cpp
+        logics/exceptions/NotEnoughMoneyException.h
+        logics/exceptions/NoSuchCardException.h
+        logics/exceptions/NoSuchCreditException.h
+        logics/exceptions/NoSuchDepositException.h
+        logics/exceptions/NoSuchCustomerPossessionException.cpp
+        logics/exceptions/NoSuchCustomerPossessionException.h
+        logics/exceptions/CreditRepayOverheadException.cpp
+        logics/exceptions/CreditRepayOverheadException.h
+        logics/exceptions/CustomerRegistrationException.cpp
+        logics/exceptions/CustomerRegistrationException.h
+        logics/exceptions/CustomerAuthorizationException.cpp
+        logics/exceptions/CustomerAuthorizationException.h
+        logics/exceptions/DepositMaxSumReachedException.cpp
+        logics/exceptions/DepositMaxSumReachedException.h
+        logics/exceptions/BlockedCardException.h
+        logics/managers/CustomerDataManager.cpp
+        logics/managers/CustomerDataManager.h
+        logics/managers/OperationManager.cpp
+        logics/managers/OperationManager.h
+        logics/auth/Authorizer.cpp
+        logics/auth/Authorizer.h
+        logics/auth/Registrator.cpp
+        logics/auth/Registrator.h
+        logics/auth/CustomerVerificationData.cpp
+        logics/auth/CustomerVerificationData.h
+        data_access/CardDAO.cpp data_access/CardDAO.h
+        data_access/CustomerDAO.cpp
+        data_access/CustomerDAO.h
+        data_access/CreditDAO.cpp
+        data_access/CreditDAO.h
+        data_access/DepositDAO.cpp
+        data_access/DepositDAO.h
+        data_access/PaymentDAO.cpp
+        data_access/PaymentDAO.h
+        )
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

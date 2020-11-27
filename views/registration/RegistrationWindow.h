@@ -37,6 +37,7 @@ private:
 
     ABankFee::CardType getCardType();
     void clear();
+    bool validateInput();
 
     int state();
 };

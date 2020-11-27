@@ -7,7 +7,7 @@
 #include <QtWidgets/QMessageBox>
 #include "RegistrationWindow.h"
 #include "gui/ui_registrationwindow.h"
-#include <QDebug>
+#include "views/validator/Validators.h"
 
 enum Windows {
     REGISTRATION,
@@ -19,9 +19,16 @@ RegistrationWindow::RegistrationWindow(OperationManager& operationManager, QWidg
         _operationManager(operationManager) {
     _ui->setupUi(this);
 
-    // TODO validate data
+    _ui->editName->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(userNameRegex), this));
+    _ui->editPhone->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(phoneRegex), this));
+    _ui->editTaxNumber->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(taxRegex), this));
+    _ui->editIncome->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(incomeRegex), this));
 
-    for (const auto & it : ABankFee::CARD_TYPES)
+    for (const auto& it : ABankFee::CARD_TYPES)
         _ui->comboCardType->addItem(QString::fromStdString(it.first));
 }
 
@@ -39,6 +46,9 @@ void RegistrationWindow::setLogicActive() {
 
 void RegistrationWindow::onBtnEnterClicked() {
     if (state() != CARD) {
+        if (!validateInput())
+            return;
+
         QString name = _ui->editName->text();
         QString phone = _ui->editPhone->text();
         QString taxNumber = _ui->editTaxNumber->text();
@@ -87,4 +97,23 @@ ABankFee::CardType RegistrationWindow::getCardType() {
         return it->second;
     else
         throw std::logic_error("getCardType Card Not Found");
+}
+
+bool RegistrationWindow::validateInput() {
+    QString message;
+    if (!_ui->editName->hasAcceptableInput())
+        message = "Name is invalid";
+    else if (!_ui->editPhone->hasAcceptableInput())
+        message = "Phone number is invalid";
+    else if (!_ui->editTaxNumber->hasAcceptableInput())
+        message = "Tax number is invalid";
+    else if (!_ui->editIncome->hasAcceptableInput())
+        message = "Income is invalid";
+
+    if (!message.isEmpty()) {
+        QMessageBox::critical(this, "ATM", message);
+        return false;
+    }
+
+    return true;
 }
