@@ -10,7 +10,7 @@
 #include <logics/utils/general.h>
 
 QString Registrator::registerCustomer(const CustomerVerificationData& verificationData) const {
-    Customer* const customer = _customerDataManager.getCustomerByTaxNumber(verificationData.getTaxNumber());
+    Customer* customer = _customerDataManager.getCustomerByTaxNumber(verificationData.getTaxNumber());
     if (customer != nullptr) {
         QList<Card*> cards = customer->cards();
         for (int i = 0; i < cards.count(); ++i) {
@@ -19,22 +19,21 @@ QString Registrator::registerCustomer(const CustomerVerificationData& verificati
                     "The person with given taxNumber and chosen card type has already registered");
             }
         }
+    } else {
+        customer = new Customer(
+                    verificationData.getName(),
+                    verificationData.getTaxNumber(),
+                    verificationData.getPhoneNumber(),
+                    verificationData.getIncome());
     }
-
-    Customer* const newCustomer = new Customer(
-            verificationData.getName(),
-            verificationData.getTaxNumber(),
-            verificationData.getPhoneNumber(),
-            verificationData.getIncome());
 
     QString pin = genPin();
     const QString number = generateCardNumber();
 	Card* newCard = new Card(number, verificationData.getCardType(), pin);
-    newCustomer->addCard(newCard);
+    customer->addCard(newCard);
 
-	_customerDao.saveCustomer(*customer);
+    _customerDao.saveCustomer(*customer);
 	delete customer;
-	delete newCard;
     return pin;
 }
 

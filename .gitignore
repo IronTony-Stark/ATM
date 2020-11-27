@@ -74,3 +74,4 @@ Thumbs.db
 *.exe
 
 /cmake-build-debug/
+/db_file/bank_database.sqlite
