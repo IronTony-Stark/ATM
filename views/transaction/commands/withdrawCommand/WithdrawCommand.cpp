@@ -17,6 +17,11 @@ WithdrawCommand::WithdrawCommand(
         _messageDisplay(messageDisplay) {}
 
 void WithdrawCommand::execute() {
+    if (!_editHowMuch.hasAcceptableInput()) {
+        _messageDisplay.show("Amount is invalid");
+        return;
+    }
+
     uint amount = _editHowMuch.text().toUInt();
     try {
         _operationManager.withdraw(amount);

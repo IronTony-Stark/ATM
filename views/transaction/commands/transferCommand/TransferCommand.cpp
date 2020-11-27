@@ -11,7 +11,7 @@ TransferCommand::TransferCommand(
         OperationManager& operationManager,
         QLineEdit& editHowMuch,
         QLineEdit& editToWhom,
-        MessageDisplay messageDisplay) :
+        MessageDisplay& messageDisplay) :
         _navigatable(navigatable),
         _operationManager(operationManager),
         _editHowMuch(editHowMuch),
@@ -19,6 +19,15 @@ TransferCommand::TransferCommand(
         _messageDisplay(messageDisplay) {}
 
 void TransferCommand::execute() {
+    if (!_editToWhom.hasAcceptableInput()) {
+        _messageDisplay.show("Receiver is invalid");
+        return;
+    }
+    if (!_editHowMuch.hasAcceptableInput()) {
+        _messageDisplay.show("Amount is invalid");
+        return;
+    }
+
     QString to = _editToWhom.text();
     uint amount = _editHowMuch.text().toUInt();
     try {

@@ -9,12 +9,14 @@
 #include <views/Navigatable.h>
 #include <logics/managers/OperationManager.h>
 #include <QtWidgets/QLineEdit>
+#include <views/MessageDisplay.h>
 
 class ReplenishCommand : public Command {
 public:
-    explicit ReplenishCommand(Navigatable& navigatable,
-                              OperationManager& operationManager,
-                              QLineEdit& editHowMuch);
+    ReplenishCommand(Navigatable& navigatable,
+                     OperationManager& operationManager,
+                     QLineEdit& editHowMuch,
+                     MessageDisplay& messageDisplay);
 
     void execute() override;
 
@@ -22,6 +24,7 @@ private:
     Navigatable& _navigatable;
     OperationManager& _operationManager;
     QLineEdit& _editHowMuch;
+    MessageDisplay& _messageDisplay;
 };
 
 

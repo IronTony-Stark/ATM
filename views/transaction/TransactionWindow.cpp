@@ -4,17 +4,28 @@
 
 #include <QtWidgets/QMessageBox>
 #include <utility>
+#include <QtGui/QRegularExpressionValidator>
 #include "TransactionWindow.h"
 #include "gui/ui_transactionwindow.h"
 #include "views/exceptions/AbsentNavigationDestination.h"
 #include "views/transaction/Windows.h"
 #include "commands/IncludeAllCommands.h"
+#include "views/validator/Validators.h"
 
 TransactionWindow::TransactionWindow(OperationManager& operationManager, QWidget* parent) :
         QWidget(parent), _ui(new Ui::TransactionWindow),
         _messageDisplay(*this),
         _transactionPageLogic(*this) {
     _ui->setupUi(this);
+
+    auto amountValidator = new QRegularExpressionValidator(
+            QRegularExpression(amountRegex), this);
+    _ui->editWithdrawHowMuch->setValidator(amountValidator);
+    _ui->editReplenishHowMuch->setValidator(amountValidator);
+    _ui->editTransferHowMuch->setValidator(amountValidator);
+    _ui->editTransferToWhom->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(cardNumberRegex), this));
+
     setupCommands(operationManager);
 }
 
@@ -37,14 +48,18 @@ void TransactionWindow::navigate(int destination) {
             _ui->stackedWidget->setCurrentIndex(TRANSACTIONS);
             break;
         case REPLENISH:
+            _ui->editReplenishHowMuch->setText("");
             _logicSettable->setLogic(&_replenishPageLogic);
             _ui->stackedWidget->setCurrentIndex(REPLENISH);
             break;
         case WITHDRAW:
+            _ui->editWithdrawHowMuch->setText("");
             _logicSettable->setLogic(&_withdrawPageLogic);
             _ui->stackedWidget->setCurrentIndex(WITHDRAW);
             break;
         case TRANSFER:
+            _ui->editTransferToWhom->setText("");
+            _ui->editTransferHowMuch->setText("");
             _logicSettable->setLogic(&_transferPageLogic);
             _ui->stackedWidget->setCurrentIndex(TRANSFER);
             break;
@@ -140,7 +155,7 @@ void TransactionWindow::setupCommands(OperationManager& operationManager) {
     _transferPageLogic.setCancelCommand(navigateCommand);
 
     std::shared_ptr<Command> replenishCommand(new ReplenishCommand(
-            *this, operationManager, *_ui->editReplenishHowMuch));
+            *this, operationManager, *_ui->editReplenishHowMuch, _messageDisplay));
     _replenishPageLogic.setEnterCommand(replenishCommand);
 
     std::shared_ptr<Command> withdrawCommand(new WithdrawCommand(
@@ -148,6 +163,6 @@ void TransactionWindow::setupCommands(OperationManager& operationManager) {
     _withdrawPageLogic.setEnterCommand(withdrawCommand);
 
     std::shared_ptr<Command> transferCommand(new TransferCommand(
-            *this, operationManager, *_ui->editWithdrawHowMuch, *_ui->editTransferToWhom, _messageDisplay));
+            *this, operationManager, *_ui->editTransferHowMuch, *_ui->editTransferToWhom, _messageDisplay));
     _transferPageLogic.setEnterCommand(transferCommand);
 }

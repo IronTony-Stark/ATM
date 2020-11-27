@@ -5,6 +5,7 @@
 #include <QDateTime>
 #include <logics/bank_fees/CreditConditions.h>
 #include <logics/bank_services/Credit.h>
+#include <QtWidgets/QMessageBox>
 #include "CreditWidget.h"
 #include "gui/ui_creditwidget.h"
 
@@ -75,5 +76,20 @@ void CreditWidget::onPeriodChanged() {
     int period = _ui->comboPeriod->currentText().toUInt();
     _ui->labelEndValue->setText(QDate::currentDate().addMonths(period).toString(dateFormat));
     _ui->labelInterestValue->setText(QString::number(CreditConditions::creditingOptions.value(period)));
+}
+
+bool CreditWidget::validateInput() {
+    QString message;
+    if (!_ui->editName->hasAcceptableInput())
+        message = "Credit's name is invalid";
+    else if (_ui->editSum->hasAcceptableInput())
+        message = "Amount is invalid";
+
+    if (!message.isEmpty()) {
+        QMessageBox::critical(this, "ATM", message);
+        return false;
+    }
+
+    return true;
 }
 

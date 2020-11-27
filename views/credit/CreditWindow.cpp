@@ -20,8 +20,6 @@ CreditWindow::CreditWindow(OperationManager& operationManager, QWidget* parent) 
         _myCreditPageLogic(*this) {
     _ui->setupUi(this);
 
-    // TODO creditLimit
-    _ui->labelTakeCreditLimit->setText(QString::number(Credit::creditLimitOfIncome));
     _ui->widgetTakeCreditCredit->setReadOnly(false);
     _ui->widgetMyCreditCredit->setReadOnly(true);
 
@@ -95,6 +93,8 @@ void CreditWindow::setController(ControllerLogicSettable* logicSettable) {
 }
 
 void CreditWindow::setLogicActive() {
+    double limit = static_cast<double>(_operationManager.getCurrentCustomerCreditLimit());
+    _ui->labelTakeCreditLimitValue->setText(QString::number(limit));
     _logicSettable->setLogic(&_creditPageLogic);
 }
 

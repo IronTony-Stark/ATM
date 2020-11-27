@@ -13,11 +13,11 @@
 
 class TransferCommand : public Command {
 public:
-    explicit TransferCommand(Navigatable& navigatable,
-                             OperationManager& operationManager,
-                             QLineEdit& editHowMuch,
-                             QLineEdit& editToWhom,
-                             MessageDisplay messageDisplay);
+    TransferCommand(Navigatable& navigatable,
+                    OperationManager& operationManager,
+                    QLineEdit& editHowMuch,
+                    QLineEdit& editToWhom,
+                    MessageDisplay& messageDisplay);
 
     void execute() override;
 
@@ -26,7 +26,7 @@ private:
     OperationManager& _operationManager;
     QLineEdit& _editHowMuch;
     QLineEdit& _editToWhom;
-    MessageDisplay _messageDisplay;
+    MessageDisplay& _messageDisplay;
 };
 
 

@@ -51,6 +51,8 @@ void MainMenuWindow::setController(ControllerLogicSettable* logicSettable) {
 
 void MainMenuWindow::setLogicActive() {
     _logicSettable->setLogic(this);
+    double balance = static_cast<double>(_operationManager.getInsertedCardBalance());
+    _ui->labelBalanceValue->setText(QString::number(balance));
 }
 
 void MainMenuWindow::onBtnCancelClicked() {
@@ -78,6 +80,6 @@ void MainMenuWindow::onBtn3Clicked() {
 }
 
 void MainMenuWindow::onBtnBackToMainMenuClicked() {
-    _logicSettable->setLogic(this);
+    setLogicActive();
     _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
 }

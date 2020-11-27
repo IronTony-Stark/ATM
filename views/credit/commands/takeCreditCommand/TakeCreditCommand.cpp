@@ -17,6 +17,9 @@ TakeCreditCommand::TakeCreditCommand(
         _messageDisplay(messageDisplay) {}
 
 void TakeCreditCommand::execute() {
+    if (!_widgetTakeCredit.validateInput())
+        return;
+
     QString name;
     uint sum;
     uint period;

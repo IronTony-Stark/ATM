@@ -22,6 +22,7 @@ public:
     void setup(const Credit&);
     void setReadOnly(bool);
     void clear();
+    bool validateInput();
 
 private slots:
     void onPeriodChanged();
