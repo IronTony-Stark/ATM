@@ -26,6 +26,10 @@ struct ABankFee {
 
 	[[nodiscard]] Money cardPayment() const { return _cardPayment; }
 
+	bool operator==(const ABankFee& rhs) const;
+
+	bool operator!=(const ABankFee& rhs) const;
+
 protected:
 	explicit ABankFee(double replenish, double withdraw, double transfer, Money cardPayment) :
 			_replenishFee(replenish), _withdrawFee(withdraw), _transferFee(transfer), _cardPayment(cardPayment) {}

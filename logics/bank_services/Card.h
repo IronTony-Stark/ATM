@@ -57,12 +57,16 @@ public:
 
 	Card& operator=(const Card&) = delete;
 
+	bool operator==(const Card& rhs) const;
+
+	bool operator!=(const Card& rhs) const;
+
+
 private:
 	QString _id;
 	QString _pin;
 	Money _balance;
 	bool _isBlocked = false;
 };
-
 
 #endif //ATM_CARD_H

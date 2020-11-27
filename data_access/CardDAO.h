@@ -6,6 +6,7 @@
 #define ATM_CARDDAO_H
 
 #include <QtSql/QSqlQuery>
+#include <QtCore/QObject>
 #include "logics/bank_services/Card.h"
 
 class CardDAO {

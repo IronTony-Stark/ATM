@@ -12,6 +12,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
+find_package(Qt5Test REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -160,9 +161,10 @@ add_executable(MOOP_ATM
         data_access/DepositDAO.h
         data_access/PaymentDAO.cpp
         data_access/PaymentDAO.h
-        )
+        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 target_link_libraries(${PROJECT_NAME} Qt5::Sql)
+target_link_libraries(${PROJECT_NAME} Qt5::Test)

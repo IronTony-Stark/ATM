@@ -31,8 +31,8 @@ Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 	createQuery.bindValue(":name", deposit.name());
 	createQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	createQuery.bindValue(":interest", deposit.interest());
-	createQuery.bindValue(":start_date", deposit.startDate().toString());
-	createQuery.bindValue(":end_date", deposit.endDate());
+    createQuery.bindValue(":start_date", deposit.startDate());
+    createQuery.bindValue(":end_date", deposit.endDate());
 	createQuery.exec();
 	deposit._id = createQuery.lastInsertId().toUInt();
 	return deposit;

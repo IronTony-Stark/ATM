@@ -89,3 +89,14 @@ bool Card::isBlocked() const {
 	return _isBlocked;
 }
 
+bool Card::operator==(const Card& rhs) const {
+	return _bankFee == rhs._bankFee &&
+		   _cardType == rhs._cardType &&
+		   _pin == rhs._pin &&
+		   _balance == rhs._balance &&
+		   _isBlocked == rhs._isBlocked;
+}
+
+bool Card::operator!=(const Card& rhs) const {
+	return !(rhs == *this);
+}
