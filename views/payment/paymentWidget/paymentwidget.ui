@@ -20,6 +20,9 @@
    <property name="formAlignment">
     <set>Qt::AlignCenter</set>
    </property>
+   <property name="verticalSpacing">
+    <number>30</number>
+   </property>
    <item row="0" column="0">
     <widget class="QLabel" name="labelName">
      <property name="text">
@@ -44,7 +47,7 @@
    <item row="3" column="0">
     <widget class="QLabel" name="labelWhen">
      <property name="text">
-      <string>Time</string>
+      <string>Day of month</string>
      </property>
     </widget>
    </item>
@@ -71,7 +74,7 @@
     </widget>
    </item>
    <item row="3" column="1">
-    <widget class="QDateTimeEdit" name="editWhen"/>
+    <widget class="QLineEdit" name="editWhen"/>
    </item>
   </layout>
  </widget>

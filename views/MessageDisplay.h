@@ -12,8 +12,11 @@ class MessageDisplay {
 public:
     explicit MessageDisplay(QWidget& parent) : _parent(parent) {}
 
-    void show(const QString& msg) {
-        QMessageBox::critical(&_parent, "ATM", msg);
+    void show(const QString& msg, bool isCritical = true) {
+        if (isCritical)
+            QMessageBox::critical(&_parent, "ATM", msg);
+        else
+            QMessageBox::information(&_parent, "ATM", msg);
     }
 
 private:

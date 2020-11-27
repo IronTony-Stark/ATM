@@ -13,13 +13,15 @@
 
 class ReplenishDepositCommand : public Command {
 public:
-    ReplenishDepositCommand(OperationManager& operationManager,
+    ReplenishDepositCommand(Deposit*& selectedDeposit,
+                            OperationManager& operationManager,
                             QLineEdit& replenishAmount,
                             MessageDisplay& messageDisplay);
 
     void execute() override;
 
 private:
+    Deposit*& _selectedDeposit;
     OperationManager& _operationManager;
     QLineEdit& _replenishAmount;
     MessageDisplay& _messageDisplay;

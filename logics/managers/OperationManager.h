@@ -76,7 +76,7 @@ public:
 	int endDeposit(uint);
 
 	QList<RegularPayment*> getAllPayments();
-    void setPayment(const QString&, uint, const QString&, const QDateTime&);
+    void setPayment(const QString&, uint, const QString&, const uint&);
     void cancelPayment(uint id);
 
     void setClock(Clock*);

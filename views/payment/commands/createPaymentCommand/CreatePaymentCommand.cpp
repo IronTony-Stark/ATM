@@ -22,7 +22,7 @@ void CreatePaymentCommand::execute() {
     QString name;
     uint amount;
     QString receiver;
-    QDateTime when;
+    uint when;
     std::tie(name, amount, receiver, when) = _paymentWidget.data();
     try {
         _operationManager.setPayment(name, amount, receiver, when);

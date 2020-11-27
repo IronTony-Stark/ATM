@@ -37,8 +37,6 @@ int main(int argc, char* argv[]) {
 		PaymentDAO::getInstance();
 	}
 
-//    Deposit* d = new Deposit("owned", "name", 10, 5, QDate::currentDate(), QDate::currentDate().addDays(5), 1);
-
 	freopen("testing.log", "w", stdout);
 	QTest::qExec(new Test_CardDAO, argc, argv);
 	QTest::qExec(new Test_CreditDAO, argc, argv);

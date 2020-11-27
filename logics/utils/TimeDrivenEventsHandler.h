@@ -26,10 +26,12 @@ public:
 
 private:
     bool _isPayed = false;
+    bool _isIncreased = false;
     OperationManager* _operationManager;
 
-    void payPayments();
+    void payPayments(const QDateTime& dateTime);
     void increaseDeposits(const QDateTime& dateTime);
+    static void checkPaymentsDate(const QDateTime& dateTime);
 };
 
 

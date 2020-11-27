@@ -41,6 +41,7 @@ void PaymentWindow::setupListPayments() {
 void PaymentWindow::onListPaymentsItemClicked(QListWidgetItem* item) {
     int index = _ui->listPayments->row(item);
     _selectedPayment = _payments[index];
+    _ui->widgetMyPaymentsPayment->setup(*_selectedPayment);
     _ui->stackedWidget->setCurrentIndex(3);
 }
 
@@ -51,11 +52,13 @@ void PaymentWindow::navigate(int destination) {
             _logicSettable->setLogic(&_paymentPageLogic);
             break;
         case CREATE_PAYMENT:
+            _ui->widgetCreatePaymentPayment->clear();
             _ui->stackedWidget->setCurrentIndex(1);
             _logicSettable->setLogic(&_createPaymentPageLogic);
             break;
         case MY_PAYMENTS:
             setupListPayments();
+            _ui->widgetMyPaymentsPayment->clear();
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myPaymentsPageLogic);
             break;
@@ -73,7 +76,7 @@ void PaymentWindow::setupCommands() {
     _createPaymentPageLogic.setEnterCommand(createPayment);
 
     std::shared_ptr<Command> cancelPayment(new CancelPaymentCommand(
-            _operationManager));
+            *this, _selectedPayment, _operationManager, _messageDisplay));
     _myPaymentsPageLogic.setClearCommand(cancelPayment);
 }
 

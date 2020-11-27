@@ -25,6 +25,8 @@ public:
 
 	uint dayOfMonth() const;
 
+	void setDayOfMonth(uint);
+
 private:
 	friend class PaymentDAO;
 

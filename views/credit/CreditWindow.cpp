@@ -72,7 +72,7 @@ void CreditWindow::setupCommands() {
     _takeCreditPageLogic.setEnterCommand(takeCreditCommand);
 
     std::shared_ptr<Command> repayCreditCommand(new RepayCreditCommand(
-            _operationManager, _messageDisplay));
+            _selectedCredit, _operationManager, _messageDisplay));
     _myCreditPageLogic.setEnterCommand(repayCreditCommand);
 }
 

@@ -6,6 +6,7 @@
 #define ATM_PAYMENTWIDGET_H
 
 #include <QWidget>
+#include <logics/bank_services/RegularPayment.h>
 
 namespace Ui {
     class PaymentWidget;
@@ -18,7 +19,10 @@ public:
     explicit PaymentWidget(QWidget* parent = nullptr);
     ~PaymentWidget() override;
 
-    std::tuple<QString, uint, QString, QDateTime> data();
+    std::tuple<QString, uint, QString, uint> data();
+    void setup(const RegularPayment&);
+    void setReadOnly(bool);
+    void clear();
 
     bool validateInput();
 

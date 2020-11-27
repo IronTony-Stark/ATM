@@ -13,7 +13,9 @@
 
 class OpenDepositCommand : public Command {
 public:
-    OpenDepositCommand(Navigatable& navigatable, OperationManager& operationManager, DepositWidget& depositWidget,
+    OpenDepositCommand(Navigatable& navigatable,
+                       OperationManager& operationManager,
+                       DepositWidget& depositWidget,
                        MessageDisplay& messageDisplay);
 
     void execute() override;
