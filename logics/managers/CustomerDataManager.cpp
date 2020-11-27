@@ -4,7 +4,6 @@
 
 #include <logics/exceptions/NotEnoughMoneyException.h>
 #include <logics/exceptions/NoSuchCreditException.h>
-//#include <logics/exceptions/WrongPaymentException.h>
 #include <logics/exceptions/CreditRepayOverheadException.h>
 #include <logics/exceptions/NoSuchDepositException.h>
 
@@ -26,11 +25,13 @@ Money CustomerDataManager::balance() const {
 
 void CustomerDataManager::replenish(Money amount) {
 	_bankCard->replenish(amount);
+	CardDAO::getInstance().updateCard(*_bankCard);
 }
 
 void CustomerDataManager::withdraw(Money amount) {
 	if (_bankCard->balance() < amount) throw NotEnoughMoneyException(_bankCard->balance(), amount);
 	_bankCard->withdraw(amount);
+	CardDAO::getInstance().updateCard(*_bankCard);
 }
 
 bool CustomerDataManager::canAffordCredit(Money amount, double interest) const {

@@ -32,6 +32,12 @@ int main(int argc, char* argv[]) {
 		PaymentDAO::getInstance();
 	}
 
+//    Card c("1234", ABankFee::STANDARD, "0000", 5000);
+//    Card* pc = CardDAO::getInstance().getById("2");
+//    pc->withdraw(10000000);
+//    Money b = pc->balance();
+
+
 	// tests/demo
 	/*
 	Credit* credit = new Credit("myName", Money(50.23), 0.2, Money(4.90));
