@@ -11,11 +11,14 @@
 
 class RepayCreditCommand : public Command {
 public:
-    explicit RepayCreditCommand(OperationManager& operationManager, MessageDisplay& messageDisplay);
+    RepayCreditCommand(Credit*& selectedCredit,
+                       OperationManager& operationManager,
+                       MessageDisplay& messageDisplay);
 
     void execute() override;
 
 private:
+    Credit*& _selectedCredit;
     OperationManager& _operationManager;
     MessageDisplay& _messageDisplay;
 };

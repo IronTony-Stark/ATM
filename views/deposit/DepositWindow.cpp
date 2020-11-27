@@ -5,6 +5,7 @@
 #include <QtWidgets/QMessageBox>
 #include <utility>
 #include <views/exceptions/AbsentNavigationDestination.h>
+#include <views/validator/Validators.h>
 #include "DepositWindow.h"
 #include "gui/ui_depositwindow.h"
 #include "Windows.h"
@@ -18,6 +19,9 @@ DepositWindow::DepositWindow(OperationManager& operationManager, QWidget* parent
         _openDepositPageLogic(*this),
         _myDepositsPageLogic(*this) {
     _ui->setupUi(this);
+
+    _ui->editMyDepositsReplenish->setValidator(new QRegularExpressionValidator(
+            QRegularExpression(amountRegex), this));
 
     _ui->widgetOpenDepositDeposit->setReadOnly(false);
     _ui->widgetMyDepositsDeposit->setReadOnly(true);
@@ -49,6 +53,7 @@ void DepositWindow::navigate(int destination) {
             break;
         case MY_DEPOSITS:
             setupListDeposits();
+            _ui->editMyDepositsReplenish->setText("");
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myDepositsPageLogic);
             break;
@@ -66,11 +71,11 @@ void DepositWindow::setupCommands() {
     _openDepositPageLogic.setEnterCommand(openDepositCommand);
 
     std::shared_ptr<Command> replenishDepositCommand(new ReplenishDepositCommand(
-            _operationManager, *_ui->editMyDepositsReplenish, _messageDisplay));
+            _selectedDeposit, _operationManager, *_ui->editMyDepositsReplenish, _messageDisplay));
     _myDepositsPageLogic.setEnterCommand(replenishDepositCommand);
 
     std::shared_ptr<Command> cancelDepositCommand(new CancelDepositCommand(
-            _operationManager));
+            *this, _selectedDeposit, _operationManager, _messageDisplay));
     _myDepositsPageLogic.setClearCommand(cancelDepositCommand);
 }
 

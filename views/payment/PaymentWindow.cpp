@@ -76,7 +76,7 @@ void PaymentWindow::setupCommands() {
     _createPaymentPageLogic.setEnterCommand(createPayment);
 
     std::shared_ptr<Command> cancelPayment(new CancelPaymentCommand(
-            _operationManager));
+            *this, _selectedPayment, _operationManager, _messageDisplay));
     _myPaymentsPageLogic.setClearCommand(cancelPayment);
 }
 

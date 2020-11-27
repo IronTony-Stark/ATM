@@ -8,15 +8,22 @@
 #include <views/Command.h>
 #include <views/Navigatable.h>
 #include <logics/managers/OperationManager.h>
+#include <views/MessageDisplay.h>
 
 class CancelPaymentCommand : public Command {
 public:
-    explicit CancelPaymentCommand(OperationManager& operationManager);
+    CancelPaymentCommand(Navigatable& navigatable,
+                         RegularPayment*& selectedPayment,
+                         OperationManager& operationManager,
+                         MessageDisplay& messageDisplay);
 
     void execute() override;
 
 private:
+    Navigatable& _navigatable;
+    RegularPayment*& _selectedPayment;
     OperationManager& _operationManager;
+    MessageDisplay& _messageDisplay;
 };
 
 

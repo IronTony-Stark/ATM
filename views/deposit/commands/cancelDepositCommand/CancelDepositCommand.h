@@ -7,15 +7,23 @@
 
 #include <views/Command.h>
 #include <logics/managers/OperationManager.h>
+#include <views/MessageDisplay.h>
+#include <views/Navigatable.h>
 
 class CancelDepositCommand : public Command {
 public:
-    CancelDepositCommand(OperationManager& operationManager);
+    CancelDepositCommand(Navigatable& navigatable,
+                         Deposit*& selectedDeposit,
+                         OperationManager& operationManager,
+                         MessageDisplay& messageDisplay);
 
     void execute() override;
 
 private:
+    Navigatable& _navigatable;
+    Deposit*& _selectedDeposit;
     OperationManager& _operationManager;
+    MessageDisplay& _messageDisplay;
 };
 
 #endif //ATM_CANCELDEPOSITCOMMAND_H

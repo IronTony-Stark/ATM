@@ -32,6 +32,13 @@
          </property>
         </widget>
        </item>
+       <item>
+        <widget class="QPushButton" name="pushButton">
+         <property name="text">
+          <string>|Cancel| Back</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageOpenDeposit">
@@ -57,13 +64,40 @@
        <item>
         <widget class="DepositWidget" name="widgetOpenDepositDeposit" native="true"/>
        </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <widget class="QLabel" name="label_4">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>|Enter| Open Deposit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_5">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>|Cancel| Back</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
+       </item>
       </layout>
      </widget>
      <widget class="QWidget" name="pageMyDeposits">
       <layout class="QGridLayout" name="gridLayout">
-       <item row="4" column="1">
-        <widget class="QLineEdit" name="editMyDepositsReplenish"/>
-       </item>
        <item row="1" column="0" colspan="2" alignment="Qt::AlignHCenter">
         <widget class="QLabel" name="labelMyDepositsTitle">
          <property name="sizePolicy">
@@ -82,8 +116,11 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="DepositWidget" name="widgetMyDepositsDeposit" native="true"/>
+       <item row="2" column="0" rowspan="3">
+        <widget class="QListWidget" name="listDeposits"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLineEdit" name="editMyDepositsReplenish"/>
        </item>
        <item row="3" column="1">
         <widget class="QLabel" name="labelMyDepositsReplenish">
@@ -98,34 +135,51 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="0" rowspan="3">
-        <widget class="QListWidget" name="listDeposits"/>
+       <item row="2" column="1">
+        <widget class="DepositWidget" name="widgetMyDepositsDeposit" native="true"/>
        </item>
-       <item row="5" column="0" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>|Enter| Replenish Deposit</string>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1" alignment="Qt::AlignHCenter">
-        <widget class="QLabel" name="label_2">
-         <property name="sizePolicy">
-          <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-           <horstretch>0</horstretch>
-           <verstretch>0</verstretch>
-          </sizepolicy>
-         </property>
-         <property name="text">
-          <string>|Cancel| Back</string>
-         </property>
-        </widget>
+       <item row="6" column="0" colspan="3">
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <widget class="QLabel" name="label">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>|Enter| Replenish Deposit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_3">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>|Clear| Cancel Deposit</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_2">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>|Cancel| Back</string>
+           </property>
+          </widget>
+         </item>
+        </layout>
        </item>
       </layout>
      </widget>
