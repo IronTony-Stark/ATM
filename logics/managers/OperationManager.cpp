@@ -67,9 +67,8 @@ void OperationManager::transfer(const QString& cardNumberTo, uint amount) {
     transfer(_customerDataManager.card().number(), cardNumberTo, amount);
 }
 
-// TODO get all credits for the authorized user, not for all users
 QList<Credit*> OperationManager::getAllCredits() {
-    return _creditDao.getAll();
+    return _customerDataManager.customer().credits();
 }
 
 
@@ -92,7 +91,6 @@ void OperationManager::takeCredit(const QString& name,
 void OperationManager::repayCredit(uint id) {
     Credit* pCredit = _creditDao.getById(id);
     const Money& requested = pCredit->payment();
-    // TODO is this right?
     if (_customerDataManager.balance() >= requested) {
         pCredit->replenish(requested);
         _customerDataManager.withdraw(requested);
@@ -104,7 +102,7 @@ void OperationManager::repayCredit(uint id) {
 }
 
 QList<Deposit*> OperationManager::getAllDeposits() {
-    return _depositDao.getAll();
+    return _customerDataManager.customer().deposits();
 }
 
 void OperationManager::startDeposit(
