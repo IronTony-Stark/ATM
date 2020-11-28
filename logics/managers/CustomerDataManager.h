@@ -34,7 +34,8 @@ public:
 
 	static void withdrawByCardId(QString& cardId, Money amount);
 
-	bool canAffordCredit(Money amount, double interest) const;
+	bool canAffordCredit(Money amount, uint period, double interest) const;
+    static Money getCreditValueWithPercents(const Money& amount, uint period, double interest) ;
 
 	Money takeCredit(Money debt, QString name, double interest);
 

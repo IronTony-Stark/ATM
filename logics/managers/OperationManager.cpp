@@ -9,6 +9,8 @@
 #include <data_access/CardDAO.h>
 #include "OperationManager.h"
 
+#include "QDebug"
+
 // todo withdraw, transfer, register, takeCredit, repayCredit, replenishDeposit, startDeposit, setPayment can throw std::exception
 bool OperationManager::authorizeCustomer(const QString& cardNumber, const QString& pinCode) {
     Customer* const customer = _customerDataManager.getCustomerByCardNumber(cardNumber);
@@ -45,13 +47,16 @@ void OperationManager::withdraw(unsigned int howMuch) {
 }
 
 void OperationManager::transfer(const QString& cardNumberFrom, const QString& cardNumberTo, const Money& amount) {
+    if (cardNumberFrom == cardNumberTo)
+        throw std::invalid_argument("Couldn't transfer yourself");
+
     Customer* const customer = CustomerDAO::getInstance().getCustomerByCardId(cardNumberTo);
     if (customer == nullptr)
-        throw std::runtime_error("card number'" + cardNumberFrom.toStdString() + "' not found in database.");
+        throw std::invalid_argument("No such card registered: '" + cardNumberTo.toStdString() + "'");
 
     Card* cardFrom = CardDAO::getInstance().getById(cardNumberFrom);
     const std::pair<Money, Money>& pair = cardFrom->transfer(cardNumberTo, amount);
-    cardFrom->withdrawFree(pair.second); // Money after subtracting fee
+    cardFrom->withdrawFree(pair.second); // Money before subtracting fee
     CardDAO::getInstance().updateCard(*cardFrom);
     delete cardFrom;
     delete customer;
@@ -74,12 +79,14 @@ void OperationManager::takeCredit(const QString& name,
                                   uint payment,
                                   const QDateTime& start,
                                   const QDateTime& end) {
-    int interest = CreditConditions::creditingOptions.value(period);
+    double interest = CreditConditions::creditingOptions.value(period);
     const Money& debt = Money(amount);
-    if (_customerDataManager.canAffordCredit(debt, period)) {
+    if (_customerDataManager.canAffordCredit(debt, period, interest)) {
         _customerDataManager.takeCredit(debt, name, interest);
     } else
-        throw NotEnoughMoneyException(_customerDataManager.balance(), debt);
+        throw NotEnoughMoneyException(
+                _customerDataManager.customer().creditLimit(),
+                CustomerDataManager::getCreditValueWithPercents(amount, period, interest));
 }
 
 void OperationManager::repayCredit(uint id) {

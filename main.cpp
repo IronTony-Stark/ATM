@@ -17,6 +17,8 @@
 #include "data_access/PaymentDAO.h"
 
 int main(int argc, char* argv[]) {
+    // TODO Update card balance after operations (transfer)
+    // TODO Add info about commissions to the 'Info' tab
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	qDebug() << QApplication::style()->objectName();
