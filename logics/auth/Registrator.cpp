@@ -9,7 +9,7 @@
 #include <logics/exceptions/CustomerRegistrationException.h>
 #include <logics/utils/general.h>
 
-QString Registrator::registerCustomer(const CustomerVerificationData& verificationData) const {
+std::pair<QString, QString> Registrator::registerCustomer(const CustomerVerificationData& verificationData) const {
     Customer* customer = _customerDataManager.getCustomerByTaxNumber(verificationData.getTaxNumber());
     if (customer != nullptr) {
         QList<Card*> cards = customer->cards();
@@ -33,8 +33,9 @@ QString Registrator::registerCustomer(const CustomerVerificationData& verificati
     customer->addCard(newCard);
 
     _customerDao.saveCustomer(*customer);
-	delete customer;
-    return pin;
+    const std::pair<QString, QString>& returnVal = std::pair<QString, QString>(pin, newCard->id());
+    delete customer;
+    return returnVal;
 }
 
 QString Registrator::genPin() {

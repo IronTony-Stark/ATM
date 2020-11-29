@@ -22,7 +22,7 @@ public:
     explicit Registrator(const CustomerDataManager& customerDataManager, const CustomerDAO& customerDao) :
             _customerDataManager(customerDataManager), _customerDao(customerDao) {}
 
-    QString registerCustomer(const CustomerVerificationData& verificationData) const;
+    std::pair<QString, QString> registerCustomer(const CustomerVerificationData& verificationData) const;
 };
 
 
