@@ -32,16 +32,14 @@ int main(int argc, char* argv[]) {
     // Deposits
     // ! TODO Deposit end date incorrect (start is shown)
     // ! TODO Deposit interest is 0 (have to be not)
+    // ! TODO OpenDepositCommand::execute() pass 0 as percentage
     // TODO Update sum in deposit view after replenish
     // TODO Clear fields in deposit view after return to previous screen
 
     // *Andrew*
-    // ! TODO All exceptions (except NotEnoughMoney) must be compatible with std::exception (what() method)
     // ! TODO Make columns belong to Money in 'credit' table accept double
     // ! TODO Add start sum to deposit
-    // ! TODO 'owner_card' have to be added with CARD id
     // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
-    // TODO 'owner_card' in deposit - customer_id
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

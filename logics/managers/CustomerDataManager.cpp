@@ -94,9 +94,11 @@ bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {
     return (totalDepositBalance + potentialBalance) < Deposit::maxDepoSum;
 }
 
-Money CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest, uint months) {
+Money
+CustomerDataManager::openDeposit(Money initialBalance, QString name, double interest,
+                                 uint months, QDate startDate, QDate endDate) {
     Deposit* depo = new Deposit(_bankCard->id(), std::move(name), initialBalance, interest,
-                                QDate::currentDate(), QDate::currentDate().addMonths(months));
+                                endDate, startDate);
     _customer->addDeposit(depo);
     _bankCard->withdrawFree(initialBalance);
     DepositDAO::getInstance().saveDeposit(*depo);

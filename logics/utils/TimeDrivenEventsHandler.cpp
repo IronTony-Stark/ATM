@@ -54,14 +54,19 @@ void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
     const QList<Deposit*>& deposits = depositDao.getAll();
     qDebug() << "Deposits count: " << deposits.count();
     for (Deposit* deposit: deposits) {
-        if (deposit->endDate() >= dateTime.date()) {
+        if (deposit->endDate() > dateTime.date()) {
             double interestPerDay = deposit->interest() / 365;
             const Money& incomePerDay = (double)deposit->sum() * interestPerDay;
             qDebug() << deposit->name() << ": " << (double)incomePerDay;
             deposit->replenish(incomePerDay);
             depositDao.updateDeposit(*deposit);
         } else {
-            _operationManager->endDeposit(deposit->id());
+            try {
+                OperationManager::endDeposit(deposit->id());
+                qInfo() << "Deposit '" << deposit->id() << "' was cancelled";
+            } catch (const std::exception& e) {
+                qWarning() << e.what();
+            }
         }
     }
     _isIncreased = true;
