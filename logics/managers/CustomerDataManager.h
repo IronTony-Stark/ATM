@@ -22,7 +22,7 @@ public:
 
 	Customer* getCustomerByCredit(uint) const;
 
-	Customer* getCustomerByDepositId(uint) const;
+	static Customer* getCustomerByDepositId(uint);
 
 	Money balance() const;
 

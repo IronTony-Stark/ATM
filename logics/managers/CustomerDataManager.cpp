@@ -160,7 +160,7 @@ Customer* CustomerDataManager::getCustomerByCredit(uint creditId) const {
     return CustomerDAO::getInstance().getCustomerByCredit(creditId);
 }
 
-Customer* CustomerDataManager::getCustomerByDepositId(uint depoId) const {
+Customer* CustomerDataManager::getCustomerByDepositId(uint depoId) {
     return CustomerDAO::getInstance().getCustomerByDepositId(depoId);
 }
 

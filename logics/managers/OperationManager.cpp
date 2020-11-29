@@ -155,9 +155,9 @@ void OperationManager::setClock(Clock* clock) {
     _clock->subscribe(_timeDrivenEventsHandler);
 }
 
-int OperationManager::endDeposit(const uint depositId) const {
-    Deposit* pDeposit = _depositDao.getById(depositId);
-    Customer* pCustomer = _customerDataManager.getCustomerByDepositId(depositId);
+int OperationManager::endDeposit(const uint depositId) {
+    Deposit* pDeposit = DepositDAO::getInstance().getById(depositId);
+    Customer* pCustomer = CustomerDataManager::getCustomerByDepositId(depositId);
 
     if (pDeposit == nullptr)
         throw std::invalid_argument("Given deposit id wasn't found in DB.");
