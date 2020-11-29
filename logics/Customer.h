@@ -48,7 +48,7 @@ public:
 
 	void removeDeposit(uint);
 
-	const QList<RegularPayment*> regularPayments() const;
+	//QList<RegularPayment*> regularPayments() const;
 
 	~Customer();
 

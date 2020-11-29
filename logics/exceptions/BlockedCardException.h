@@ -8,7 +8,7 @@
 
 #include <QtCore/QString>
 
-class BlockedCardException : std::exception {
+class BlockedCardException : public std::exception {
 public:
 	explicit BlockedCardException(QString cardId) : _cardId(std::move(cardId)) {}
 

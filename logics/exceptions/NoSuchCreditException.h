@@ -12,14 +12,12 @@
 #include <utility>
 #include "NoSuchCustomerPossessionException.h"
 
-class NoSuchCreditException : NoSuchCustomerPossessionException {
+class NoSuchCreditException : public NoSuchCustomerPossessionException {
 public:
 	NoSuchCreditException(QString customerId, uint creditId) :
 			NoSuchCustomerPossessionException(std::move(customerId), QString::number(creditId), "CREDIT") {};
 
 	const char* what() const noexcept override { return NoSuchCustomerPossessionException::what();};
 };
-
-//std::ostream& operator<<(std::ostream&, const NoSuchCreditException&);
 
 #endif //ATM_NOSUCHCREDITEXCEPTION_H

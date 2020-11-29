@@ -14,6 +14,7 @@
 #include <data_access/CreditDAO.h>
 #include <logics/exceptions/NoSuchCardException.h>
 #include <logics/bank_fees/CreditConditions.h>
+#include <data_access/PaymentDAO.h>
 #include "CustomerDataManager.h"
 
 const Customer& CustomerDataManager::customer() const {
@@ -183,5 +184,9 @@ void CustomerDataManager::withdrawByCardId(QString& cardId, Money amount) {
     if (!card->canWithdraw(amount)) throw NotEnoughMoneyException(card->balance(), amount);
     card->withdraw(amount);
     CardDAO::getInstance().updateCard(*card);
+}
+
+QList<RegularPayment*> CustomerDataManager::regularPayments() const {
+	return PaymentDAO::getInstance().getSenderCardPayments(_bankCard->id());
 }
 

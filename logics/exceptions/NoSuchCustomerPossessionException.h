@@ -10,7 +10,7 @@
 #include <QtGui/qopengl.h>
 #include <QtCore/QString>
 
-class NoSuchCustomerPossessionException : std::exception {
+class NoSuchCustomerPossessionException : public std::exception {
 public:
 	NoSuchCustomerPossessionException(QString customerId, QString possessionId, QString possName);
 

@@ -75,7 +75,7 @@ public:
 
     static int endDeposit(uint);
 
-	QList<RegularPayment*> getAllPayments();
+	const QList<RegularPayment*> getAllCustomerPayments();
     void setPayment(const QString&, uint, const QString&, const uint&);
     void cancelPayment(uint id);
 

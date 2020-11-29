@@ -41,6 +41,8 @@ public:
 
 	bool repayCredit(Money amount, uint creditId);
 
+	QList<RegularPayment*> regularPayments() const;
+
 	bool canOpenDeposit(Money potentialBalance) const;
 
 	Money openDeposit(Money initialBalance, QString name, double interest, uint months, QDate startDate,

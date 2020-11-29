@@ -23,12 +23,6 @@ int main(int argc, char* argv[]) {
     // General
     // ! TODO Add info about commissions to the 'Info' tab
 
-    // *Andrew*
-    // testCardId DELETE!!
-    // ! TODO Add start sum to deposit
-    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has been cancelled [DONE]
-    // ! TODO return payments belong to customer
-    // ! TODO виправ в OperationManager повернення результату
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

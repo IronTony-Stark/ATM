@@ -31,7 +31,7 @@ PaymentWindow::~PaymentWindow() {
 
 void PaymentWindow::setupListPayments() {
     _ui->listPayments->clear();
-    _payments = _operationManager.getAllPayments();
+    _payments = _operationManager.getAllCustomerPayments();
 
     for (auto& payment : _payments) {
         new QListWidgetItem(payment->name(), _ui->listPayments);

@@ -11,7 +11,7 @@
 #include <utility>
 #include "NoSuchCustomerPossessionException.h"
 
-class NoSuchCardException : NoSuchCustomerPossessionException {
+class NoSuchCardException : public NoSuchCustomerPossessionException {
 public:
 	NoSuchCardException(QString customerId, const QString& cardId) :
 			NoSuchCustomerPossessionException(std::move(customerId), cardId, "CARD") {}

@@ -15,6 +15,8 @@ public:
 
 	void save(RegularPayment&) const;
 
+	QList<RegularPayment*> getSenderCardPayments(const QString& senderId) const;
+
 	QList<RegularPayment*> getAll() const;
 
 	RegularPayment* const getById(uint id) const;

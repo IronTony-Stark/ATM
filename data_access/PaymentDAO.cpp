@@ -46,6 +46,18 @@ QList<RegularPayment*> PaymentDAO::getAll() const {
 	return res;
 }
 
+QList<RegularPayment*> PaymentDAO::getSenderCardPayments(const QString& senderId) const {
+	QSqlQuery selectQuery("SELECT id, name, amount, sender_id, receiver_id, day_of_month FROM payment WHERE sender_id = ?;");
+	selectQuery.bindValue(0, senderId);
+    selectQuery.exec();
+	QList<RegularPayment*> res;
+	while (selectQuery.next()) {
+		RegularPayment* payment = buildPayment(selectQuery);
+		res.append(payment);
+	}
+	return res;
+}
+
 RegularPayment* const PaymentDAO::getById(uint id) const {
 	QSqlQuery selectQuery;
 	selectQuery.prepare("SELECT id, name, amount, sender_id, receiver_id, day_of_month FROM payment WHERE id = ?;");
@@ -65,6 +77,8 @@ RegularPayment* PaymentDAO::buildPayment(const QSqlQuery& query) const {
 void PaymentDAO::removePayment(uint id) const {
 	QSqlQuery deleteQuery(QString("DELETE FROM payment WHERE id = %1").arg(id));
 }
+
+
 
 
 

@@ -8,7 +8,7 @@
 #include <exception>
 #include <logics/utils/Money.h>
 
-class CreditRepayOverheadException : std::exception {
+class CreditRepayOverheadException : public std::exception {
 public:
 	CreditRepayOverheadException(Money maximum, Money actual);
 

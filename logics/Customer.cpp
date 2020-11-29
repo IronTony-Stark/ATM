@@ -12,6 +12,7 @@
 #include <data_access/CustomerDAO.h>
 #include <data_access/CreditDAO.h>
 #include <data_access/DepositDAO.h>
+#include <data_access/PaymentDAO.h>
 
 Customer::Customer(QString name, QString taxNum, QString phoneNum, const Money revenue) :
 		_name(std::move(name)), _taxNumber(std::move(taxNum)), _phoneNumber(std::move(phoneNum)),
@@ -106,8 +107,7 @@ void Customer::releaseMemory(QList<Pointer>& list) {
     }
 }
 
-const QList<RegularPayment*> Customer::regularPayments() const {
-    // TODO return payments belong to customer
-    return QList<RegularPayment*>();
-}
+//QList<RegularPayment*> Customer::regularPayments() const {
+//    return PaymentDAO::getInstance().getSenderCardPayments(_taxNumber);
+//}
 

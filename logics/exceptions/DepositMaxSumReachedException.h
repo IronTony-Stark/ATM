@@ -8,7 +8,7 @@
 #include <exception>
 #include <string>
 
-class DepositMaxSumReachedException final : std::exception {
+class DepositMaxSumReachedException final : public std::exception {
 public:
     explicit DepositMaxSumReachedException(std::string message): _message(std::move(message)){}
 
