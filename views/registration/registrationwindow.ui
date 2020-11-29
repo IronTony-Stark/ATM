@@ -176,6 +176,19 @@
        <item>
         <layout class="QVBoxLayout" name="verticalLayout_2">
          <item alignment="Qt::AlignHCenter">
+          <widget class="QLabel" name="labelCardNumber">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+             <horstretch>0</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
+           <property name="text">
+            <string>Your card number</string>
+           </property>
+          </widget>
+         </item>
+         <item alignment="Qt::AlignHCenter">
           <widget class="QLabel" name="labelPin">
            <property name="sizePolicy">
             <sizepolicy hsizetype="Fixed" vsizetype="Fixed">

@@ -55,9 +55,10 @@ void RegistrationWindow::onBtnEnterClicked() {
         uint income = _ui->editIncome->text().toUInt();
         ABankFee::CardType cardType = getCardType();
         try {
-            QString pin = _operationManager.registerCustomer(CustomerVerificationData(
+            std::pair<QString, QString> numberPin = _operationManager.registerCustomer(CustomerVerificationData(
                     name, taxNumber, income, phone, cardType));
-            _ui->labelPin->setText(pin);
+            _ui->labelCardNumber->setText(numberPin.second);
+            _ui->labelPin->setText(numberPin.first);
             _ui->stackedWidget->setCurrentIndex(CARD);
             clear();
         } catch (const std::exception& e) {
