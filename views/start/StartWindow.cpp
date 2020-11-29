@@ -88,8 +88,9 @@ void StartWindow::onBtnEnterClicked() {
             _mainMenuWindow.setLogicActive();
             _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
         } else if (--_pinAttempts == 0) {
-            // TODO navigate to start if card is blocked
-            _operationManager.blockCustomer(number);
+            OperationManager::blockCustomer(number);
+            QMessageBox::critical(this, "ATM", "Your card has been blocked");
+            _ui->stackedWidget->setCurrentIndex(START);
         } else {
             _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
         }
