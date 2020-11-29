@@ -29,6 +29,7 @@ void TakeCreditCommand::execute() {
     std::tie(name, sum, period, payment, start, end) = _widgetTakeCredit.data();
     try {
         _operationManager.takeCredit(name, sum, period, payment, start, end);
+        _messageDisplay.show(QString::number(sum) + " added to card balance", false);
         _navigatable.navigate(CREDITS_MENU);
     } catch (const std::exception& e) {
         _messageDisplay.show(e.what());

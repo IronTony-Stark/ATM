@@ -53,6 +53,7 @@ void DepositWindow::navigate(int destination) {
             break;
         case MY_DEPOSITS:
             setupListDeposits();
+            _ui->widgetMyDepositsDeposit->clear();
             _ui->editMyDepositsReplenish->setText("");
             _ui->stackedWidget->setCurrentIndex(2);
             _logicSettable->setLogic(&_myDepositsPageLogic);

@@ -45,7 +45,7 @@ std::tuple<QString, uint, uint, QDateTime, QDateTime, double> DepositWidget::dat
     uint period = _ui->comboPeriod->currentText().toUInt();
     QDateTime start = QDateTime::currentDateTime();
     QDateTime end = start.addMonths(period);
-    uint interest = _ui->labelInterestValue->text().toUInt();
+    double interest = _ui->labelInterestValue->text().toDouble();
 
     return std::tuple<QString, uint, uint, QDateTime, QDateTime, double>(name, amount, period, start, end, interest);
 }
@@ -60,7 +60,7 @@ void DepositWidget::setup(const Deposit& deposit) {
     _ui->comboPeriod->setCurrentIndex(index);
 
     _ui->labelStartValue->setText(deposit.startDate().toString(dateFormat));
-    _ui->labelEndValue->setText(deposit.startDate().addMonths(period).toString(dateFormat));
+    onPeriodChanged();
 }
 
 void DepositWidget::setReadOnly(bool value) {

@@ -8,10 +8,12 @@
 #include <views/Command.h>
 #include <logics/managers/OperationManager.h>
 #include <views/MessageDisplay.h>
+#include <views/Navigatable.h>
 
 class RepayCreditCommand : public Command {
 public:
     RepayCreditCommand(Credit*& selectedCredit,
+                       Navigatable& navigatable,
                        OperationManager& operationManager,
                        MessageDisplay& messageDisplay);
 
@@ -19,6 +21,7 @@ public:
 
 private:
     Credit*& _selectedCredit;
+    Navigatable& _navigatable;
     OperationManager& _operationManager;
     MessageDisplay& _messageDisplay;
 };
