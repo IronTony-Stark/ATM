@@ -100,7 +100,7 @@ void OperationManager::startDeposit(
         const QString& name, uint amount, uint period, const QDateTime& start, const QDateTime& end,
         double percentage) {
     if (_customerDataManager.canOpenDeposit(amount)) {
-        _customerDataManager.openDeposit(amount, name, percentage, period);
+        _customerDataManager.openDeposit(amount, name, percentage, period, start.date(), end.date());
     } else
         throw DepositMaxSumReachedException("You have reached max sum on deposits.");
 }
@@ -164,15 +164,20 @@ int OperationManager::endDeposit(const uint depositId) {
     if (pCustomer == nullptr)
         throw std::invalid_argument("Given deposit isn't belong to any customer.");
 
-//    _bankCard->replenish(deposit->sum());
-//    _customer->removeDeposit(depoId);
-//    DepositDAO::getInstance().deleteById(depoId);
-//    CustomerDAO::getInstance().removeDeposit(depoId);
-//    CardDAO::getInstance().updateCard(card());
-    // TODO replenish to card
+    Card* pCard = CardDAO::getInstance().getById(pDeposit->ownerCard());
+    if (pCard == nullptr)
+        throw std::invalid_argument("Card, to which money must be transferred cannot be found in DB. "
+                                    + pDeposit->ownerCard().toStdString());
+
+    pCard->replenishFree(pDeposit->sum());
+    pCustomer->removeDeposit(depositId);
+    DepositDAO::getInstance().deleteById(depositId);
+    CustomerDAO::getInstance().removeDeposit(depositId);
+    CardDAO::getInstance().updateCard(*pCard);
 
     delete pDeposit;
     delete pCustomer;
+    delete pCard;
 
     return depositId;
 }

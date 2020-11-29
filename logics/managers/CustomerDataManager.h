@@ -43,7 +43,8 @@ public:
 
 	bool canOpenDeposit(Money potentialBalance) const;
 
-	Money openDeposit(Money initialBalance, QString name, double interest, uint months);
+	Money openDeposit(Money initialBalance, QString name, double interest, uint months, QDate startDate,
+                      QDate endDate);
 
 	void replenishDeposit(Money amount, uint depoId);
 
