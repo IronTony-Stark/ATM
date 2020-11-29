@@ -19,7 +19,9 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, const QStrin
     QList<Card*> cards = customer->cards();
     for (int i = 0; i < cards.count(); ++i) {
         if (cards[i]->number() == cardNumber) {
-            if (cards[i]->pin() == pinCode && !cards[i]->isBlocked()) {
+            if (!cards[i]->isBlocked())
+                throw std::runtime_error("Card was blocked");
+            if (cards[i]->pin() == pinCode) {
                 _authorizer.authorizeCustomer(customer, cards[i]);
                 return true;
             }
