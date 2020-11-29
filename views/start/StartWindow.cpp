@@ -84,15 +84,20 @@ void StartWindow::onBtnEnterClicked() {
         QString number = _ui->editCardNumber->text();
         QString pin = _ui->editPin->text();
 
-        if (_operationManager.authorizeCustomer(number, pin)) {
-            _mainMenuWindow.setLogicActive();
-            _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
-        } else if (--_pinAttempts == 0) {
-            OperationManager::blockCustomer(number);
-            QMessageBox::critical(this, "ATM", "Your card has been blocked");
+        try {
+            if (_operationManager.authorizeCustomer(number, pin)) {
+                _mainMenuWindow.setLogicActive();
+                _ui->stackedWidget->setCurrentIndex(MAIN_MENU);
+            } else if (--_pinAttempts == 0) {
+                OperationManager::blockCustomer(number);
+                QMessageBox::critical(this, "ATM", "Your card has been blocked");
+                _ui->stackedWidget->setCurrentIndex(START);
+            } else {
+                _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
+            }
+        } catch (const std::exception& e) {
+            QMessageBox::critical(this, "ATM", e.what());
             _ui->stackedWidget->setCurrentIndex(START);
-        } else {
-            _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
         }
     }
 }

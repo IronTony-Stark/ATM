@@ -22,11 +22,6 @@ int main(int argc, char* argv[]) {
     // *Tony*
     // General
     // ! TODO Add info about commissions to the 'Info' tab
-    // ! TODO Show popup with information about the card was blocked after unsuccessful login
-    // TODO disable all buttons in left part of interface or non-active at right part
-    // TODO For what 'Money out' button?
-    // Registration
-    // ! TODO Show card number after registration
 
     // *Andrew*
     // testCardId DELETE!!
