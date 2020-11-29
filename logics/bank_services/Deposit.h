@@ -14,8 +14,8 @@ class Deposit {
 public:
 	static const Money maxDepoSum;
 
-	Deposit(QString ownerCard, QString name, Money initialBalance, double interest, QDate endDate,
-			QDate startDate = QDate::currentDate(), uint id = -1);
+	Deposit(QString ownerCard, QString name, Money sum, double interest, QDate endDate,
+			QDate startDate = QDate::currentDate(), uint id = -1, Money initialBalance = 0);
 
 	Deposit(const Deposit&);
 
@@ -26,6 +26,8 @@ public:
 	void replenish(Money amount);
 
 	[[nodiscard]] Money sum() const;
+
+	const Money& initBalance() const;
 
 	[[nodiscard]] const QString& name() const;
 
@@ -47,6 +49,7 @@ private:
 	uint _id;
 	const QString _ownerCard;
 	QString _name;
+	Money _initBalance;
 	Money _sum;
 	double _interest;
 	const QDate _startDate;

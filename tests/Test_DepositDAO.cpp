@@ -29,6 +29,7 @@ void Test_DepositDAO::test() {
 void Test_DepositDAO::compareDeposits(const Deposit& actual, const Deposit& expected) {
 	QCOMPARE(actual.ownerCard(), expected.ownerCard());
 	QCOMPARE(actual.name(), expected.name());
+	QCOMPARE(actual.initBalance(), expected.initBalance());
 	QCOMPARE(actual.sum(), expected.sum());
 	QCOMPARE(actual.interest(), expected.interest());
 	QCOMPARE(actual.startDate(), expected.startDate());

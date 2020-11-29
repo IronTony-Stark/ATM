@@ -41,10 +41,6 @@ bool CustomerDataManager::canAffordCredit(Money amount, uint period, double inte
 
 Money
 CustomerDataManager::getCreditValueWithPercents(const Money& amount, uint period, double interest) {
-    auto v1 = amount * interest;
-    auto v2 = amount * interest / 12;
-    auto v3 = amount * interest / 12 * period;
-    auto v4 = amount + (amount * interest / 12 * period);
     return amount + (amount * interest / 12 * period);
 }
 
@@ -133,7 +129,7 @@ void CustomerDataManager::cancelDeposit(uint depoId) {
             break;
         }
     if (deposit == nullptr) throw NoSuchDepositException(_customer->_taxNumber, depoId);
-    _bankCard->replenish(deposit->sum()); // TODO use start sum, as deposit has cancelled
+    _bankCard->replenishFree(deposit->initBalance());
     _customer->removeDeposit(depoId);
     DepositDAO::getInstance().deleteById(depoId);
     CustomerDAO::getInstance().removeDeposit(depoId);

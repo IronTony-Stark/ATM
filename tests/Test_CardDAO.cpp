@@ -7,7 +7,7 @@
 #include "Test_CardDAO.h"
 
 void Test_CardDAO::test() {
-    Card* card = new Card(QString("testCardId"), ABankFee::CardType(0), QString("0000"));
+    Card* card = new Card(QString("47"), ABankFee::CardType(0), QString("0000"));
 	CardDAO::getInstance().saveCard(*card);
 	Card* restored = CardDAO::getInstance().getById(card->id());
 	compareCards(*restored, *card);
@@ -20,7 +20,7 @@ void Test_CardDAO::test() {
 	QCOMPARE(restored->balance(), old);
 	delete restored;
 
-    CardDAO::getInstance().deleteById("testCardId");
+    CardDAO::getInstance().deleteById("47");
 	restored = CardDAO::getInstance().getById(card->id());
 	QCOMPARE(restored, nullptr);
 }

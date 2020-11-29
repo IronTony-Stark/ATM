@@ -17,7 +17,7 @@ void DepositDAO::initialize() {
 	if (isInitialized || !QSqlDatabase::database().isOpen()) return;
 
 	QSqlQuery createQuery("CREATE TABLE IF NOT EXISTS deposit "
-						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, owner_card TEXT, name TEXT, sum REAL, "
+						  "(id INTEGER PRIMARY KEY AUTOINCREMENT, owner_card TEXT, name TEXT, init REAL, sum REAL, "
 						  "interest REAL, start_date TEXT, end_date TEXT);");
 	qDebug() << "creation of a 'deposit' table is successful: " << createQuery.isActive();
 	isInitialized = true;
@@ -25,14 +25,15 @@ void DepositDAO::initialize() {
 
 Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 	QSqlQuery createQuery(QSqlDatabase::database());
-	createQuery.prepare("INSERT INTO deposit (owner_card, name, sum, interest, start_date, end_date) "
-						"VALUES (:owner_card, :name, :sum, :interest, :start_date, :end_date);");
+	createQuery.prepare("INSERT INTO deposit (owner_card, name, init, sum, interest, start_date, end_date) "
+						"VALUES (:owner_card, :name, :init, :sum, :interest, :start_date, :end_date);");
 	createQuery.bindValue(":owner_card", deposit.ownerCard());
 	createQuery.bindValue(":name", deposit.name());
+	createQuery.bindValue(":init", static_cast<double>(deposit.initBalance()));
 	createQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	createQuery.bindValue(":interest", deposit.interest());
-    createQuery.bindValue(":start_date", deposit.startDate());
-    createQuery.bindValue(":end_date", deposit.endDate());
+	createQuery.bindValue(":start_date", deposit.startDate());
+	createQuery.bindValue(":end_date", deposit.endDate());
 	createQuery.exec();
 	deposit._id = createQuery.lastInsertId().toUInt();
 	return deposit;
@@ -40,7 +41,7 @@ Deposit& DepositDAO::saveDeposit(Deposit& deposit) {
 
 QList<Deposit*> DepositDAO::getAll() const {
 	// Using SELECT * is not recommended because the order of the fields in the query is undefined.
-	QSqlQuery findAllQuery("SELECT id, owner_card, name, sum, interest, start_date, end_date FROM deposit;");
+	QSqlQuery findAllQuery("SELECT id, owner_card, name, init, sum, interest, start_date, end_date FROM deposit;");
 	QList<Deposit*> res;
 	while (findAllQuery.next()) {
 		Deposit* deposit = buildDeposit(findAllQuery);
@@ -51,7 +52,7 @@ QList<Deposit*> DepositDAO::getAll() const {
 
 Deposit* DepositDAO::getById(uint id) const {
 	QSqlQuery findQuery;
-	findQuery.prepare("SELECT id, owner_card, name, sum, interest, start_date, end_date "
+	findQuery.prepare("SELECT id, owner_card, name, init, sum, interest, start_date, end_date "
 					  "FROM deposit WHERE id = ?;");
 	findQuery.bindValue(0, QVariant(id));
 	findQuery.exec();
@@ -62,20 +63,22 @@ Deposit* DepositDAO::getById(uint id) const {
 }
 
 Deposit* DepositDAO::buildDeposit(const QSqlQuery& queryRes) const {
-    return new Deposit(queryRes.value(1).toString(),
-                       queryRes.value(2).toString(),
-                       Money(queryRes.value(3).toDouble()),
-                       queryRes.value(4).toDouble(),
-                       QDate::fromString(queryRes.value(6).toString(), "yyyy-MM-dd"),
-                       QDate::fromString(queryRes.value(5).toString(), "yyyy-MM-dd"),
-                       queryRes.value(0).toUInt());
+	return new Deposit(queryRes.value(1).toString(),
+					   queryRes.value(2).toString(),
+					   Money(queryRes.value(4).toDouble()),
+					   queryRes.value(5).toDouble(),
+					   QDate::fromString(queryRes.value(7).toString(), "yyyy-MM-dd"),
+					   QDate::fromString(queryRes.value(6).toString(), "yyyy-MM-dd"),
+					   queryRes.value(0).toUInt(),
+					   queryRes.value(3).toDouble());
 }
 
 boolean DepositDAO::updateDeposit(const Deposit& deposit) {
 	QSqlQuery updQuery;
-	updQuery.prepare("UPDATE deposit SET name = :name, sum = :sum, interest = :interest, "
+	updQuery.prepare("UPDATE deposit SET name = :name, init = :init, sum = :sum, interest = :interest, "
 					 "start_date = :start_date, end_date = :end_date WHERE id = :id;");
 	updQuery.bindValue(":name", deposit.name());
+	updQuery.bindValue(":init", static_cast<double>(deposit.initBalance()));
 	updQuery.bindValue(":sum", static_cast<double>(deposit.sum()));
 	updQuery.bindValue(":interest", deposit.interest());
 	updQuery.bindValue(":start_date", deposit.startDate());

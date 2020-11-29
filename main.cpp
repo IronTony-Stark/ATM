@@ -47,8 +47,9 @@ int main(int argc, char* argv[]) {
     // ! TODO Disable editing payments
 
     // *Andrew*
+    // testCardId DELETE!!
     // ! TODO Add start sum to deposit
-    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has been cancelled
+    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has been cancelled [DONE]
     // ! TODO return payments belong to customer
     // ! TODO виправ в OperationManager повернення результату
 
