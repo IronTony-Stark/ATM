@@ -23,6 +23,7 @@ int main(int argc, char* argv[]) {
     // General
     // ! TODO Add info about commissions to the 'Info' tab
     // TODO disable all buttons in left part of interface or non-active at right part
+    // TODO For what 'Money out' button?
     // Registration
     // ! TODO Show card number after registration
     // ! TODO Tax number has 10 numbers
@@ -31,6 +32,7 @@ int main(int argc, char* argv[]) {
     // TODO Error 'Something is invalid' better to show with 'Something is empty', when it is empty
     // Transactions
     // ! TODO Update card balance after operations (transfer)
+    // TODO 'Print check' button do nothing.
     // Credit
     // ! TODO after pay for credit return to previous page
     // TODO After take credit show popup with sum added to the card (credit body)
@@ -41,11 +43,14 @@ int main(int argc, char* argv[]) {
     // ! TODO OpenDepositCommand::execute() pass 0 as percentage
     // TODO Update sum in deposit view after replenish
     // TODO Clear fields in deposit view after return to previous screen
+    // Payments
+    // ! TODO Disable editing payments
 
     // *Andrew*
     // ! TODO Make columns belong to Money in 'credit' table accept double
     // ! TODO Add start sum to deposit
     // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
+    // ! TODO return payments belong to customer
     // TODO CustomerRegistrationException is shown as 'std::exception' at registration with non-unique tax number
 
 	QApplication a(argc, argv);

@@ -16,21 +16,26 @@ void TimeDrivenEventsHandler::payPayments(const QDateTime& dateTime) {
     for (RegularPayment* payment: payments) {
         Card* senderCard = cardDao.getById(payment->sender());
         Card* receiverCard = cardDao.getById(payment->receiver());
-        if (senderCard == nullptr){
+        if (senderCard == nullptr) {
             qWarning() << "Card " << payment->sender() << "wasn't found for payment " << payment->id();
         }
-        if (receiverCard == nullptr){
+        if (receiverCard == nullptr) {
             qWarning() << "Card " << payment->receiver() << "wasn't found for payment " << payment->id();
         }
         if (receiverCard == nullptr || senderCard == nullptr)
             continue;
 
-        if (senderCard->isBlocked() || receiverCard->isBlocked()){
+        if (senderCard->isBlocked() || receiverCard->isBlocked()) {
             qInfo() << "Skipped payment " << payment->id() << " because of blocked card";
             continue;
         }
         if (payment->dayOfMonth() == dateTime.date().day()) {
-            OperationManager::transfer(payment->sender(), payment->receiver(), payment->amount());
+            try {
+                OperationManager::transfer(payment->sender(), payment->receiver(), payment->amount());
+            } catch (const std::exception& e) {
+                qWarning() << e.what() << ". For payment '" << payment->id();
+            }
+
         }
     }
     _isPayed = true;
@@ -56,8 +61,8 @@ void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
     for (Deposit* deposit: deposits) {
         if (deposit->endDate() > dateTime.date()) {
             double interestPerDay = deposit->interest() / 365;
-            const Money& incomePerDay = (double)deposit->sum() * interestPerDay;
-            qDebug() << deposit->name() << ": " << (double)incomePerDay;
+            const Money& incomePerDay = (double) deposit->sum() * interestPerDay;
+            qDebug() << deposit->name() << ": " << (double) incomePerDay;
             deposit->replenish(incomePerDay);
             depositDao.updateDeposit(*deposit);
         } else {
@@ -78,7 +83,8 @@ void TimeDrivenEventsHandler::checkPaymentsDate(const QDateTime& dateTime) {
     const QList<RegularPayment*>& payments = paymentDao.getAll();
     for (RegularPayment* payment: payments) {
         int daysInMonth = dateTime.date().daysInMonth();
-        if (payment->dayOfMonth() > daysInMonth || daysInMonth < 31) {
+        if (payment->dayOfMonth() > dateTime.date().day() &&
+            payment->dayOfMonth() > daysInMonth) {
             payment->setDayOfMonth(31 - daysInMonth);
             paymentDao.removePayment(payment->id());
             paymentDao.save(*payment);

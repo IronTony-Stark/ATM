@@ -8,6 +8,7 @@
 #include <logics/bank_services/Credit.h>
 #include <logics/bank_services/Deposit.h>
 #include <logics/utils/Money.h>
+#include <logics/bank_services/RegularPayment.h>
 #include "logics/bank_services/Card.h"
 
 class Customer {
@@ -46,6 +47,8 @@ public:
 	void addDeposit(Deposit*);
 
 	void removeDeposit(uint);
+
+	const QList<RegularPayment*> regularPayments() const;
 
 	~Customer();
 

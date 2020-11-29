@@ -16,7 +16,7 @@ QString Registrator::registerCustomer(const CustomerVerificationData& verificati
         for (int i = 0; i < cards.count(); ++i) {
             if (cards[i]->cardType() == verificationData.getCardType()) {
                 throw CustomerRegistrationException(
-                    "The person with given taxNumber and chosen card type has already registered");
+                    "The person with a given tax number and chosen card type has been already registered.");
             }
         }
     } else {

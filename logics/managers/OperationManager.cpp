@@ -120,16 +120,25 @@ void OperationManager::replenishDeposit(uint id, uint amount) {
 
 QList<RegularPayment*> OperationManager::getAllPayments() {
     return _paymentDao.getAll();
+    // TODO
+//    return _customerDataManager.customer().regularPayments();
 }
 
 void OperationManager::setPayment(const QString& name, uint amount, const QString& receiver, const uint& day) {
     if (_customerDataManager.balance() < amount)
         throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
+    if (_customerDataManager.card().number() == receiver)
+        throw std::invalid_argument("The receiver couldn't be the same person as the sender.");
 
-    RegularPayment* const pPayment = new RegularPayment(name, amount, _customerDataManager.card().number(), receiver,
+    Customer* pReceiver = _customerDataManager.getCustomerByCardNumber(receiver);
+    if (pReceiver == nullptr)
+        throw std::invalid_argument("No such card registered: '" + receiver.toStdString() + "'");
+
+    auto* const pPayment = new RegularPayment(name, amount, _customerDataManager.card().number(), receiver,
                                                         day);
     _paymentDao.save(*pPayment);
     delete pPayment;
+    delete pReceiver;
 }
 
 void OperationManager::cancelPayment(uint id) {

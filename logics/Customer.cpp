@@ -106,3 +106,8 @@ void Customer::releaseMemory(QList<Pointer>& list) {
     }
 }
 
+const QList<RegularPayment*> Customer::regularPayments() const {
+    // TODO return payments belong to customer
+    return QList<RegularPayment*>();
+}
+
