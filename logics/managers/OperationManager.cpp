@@ -19,7 +19,7 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, const QStrin
     QList<Card*> cards = customer->cards();
     for (int i = 0; i < cards.count(); ++i) {
         if (cards[i]->number() == cardNumber) {
-            if (cards[i]->pin() == pinCode) {
+            if (cards[i]->pin() == pinCode && !cards[i]->isBlocked()) {
                 _authorizer.authorizeCustomer(customer, cards[i]);
                 return true;
             }
@@ -30,7 +30,14 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, const QStrin
 }
 
 void OperationManager::blockCustomer(const QString& cardNumber) {
-    throw std::exception();
+    CardDAO& cardDao = CardDAO::getInstance();
+    Card* pCard = cardDao.getById(cardNumber);
+    if (pCard != nullptr) {
+        pCard->block();
+        qInfo() << "Card '" << cardNumber << "' was blocked";
+        cardDao.updateCard(*pCard);
+    }
+    delete pCard;
 }
 
 QString OperationManager::registerCustomer(const CustomerVerificationData& verificationData) {

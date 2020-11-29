@@ -41,7 +41,7 @@ public:
 
 	bool authorizeCustomer(const QString&, const QString&);
 
-	void blockCustomer(const QString&);
+	static void blockCustomer(const QString&);
 
 	Money getCurrentCustomerCreditLimit();
 
