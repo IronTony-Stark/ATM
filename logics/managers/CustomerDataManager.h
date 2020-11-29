@@ -47,7 +47,7 @@ public:
 
 	void replenishDeposit(Money amount, uint depoId);
 
-	void closeDeposit(uint depoId);
+	void cancelDeposit(uint depoId);
 
 	QString getPin() const;
 
