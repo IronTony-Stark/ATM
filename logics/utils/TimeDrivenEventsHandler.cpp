@@ -60,6 +60,8 @@ void TimeDrivenEventsHandler::increaseDeposits(const QDateTime& dateTime) {
             qDebug() << deposit->name() << ": " << (double)incomePerDay;
             deposit->replenish(incomePerDay);
             depositDao.updateDeposit(*deposit);
+        } else {
+            _operationManager->endDeposit(deposit->id());
         }
     }
     _isIncreased = true;

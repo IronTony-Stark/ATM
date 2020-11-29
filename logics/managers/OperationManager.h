@@ -73,7 +73,7 @@ public:
 
 	void replenishDeposit(uint, uint);
 
-	int endDeposit(uint);
+	int endDeposit(uint) const static;
 
 	QList<RegularPayment*> getAllPayments();
     void setPayment(const QString&, uint, const QString&, const uint&);

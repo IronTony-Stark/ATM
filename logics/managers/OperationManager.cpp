@@ -107,19 +107,13 @@ void OperationManager::startDeposit(
 
 
 void OperationManager::cancelDeposit(uint id) {
-    Deposit* pDeposit = _depositDao.getById(id);
-//    todo: pDeposit->cancel();
-    delete pDeposit;
+    _customerDataManager.cancelDeposit(id);
 }
 
 void OperationManager::replenishDeposit(uint id, uint amount) {
-    Deposit* pDeposit = _depositDao.getById(id);
     if (_customerDataManager.balance() >= amount) {
-        pDeposit->replenish(amount);
-        _customerDataManager.withdraw(amount);
-        delete pDeposit;
+        _customerDataManager.replenishDeposit(amount, id);
     } else {
-        delete pDeposit;
         throw NotEnoughMoneyException(_customerDataManager.balance(), amount);
     }
 }
@@ -161,10 +155,20 @@ void OperationManager::setClock(Clock* clock) {
     _clock->subscribe(_timeDrivenEventsHandler);
 }
 
-int OperationManager::endDeposit(const uint depositId) {
+int OperationManager::endDeposit(const uint depositId) const {
     Deposit* pDeposit = _depositDao.getById(depositId);
     Customer* pCustomer = _customerDataManager.getCustomerByDepositId(depositId);
 
+    if (pDeposit == nullptr)
+        throw std::invalid_argument("Given deposit id wasn't found in DB.");
+    if (pCustomer == nullptr)
+        throw std::invalid_argument("Given deposit isn't belong to any customer.");
+
+//    _bankCard->replenish(deposit->sum());
+//    _customer->removeDeposit(depoId);
+//    DepositDAO::getInstance().deleteById(depoId);
+//    CustomerDAO::getInstance().removeDeposit(depoId);
+//    CardDAO::getInstance().updateCard(card());
     // TODO replenish to card
 
     delete pDeposit;

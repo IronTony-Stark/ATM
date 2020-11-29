@@ -114,9 +114,12 @@ void CustomerDataManager::replenishDeposit(Money amount, uint depoId) {
     if (deposit == nullptr) throw NoSuchDepositException(_customer->_taxNumber, depoId);
     deposit->replenish(amount);
     DepositDAO::getInstance().updateDeposit(*deposit);
+
+    card().withdrawFree(amount);
+    CardDAO::getInstance().updateCard(card());
 }
 
-void CustomerDataManager::closeDeposit(uint depoId) {
+void CustomerDataManager::cancelDeposit(uint depoId) {
     Deposit* deposit = nullptr;
     for (auto iter : _customer->deposits())
         if (iter->id() == depoId) {
@@ -124,10 +127,11 @@ void CustomerDataManager::closeDeposit(uint depoId) {
             break;
         }
     if (deposit == nullptr) throw NoSuchDepositException(_customer->_taxNumber, depoId);
-    _bankCard->replenish(deposit->sum());
+    _bankCard->replenish(deposit->sum()); // TODO use start sum, as deposit has cancelled
     _customer->removeDeposit(depoId);
     DepositDAO::getInstance().deleteById(depoId);
     CustomerDAO::getInstance().removeDeposit(depoId);
+    CardDAO::getInstance().updateCard(card());
 }
 
 QString CustomerDataManager::getPin() const {

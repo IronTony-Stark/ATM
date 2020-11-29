@@ -39,8 +39,8 @@ int main(int argc, char* argv[]) {
     // ! TODO All exceptions (except NotEnoughMoney) must be compatible with std::exception (what() method)
     // ! TODO Make columns belong to Money in 'credit' table accept double
     // ! TODO Add start sum to deposit
-    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
     // ! TODO 'owner_card' have to be added with CARD id
+    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
     // TODO 'owner_card' in deposit - customer_id
 
 	QApplication a(argc, argv);
