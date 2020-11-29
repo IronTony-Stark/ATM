@@ -51,7 +51,6 @@ int main(int argc, char* argv[]) {
     // ! TODO Add start sum to deposit
     // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
     // ! TODO return payments belong to customer
-    // TODO CustomerRegistrationException is shown as 'std::exception' at registration with non-unique tax number
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
