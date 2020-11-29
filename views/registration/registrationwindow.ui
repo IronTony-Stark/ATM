@@ -88,7 +88,7 @@
            <item row="0" column="0">
             <widget class="QLabel" name="labelName">
              <property name="text">
-              <string>Name</string>
+              <string>Full Name</string>
              </property>
             </widget>
            </item>

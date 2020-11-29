@@ -22,29 +22,11 @@ int main(int argc, char* argv[]) {
     // *Tony*
     // General
     // ! TODO Add info about commissions to the 'Info' tab
+    // ! TODO Show popup with information about the card was blocked after unsuccessful login
     // TODO disable all buttons in left part of interface or non-active at right part
     // TODO For what 'Money out' button?
     // Registration
     // ! TODO Show card number after registration
-    // ! TODO Tax number has 10 numbers
-    // TODO 'Name' field should be named 'Name and surname'
-    // TODO name or surname could have only 2 letters
-    // TODO Error 'Something is invalid' better to show with 'Something is empty', when it is empty
-    // Transactions
-    // ! TODO Update card balance after operations (transfer)
-    // TODO 'Print check' button do nothing.
-    // Credit
-    // ! TODO after pay for credit return to previous page
-    // TODO After take credit show popup with sum added to the card (credit body)
-    // TODO add credit repayment sum ('payment') to 'Repay Credit' window
-    // Deposits
-    // ! TODO Deposit end date incorrect (start is shown)
-    // ! TODO Deposit interest is 0 (have to be not)
-    // ! TODO OpenDepositCommand::execute() pass 0 as percentage
-    // TODO Update sum in deposit view after replenish
-    // TODO Clear fields in deposit view after return to previous screen
-    // Payments
-    // ! TODO Disable editing payments
 
     // *Andrew*
     // testCardId DELETE!!
