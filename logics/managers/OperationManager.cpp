@@ -81,7 +81,7 @@ void OperationManager::takeCredit(const QString& name,
     double interest = CreditConditions::creditingOptions.value(period);
     const Money& debt = Money(amount);
     if (_customerDataManager.canAffordCredit(debt, period, interest)) {
-        _customerDataManager.takeCredit(debt, name, interest);
+        _customerDataManager.takeCredit(debt, name, interest, period);
     } else
         throw NotEnoughMoneyException(
                 _customerDataManager.customer().creditLimit(),
@@ -89,16 +89,7 @@ void OperationManager::takeCredit(const QString& name,
 }
 
 void OperationManager::repayCredit(uint id) {
-    Credit* pCredit = _creditDao.getById(id);
-    const Money& requested = pCredit->payment();
-    if (_customerDataManager.balance() >= requested) {
-        pCredit->replenish(requested);
-        _customerDataManager.withdraw(requested);
-        delete pCredit;
-    } else {
-        delete pCredit;
-        throw NotEnoughMoneyException(_customerDataManager.balance(), requested);
-    }
+    _customerDataManager.repayCredit(-1, id);
 }
 
 QList<Deposit*> OperationManager::getAllDeposits() {

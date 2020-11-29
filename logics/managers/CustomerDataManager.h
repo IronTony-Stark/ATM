@@ -37,7 +37,7 @@ public:
 	bool canAffordCredit(Money amount, uint period, double interest) const;
     static Money getCreditValueWithPercents(const Money& amount, uint period, double interest) ;
 
-	Money takeCredit(Money debt, QString name, double interest);
+	Money takeCredit(Money debt, QString name, double interest, uint period);
 
 	bool repayCredit(Money amount, uint creditId);
 

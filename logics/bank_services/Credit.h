@@ -30,7 +30,7 @@ public:
 
 	Money bankIncome() const;
 
-	void replenish(Money amount);
+	Money replenish(Money amount);
 
 	[[nodiscard]] Money creditBody() const;
 

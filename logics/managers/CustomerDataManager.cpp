@@ -44,8 +44,9 @@ CustomerDataManager::getCreditValueWithPercents(const Money& amount, uint period
     return amount + (amount * interest / 12 * period);
 }
 
-Money CustomerDataManager::takeCredit(Money debt, QString name, double interest) {
-    Credit* credit = new Credit(std::move(name), debt, interest, debt * interest / 12);
+Money CustomerDataManager::takeCredit(Money debt, QString name, double interest, uint period) {
+    const Money& creditValueWithPercents = getCreditValueWithPercents(debt, period, interest);
+    Credit* credit = new Credit(std::move(name), creditValueWithPercents, interest, creditValueWithPercents / period);
     _customer->addCredit(credit);
     CreditDAO::getInstance().saveCredit(*credit);
     CustomerDAO::getInstance().addCredit(_customer->_taxNumber, credit->id());
@@ -61,19 +62,29 @@ bool CustomerDataManager::repayCredit(Money amount, uint creditId) {
             break;
         }
     if (selected == nullptr) throw NoSuchCreditException(_customer->_taxNumber, creditId);
+
+    if (amount == -1)
+        amount = selected->payment();
     if (selected->payment() != amount) throw CreditRepayOverheadException(selected->payment(), amount);
 
-    if (selected->debt() > amount) {
+    const Money& haveToBePayed = selected->creditBody();
+    bool creditEnd = false;
+
+    if (haveToBePayed > amount) {
         selected->replenish(amount);
-        return false;
+        CreditDAO::getInstance().updateCredit(*selected);
     } else {
-        Money diff = amount - selected->debt();
+        amount = amount - haveToBePayed; // debt - already payed sum
         _customer->removeCredit(selected->id());
         CreditDAO::getInstance().deleteById(selected->id());
         CustomerDAO::getInstance().removeCredit(selected->id());
-        _bankCard->replenishFree(diff);
-        return true;
+        _bankCard->replenishFree(amount);
     }
+
+    card().withdrawFree(amount);
+    CardDAO::getInstance().updateCard(card());
+
+    return creditEnd;
 }
 
 bool CustomerDataManager::canOpenDeposit(Money potentialBalance) const {

@@ -42,14 +42,16 @@ Money Credit::bankIncome() const {
 	return _bankIncome;
 }
 
-void Credit::replenish(Money amount) {
+Money Credit::replenish(Money amount) {
 	if (_creditBody >= amount) {
 		_creditBody -= amount;
+        _bankIncome += amount;
 	} else {
 		amount -= _creditBody;
 		_creditBody = 0;
-		_bankIncome -= amount;
+		_bankIncome += amount;
 	}
+	return amount;
 }
 
 Money Credit::creditBody() const {

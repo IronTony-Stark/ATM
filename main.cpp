@@ -17,9 +17,17 @@
 #include "data_access/PaymentDAO.h"
 
 int main(int argc, char* argv[]) {
+    // Tony
+    // TODO disable all buttons in left part of interface
     // TODO Update card balance after operations (transfer)
     // TODO Add info about commissions to the 'Info' tab
-    // TODO unexpected sum for credit repayment
+    // TODO After take credit show popup with sum added to the card (credit body)
+    // TODO add credit repayment sum ('payment') to 'Repay Credit' window
+    // TODO after pay for credit return to previous page
+
+    // Andrew
+    // TODO All exceptions (except NotEnoughMoney) must be compatible with std::exception (what() method)
+
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	qDebug() << QApplication::style()->objectName();
