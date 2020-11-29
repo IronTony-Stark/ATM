@@ -21,8 +21,14 @@ int main(int argc, char* argv[]) {
     //
     // *Tony*
     // General
-    // TODO disable all buttons in left part of interface
     // ! TODO Add info about commissions to the 'Info' tab
+    // TODO disable all buttons in left part of interface or non-active at right part
+    // Registration
+    // ! TODO Show card number after registration
+    // ! TODO Tax number has 10 numbers
+    // TODO 'Name' field should be named 'Name and surname'
+    // TODO name or surname could have only 2 letters
+    // TODO Error 'Something is invalid' better to show with 'Something is empty', when it is empty
     // Transactions
     // ! TODO Update card balance after operations (transfer)
     // Credit
@@ -41,6 +47,7 @@ int main(int argc, char* argv[]) {
     // ! TODO Make columns belong to Money in 'credit' table accept double
     // ! TODO Add start sum to deposit
     // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
+    // TODO CustomerRegistrationException is shown as 'std::exception' at registration with non-unique tax number
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

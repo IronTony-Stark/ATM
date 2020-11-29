@@ -16,8 +16,10 @@ QDate subtractDates(const QDate& d1, const QDate& d2) {
 }
 
 QString generatePin() {
-	static QRandomGenerator random;
-	uint nextPin = random.bounded(10000);
+    QRandomGenerator generator;
+    generator.seed(QDateTime::currentSecsSinceEpoch());
+	uint nextPin = generator.bounded(10000);
+
 	QString res = QString::number(nextPin);
 	while (res.length() < 4) res.prepend('0');
 	return res;
