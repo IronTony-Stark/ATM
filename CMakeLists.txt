@@ -137,8 +137,6 @@ add_executable(MOOP_ATM
         logics/exceptions/CreditRepayOverheadException.h
         logics/exceptions/CustomerRegistrationException.cpp
         logics/exceptions/CustomerRegistrationException.h
-        logics/exceptions/CustomerAuthorizationException.cpp
-        logics/exceptions/CustomerAuthorizationException.h
         logics/exceptions/DepositMaxSumReachedException.cpp
         logics/exceptions/DepositMaxSumReachedException.h
         logics/exceptions/BlockedCardException.h
@@ -161,7 +159,7 @@ add_executable(MOOP_ATM
         data_access/DepositDAO.h
         data_access/PaymentDAO.cpp
         data_access/PaymentDAO.h
-        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h)
+        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h logics/exceptions/BlockedCardException.cpp)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)

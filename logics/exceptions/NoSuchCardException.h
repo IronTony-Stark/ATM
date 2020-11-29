@@ -15,8 +15,10 @@ class NoSuchCardException : NoSuchCustomerPossessionException {
 public:
 	NoSuchCardException(QString customerId, const QString& cardId) :
 			NoSuchCustomerPossessionException(std::move(customerId), cardId, "CARD") {}
-};
 
-//std::ostream& operator<<(std::ostream&, const NoSuchCardException&);
+	const char* what() const noexcept override { return NoSuchCustomerPossessionException::what();};
+
+	~NoSuchCardException() override = default;
+};
 
 #endif //ATM_NOSUCHCARDEXCEPTION_H

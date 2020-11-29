@@ -16,6 +16,8 @@ public:
 
 	[[nodiscard]] Money actual() const;
 
+	const char * what() const noexcept override;
+
 private:
 	Money _maximum;
 	Money _actual;

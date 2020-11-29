@@ -2,9 +2,7 @@
 // Created by Andrew on 30-Sep-20.
 //
 
-/*
- * yse, there is code duplication, go make difference
- * */
+
 #include "Customer.h"
 #include <utility>
 #include <logics/exceptions/NoSuchCardException.h>

@@ -3,3 +3,7 @@
 //
 
 #include "DepositMaxSumReachedException.h"
+
+const char* DepositMaxSumReachedException::what() const noexcept {
+	return _message.c_str();
+}

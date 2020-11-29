@@ -9,20 +9,18 @@
 #include <stdexcept>
 #include <QtCore/QString>
 
-class CustomerRegistrationException final: public std::exception {
+class CustomerRegistrationException final : public std::exception {
 private:
-    const std::string _message;
+	const std::string _message;
 
 public:
 
-    explicit CustomerRegistrationException(std::string message): _message(std::move(message)){}
+	explicit CustomerRegistrationException(std::string message) : _message(std::move(message)) {}
 
-    const char* what() {
-        return _message.c_str();
-    }
+	const char* what() const noexcept override;
 };
 
-std::ostream& operator<< (std::ostream& os, CustomerRegistrationException& ex);
+std::ostream& operator<<(std::ostream& os, CustomerRegistrationException& ex);
 
 
 #endif //ATM_CUSTOMERREGISTRATIONEXCEPTION_H
