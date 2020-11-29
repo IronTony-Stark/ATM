@@ -17,16 +17,27 @@
 #include "data_access/PaymentDAO.h"
 
 int main(int argc, char* argv[]) {
-    // Tony
+    // *Tony*
+    // General
     // TODO disable all buttons in left part of interface
-    // TODO Update card balance after operations (transfer)
-    // TODO Add info about commissions to the 'Info' tab
+    // ! TODO Add info about commissions to the 'Info' tab
+    // Transactions
+    // ! TODO Update card balance after operations (transfer)
+    // Credit
+    // ! TODO after pay for credit return to previous page
     // TODO After take credit show popup with sum added to the card (credit body)
     // TODO add credit repayment sum ('payment') to 'Repay Credit' window
-    // TODO after pay for credit return to previous page
+    // Deposits
+    // ! TODO Deposit end date incorrect (start is shown)
+    // ! TODO Deposit interest is 0 (have to be not)
+    // TODO Update sum in deposit view after replenish
+    // TODO Clear fields in deposit view after return to previous screen
 
-    // Andrew
-    // TODO All exceptions (except NotEnoughMoney) must be compatible with std::exception (what() method)
+    // *Andrew*
+    // ! TODO All exceptions (except NotEnoughMoney) must be compatible with std::exception (what() method)
+    // ! TODO Make columns belong to Money in 'credit' table accept double
+    // ! TODO Add start sum to deposit
+    // TODO 'owner_card' in deposit - customer_id
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
