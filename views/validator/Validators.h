@@ -6,7 +6,7 @@
 #define MOOP_ATM_VALIDATORS_H
 
 constexpr const char* userNameRegex = R"(^[a-zA-Z]{3,} [a-zA-Z]{3,}$)";
-constexpr const char* phoneRegex = R"(^\d{8,16}$)";
+constexpr const char* phoneRegex = R"(^\+?\d{10,14}$)";
 constexpr const char* taxRegex = R"(^\d{10}$)";
 constexpr const char* incomeRegex = R"(^[1-9]\d{3,}$)";
 constexpr const char* pinRegex = R"(^\d{4}$)";
