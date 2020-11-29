@@ -8,3 +8,7 @@ std::ostream& operator<<(std::ostream& os, CustomerRegistrationException& ex) {
     os << "Error while registration: " << ex.what() << std::endl;
     return os;
 }
+
+const char* CustomerRegistrationException::what() const noexcept {
+	return _message.c_str();
+}

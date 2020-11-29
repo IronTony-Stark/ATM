@@ -12,10 +12,7 @@ class DepositMaxSumReachedException final : std::exception {
 public:
     explicit DepositMaxSumReachedException(std::string message): _message(std::move(message)){}
 
-    const char* what()
-    {
-        return _message.c_str();
-    }
+	const char* what() const noexcept override;
 
 private:
     std::string _message;

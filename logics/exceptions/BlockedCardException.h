@@ -14,6 +14,8 @@ public:
 
 	const QString& cardId() const { return _cardId; };
 
+	const char * what() const noexcept override;
+
 private:
 	QString _cardId;
 };

@@ -14,6 +14,9 @@ class NoSuchDepositException : NoSuchCustomerPossessionException {
 public:
 	NoSuchDepositException(QString customerId, uint depositId) :
 			NoSuchCustomerPossessionException(std::move(customerId), QString::number(depositId), "DEPOSIT") {};
+	const char* what() const noexcept override {return NoSuchCustomerPossessionException::what();};
+
+	~NoSuchDepositException() override = default;
 };
 
 

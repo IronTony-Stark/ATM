@@ -20,6 +20,10 @@ public:
 
 	[[nodiscard]] const QString& possessionId() const;
 
+	const char* what() const noexcept override;
+
+    ~NoSuchCustomerPossessionException() override = default;
+
 private:
 	const QString _possName;
 	const QString _customerId;
