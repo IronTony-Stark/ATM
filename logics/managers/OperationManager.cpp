@@ -40,7 +40,7 @@ void OperationManager::blockCustomer(const QString& cardNumber) {
     delete pCard;
 }
 
-QString OperationManager::registerCustomer(const CustomerVerificationData& verificationData) {
+std::pair<QString, QString> OperationManager::registerCustomer(const CustomerVerificationData& verificationData) {
     return _registrator.registerCustomer(verificationData);
 }
 

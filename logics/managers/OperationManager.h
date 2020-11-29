@@ -48,7 +48,7 @@ public:
 	Money getInsertedCardBalance();
 
 	// pinCode
-	QString registerCustomer(const CustomerVerificationData&);
+    std::pair<QString, QString> registerCustomer(const CustomerVerificationData& verificationData);
 
 	//static void replenish(const QString& cardNumber, const Money&);
 	void replenish(uint);
