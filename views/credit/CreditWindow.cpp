@@ -54,6 +54,7 @@ void CreditWindow::navigate(int destination) {
             break;
         case MY_CREDIT:
             assert(_selectedCredit != nullptr);
+            _ui->labelPaymentValue->setText(QString::number(static_cast<double>(_selectedCredit->payment())));
             _ui->widgetMyCreditCredit->setup(*_selectedCredit);
             _ui->stackedWidget->setCurrentIndex(3);
             _logicSettable->setLogic(&_myCreditPageLogic);
@@ -72,7 +73,7 @@ void CreditWindow::setupCommands() {
     _takeCreditPageLogic.setEnterCommand(takeCreditCommand);
 
     std::shared_ptr<Command> repayCreditCommand(new RepayCreditCommand(
-            _selectedCredit, _operationManager, _messageDisplay));
+            _selectedCredit, *this, _operationManager, _messageDisplay));
     _myCreditPageLogic.setEnterCommand(repayCreditCommand);
 }
 

@@ -15,6 +15,8 @@ OpenDepositCommand::OpenDepositCommand(
         _depositWidget(depositWidget),
         _messageDisplay(messageDisplay) {}
 
+#include <QDebug>
+
 void OpenDepositCommand::execute() {
     if (!_depositWidget.validateInput())
         return;
@@ -24,9 +26,10 @@ void OpenDepositCommand::execute() {
     uint period;
     QDateTime start;
     QDateTime end;
-    uint percentage;
+    double percentage;
     std::tie(name, amount, period, start, end, percentage) = _depositWidget.data();
     try {
+        qDebug() << percentage << "\n";
         _operationManager.startDeposit(name, amount, period, start, end, percentage);
         _navigatable.navigate(DEPOSIT_MENU);
     } catch (const std::exception& e) {

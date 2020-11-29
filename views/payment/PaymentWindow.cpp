@@ -19,6 +19,9 @@ PaymentWindow::PaymentWindow(OperationManager& operationManager, QWidget* parent
         _myPaymentsPageLogic(*this) {
     _ui->setupUi(this);
 
+    _ui->widgetCreatePaymentPayment->setReadOnly(false);
+    _ui->widgetMyPaymentsPayment->setReadOnly(true);
+
     setupCommands();
 }
 

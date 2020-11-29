@@ -3,13 +3,16 @@
 //
 
 #include <QtWidgets/QMessageBox>
+#include <views/credit/Windows.h>
 #include "RepayCreditCommand.h"
 
 RepayCreditCommand::RepayCreditCommand(
         Credit*& selectedCredit,
+        Navigatable& navigatable,
         OperationManager& operationManager,
         MessageDisplay& messageDisplay) :
         _selectedCredit(selectedCredit),
+        _navigatable(navigatable),
         _operationManager(operationManager),
         _messageDisplay(messageDisplay) {}
 
@@ -22,6 +25,7 @@ void RepayCreditCommand::execute() {
     try {
         _operationManager.repayCredit(_selectedCredit->id());
         _messageDisplay.show("Credit Payed Successfully", false);
+        _navigatable.navigate(CREDITS_MENU);
     } catch (const std::exception& e) {
         _messageDisplay.show(e.what());
     }
