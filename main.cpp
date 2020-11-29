@@ -47,10 +47,10 @@ int main(int argc, char* argv[]) {
     // ! TODO Disable editing payments
 
     // *Andrew*
-    // ! TODO Make columns belong to Money in 'credit' table accept double
     // ! TODO Add start sum to deposit
-    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has cancelled
+    // ! TODO use start sum at CustomerDataM::closeDep(), as deposit has been cancelled
     // ! TODO return payments belong to customer
+    // ! TODO виправ в OperationManager повернення результату
 
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));

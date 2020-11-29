@@ -52,19 +52,20 @@ Money& Money::operator-=(const Money& m) {
 }
 
 Money& Money::operator*=(double koef) {
-	double tempIntPart = koef * _intPart;
-	_intPart = static_cast<long int>(tempIntPart);
-
-	double tempDecPart = koef * _decPart;
-	tempDecPart += sgn(_intPart) * abs(tempIntPart - _intPart) * 100;
-	_decPart = static_cast<long int>(tempDecPart);
-
+	double temp = static_cast<double>(*this);
+	temp *= koef;
+	Money res = temp;
+	_intPart = res._intPart;
+	_decPart = res._decPart;
 	return *this;
 }
 
 Money& Money::operator/=(double koef) {
-	_intPart /= koef;
-	_decPart /= koef;
+	double temp = static_cast<double>(*this);
+	temp /= koef;
+	Money res = temp;
+	_intPart = res._intPart;
+	_decPart = res._decPart;
 	return *this;
 }
 

@@ -61,7 +61,7 @@ public:
 
 	QList<Credit*> getAllCredits();
 
-	void takeCredit(const QString&, uint, uint, uint, const QDateTime&, const QDateTime&);
+	void takeCredit(const QString&, uint, uint, const QDateTime&, const QDateTime&);
 
 	void repayCredit(uint id);
 

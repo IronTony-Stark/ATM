@@ -71,15 +71,9 @@ QList<Credit*> OperationManager::getAllCredits() {
     return _customerDataManager.customer().credits();
 }
 
-
-void OperationManager::takeCredit(const QString& name,
-                                  uint amount,
-                                  uint period,
-                                  uint payment,
-                                  const QDateTime& start,
-                                  const QDateTime& end) {
+void OperationManager::takeCredit(const QString& name, uint amount, uint period, const QDateTime& start, const QDateTime& end) {
     double interest = CreditConditions::creditingOptions.value(period);
-    const Money& debt = Money(amount);
+    const Money debt(amount);
     if (_customerDataManager.canAffordCredit(debt, period, interest)) {
         _customerDataManager.takeCredit(debt, name, interest, period);
     } else

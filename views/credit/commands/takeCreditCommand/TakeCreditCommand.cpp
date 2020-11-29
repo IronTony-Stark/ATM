@@ -28,7 +28,7 @@ void TakeCreditCommand::execute() {
     QDateTime end;
     std::tie(name, sum, period, payment, start, end) = _widgetTakeCredit.data();
     try {
-        _operationManager.takeCredit(name, sum, period, payment, start, end);
+		_operationManager.takeCredit(name, sum, period, start, end);
         _navigatable.navigate(CREDITS_MENU);
     } catch (const std::exception& e) {
         _messageDisplay.show(e.what());
