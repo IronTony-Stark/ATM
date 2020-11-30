@@ -44,6 +44,7 @@ private:
     void onBtnCancelClicked() override;
 
     int state();
+    bool cardLocked() const;
 };
 
 #endif // ATM_STARTWINDOW_H
