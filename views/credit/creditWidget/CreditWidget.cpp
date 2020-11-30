@@ -61,7 +61,7 @@ void CreditWidget::setup(const Credit& credit) {
     _ui->comboPeriod->setCurrentIndex(index);
 
     _ui->labelStartValue->setText(credit.dateTaken().toString(dateFormat));
-    _ui->labelEndValue->setText(credit.dateTaken().addMonths(period).toString(dateFormat));
+    onPeriodChanged();
 }
 
 void CreditWidget::setReadOnly(bool value) {
