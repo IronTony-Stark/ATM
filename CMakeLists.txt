@@ -4,17 +4,9 @@ project(MOOP_ATM)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_CXX_STANDARD 14)
-set(CMAKE_PREFIX_PATH $ENV{QtPath}) # e.g. C:/Qt/5.15.1/mingw81_64/
 
-set(Qt5Core_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Core)
-#set(Qt5Core_DIR $ENV{QtCore})
-set(Qt5Gui_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Gui)
-#set(Qt5Gui_DIR $ENV{QtGui})
-set(Qt5Widgets_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Widgets)
-#set(Qt5Widgets_DIR $ENV{QtWidgets})
-set(Qt5Sql_DIR "C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Sql")
-#set(Qt5Sql_DIR $ENV{QtSql})
-
+set(CMAKE_PREFIX_PATH $ENV{QtPath})
+# Environment variables: QtPath=C:/Qt/5.15.1/mingw81_64/;QT_QPA_PLATFORM_PLUGIN_PATH=C:/Qt/5.15.1/mingw81_64/plugins/platforms
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
@@ -32,59 +24,30 @@ add_executable(MOOP_ATM
         main.cpp
 
         # Views
-        views/transaction/Windows.h
-        views/credit/Windows.h
-        views/deposit/Windows.h
-        views/payment/Windows.h
+        views/Navigatable.h
+        views/MessageDisplay.h
+        views/Command.h
+        views/exceptions/AbsentNavigationDestination.h
+        views/validator/Validators.h
         views/main/MainWindow.cpp
         views/main/MainWindow.h
         views/main/mainwindow.ui
+        views/main/controller/ControllerLogic.h
+        views/main/controller/ControllerLogicSettable.h
+        views/mainMenu/MainMenuWindow.h
+        views/mainMenu/MainMenuWindow.cpp
+        views/mainMenu/mainmenuwindow.ui
         views/start/StartWindow.h
         views/start/StartWindow.cpp
         views/start/startwindow.ui
         views/registration/RegistrationWindow.h
         views/registration/RegistrationWindow.cpp
         views/registration/registrationwindow.ui
-        views/mainMenu/MainMenuWindow.h
-        views/mainMenu/MainMenuWindow.cpp
-        views/mainMenu/mainmenuwindow.ui
+        views/transaction/Windows.h
         views/transaction/TransactionWindow.h
         views/transaction/TransactionWindow.cpp
         views/transaction/transactionwindow.ui
-        views/payment/PaymentWindow.h
-        views/payment/PaymentWindow.cpp
-        views/payment/paymentwindow.ui
-        views/payment/paymentWidget/PaymentWidget.h
-        views/payment/paymentWidget/PaymentWidget.cpp
-        views/payment/paymentWidget/paymentwidget.ui
-        views/deposit/DepositWindow.h
-        views/deposit/DepositWindow.cpp
-        views/deposit/depositwindow.ui
-        views/deposit/depositWidget/DepositWidget.h
-        views/deposit/depositWidget/DepositWidget.cpp
-        views/deposit/depositWidget/depositwidget.ui
-        views/credit/CreditWindow.h
-        views/credit/CreditWindow.cpp
-        views/credit/creditwindow.ui
-        views/credit/creditWidget/CreditWidget.h
-        views/credit/creditWidget/CreditWidget.cpp
-        views/credit/creditWidget/creditwidget.ui
-        views/clock/widgets/Clock.h
-        views/clock/widgets/Clock.cpp
-        views/clock/widgets/ClockListener.h
-        views/clock/setdialog/SetDialog.h
-        views/clock/setdialog/SetDialog.cpp
-        views/clock/setdialog/setdialog.ui
-        views/main/controller/ControllerLogic.h
-        views/main/controller/ControllerLogicSettable.h
-        views/Navigatable.h
-        views/MessageDisplay.h
-        views/Command.h
-        views/exceptions/AbsentNavigationDestination.h
         views/transaction/commands/IncludeAllCommands.h
-        views/credit/commands/IncludeAllCommands.h
-        views/deposit/commands/IncludeAllCommands.h
-        views/payment/commands/IncludeAllCommands.h
         views/transaction/commands/replenishCommand/ReplenishCommand.cpp
         views/transaction/commands/replenishCommand/ReplenishCommand.h
         views/transaction/commands/transferCommand/TransferCommand.cpp
@@ -93,21 +56,50 @@ add_executable(MOOP_ATM
         views/transaction/commands/withdrawCommand/WithdrawCommand.h
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.cpp
         views/transaction/commands/navigateTransactions/NavigateTransactionsCommand.h
+        views/credit/Windows.h
+        views/credit/CreditWindow.h
+        views/credit/CreditWindow.cpp
+        views/credit/creditwindow.ui
+        views/credit/creditWidget/CreditWidget.h
+        views/credit/creditWidget/CreditWidget.cpp
+        views/credit/creditWidget/creditwidget.ui
+        views/credit/commands/IncludeAllCommands.h
         views/credit/commands/takeCreditCommand/TakeCreditCommand.cpp
         views/credit/commands/takeCreditCommand/TakeCreditCommand.h
         views/credit/commands/repayCreditCommand/RepayCreditCommand.cpp
         views/credit/commands/repayCreditCommand/RepayCreditCommand.h
+        views/deposit/Windows.h
+        views/deposit/DepositWindow.h
+        views/deposit/DepositWindow.cpp
+        views/deposit/depositwindow.ui
+        views/deposit/depositWidget/DepositWidget.h
+        views/deposit/depositWidget/DepositWidget.cpp
+        views/deposit/depositWidget/depositwidget.ui
+        views/deposit/commands/IncludeAllCommands.h
         views/deposit/commands/openDepositCommand/OpenDepositCommand.cpp
         views/deposit/commands/openDepositCommand/OpenDepositCommand.h
         views/deposit/commands/cancelDepositCommand/CancelDepositCommand.cpp
         views/deposit/commands/cancelDepositCommand/CancelDepositCommand.h
         views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.cpp
         views/deposit/commands/replenishDepositCommand/ReplenishDepositCommand.h
+        views/payment/Windows.h
+        views/payment/PaymentWindow.h
+        views/payment/PaymentWindow.cpp
+        views/payment/paymentwindow.ui
+        views/payment/paymentWidget/PaymentWidget.h
+        views/payment/paymentWidget/PaymentWidget.cpp
+        views/payment/paymentWidget/paymentwidget.ui
+        views/payment/commands/IncludeAllCommands.h
         views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.cpp
         views/payment/commands/cancelPaymentCommand/CancelPaymentCommand.h
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.cpp
         views/payment/commands/createPaymentCommand/CreatePaymentCommand.h
-        views/validator/Validators.h
+        views/clock/widgets/Clock.h
+        views/clock/widgets/Clock.cpp
+        views/clock/widgets/ClockListener.h
+        views/clock/setdialog/SetDialog.h
+        views/clock/setdialog/SetDialog.cpp
+        views/clock/setdialog/setdialog.ui
 
         # Logics
         logics/bank_fees/ABankFee.h
@@ -159,7 +151,8 @@ add_executable(MOOP_ATM
         logics/auth/Registrator.h
         logics/auth/CustomerVerificationData.cpp
         logics/auth/CustomerVerificationData.h
-        data_access/CardDAO.cpp data_access/CardDAO.h
+        data_access/CardDAO.cpp
+        data_access/CardDAO.h
         data_access/CustomerDAO.cpp
         data_access/CustomerDAO.h
         data_access/CreditDAO.cpp
