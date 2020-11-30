@@ -15,8 +15,6 @@ class CreditDAO {
 public:
 	static CreditDAO& getInstance();
 
-	QList<Credit*> getAll() const;
-
 	Credit* getById(uint id) const;
 
 	Credit& saveCredit(Credit&) const;

@@ -150,8 +150,6 @@ void OperationManager::cancelPayment(uint id) {
 
 OperationManager::OperationManager(CustomerDataManager manager) :
 		_customerDataManager(manager),
-
-		_creditDao(CreditDAO::getInstance()), _depositDao(DepositDAO::getInstance()),
 		_paymentDao(PaymentDAO::getInstance()), _customerDao(CustomerDAO::getInstance()),
 
 		_authorizer(Authorizer{_customerDataManager}),

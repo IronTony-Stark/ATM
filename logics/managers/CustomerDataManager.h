@@ -14,13 +14,9 @@ public:
 
 	Card& card() const;
 
-	void setCard(Card* card);
-
 	Customer* const getCustomerByTaxNumber(const QString&) const;
 
 	Customer* const getCustomerByCardNumber(const QString&) const;
-
-	Customer* getCustomerByCredit(uint) const;
 
 	static Customer* getCustomerByDepositId(uint);
 
@@ -28,11 +24,7 @@ public:
 
 	void replenish(Money amount);
 
-	static void replenishByCardId(QString& cardId, Money amount);
-
 	void withdraw(Money amount);
-
-	static void withdrawByCardId(QString& cardId, Money amount);
 
 	bool canAffordCredit(Money amount, uint period, double interest) const;
     static Money getCreditValueWithPercents(const Money& amount, uint period, double interest) ;
@@ -51,10 +43,6 @@ public:
 	void replenishDeposit(Money amount, uint depoId);
 
 	void cancelDeposit(uint depoId);
-
-	QString getPin() const;
-
-	QString changePin();
 
 private:
 	friend class Registrator;

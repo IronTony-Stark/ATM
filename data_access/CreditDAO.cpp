@@ -39,17 +39,6 @@ Credit& CreditDAO::saveCredit(Credit& credit) const {
 	return credit;
 }
 
-QList<Credit*> CreditDAO::getAll() const {
-	// Using SELECT * is not recommended because the order of the fields in the query is undefined.
-	QSqlQuery findAllQuery("SELECT id, name, credit_body, interest, payment, bank_income, date_taken FROM credit");
-	QList<Credit*> res;
-	while (findAllQuery.next()) {
-		Credit* credit = buildCredit(findAllQuery);
-		res.append(credit);
-	}
-	return res;
-}
-
 Credit* CreditDAO::getById(uint id) const {
 	QSqlQuery findQuery;
 	findQuery.prepare("SELECT id, name, credit_body, interest, payment, bank_income, date_taken "

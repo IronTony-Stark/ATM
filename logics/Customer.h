@@ -17,38 +17,31 @@ public:
 
 	Customer(QString name, QString taxNum, QString phoneNum, const Money revenue);
 
+	const QString& name() const;
 
-	[[nodiscard]] const QString& name() const;
-
-	void setName(const QString&);
-
-	[[nodiscard]] const Money& revenue() const;
+	const Money& revenue() const;
 
 	void setRevenue(const Money&);
 
-	[[nodiscard]] const Money& creditLimit() const;
+	const Money& creditLimit() const;
 
-	[[nodiscard]] const QString& phoneNumber() const;
+	const QString& phoneNumber() const;
 
-	[[nodiscard]] const QList<Card*>& cards() const;
+	const QList<Card*>& cards() const;
 
 	void addCard(Card*);
 
-	void removeCard(const QString&);
-
-	[[nodiscard]] const QList<Credit*>& credits() const;
+	const QList<Credit*>& credits() const;
 
 	void addCredit(Credit*);
 
 	void removeCredit(uint);
 
-	[[nodiscard]] const QList<Deposit*>& deposits() const;
+	const QList<Deposit*>& deposits() const;
 
 	void addDeposit(Deposit*);
 
 	void removeDeposit(uint);
-
-	//QList<RegularPayment*> regularPayments() const;
 
 	~Customer();
 

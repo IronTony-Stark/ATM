@@ -21,10 +21,6 @@ Customer::Customer(QString name, QString taxNum, QString phoneNum, const Money r
 
 }
 
-void Customer::setName(const QString& newName) {
-	_name = newName;
-}
-
 const QString& Customer::name() const {
     return _name;
 }
@@ -62,14 +58,6 @@ void Customer::addCard(Card* c) {
 	_cards.append(c);
 	CardDAO::getInstance().saveCard(*c);
 	CustomerDAO::getInstance().addCard(_taxNumber, c->id());
-}
-
-void Customer::removeCard(const QString& id) {
-	int index = findCardIndex(_cards, id);
-	if (index == -1) throw NoSuchCardException(_taxNumber, id);
-	_cards.removeAt(index);
-	CardDAO::getInstance().deleteById(id);
-	CustomerDAO::getInstance().removeCard(id);
 }
 
 void Customer::addCredit(Credit* c) {

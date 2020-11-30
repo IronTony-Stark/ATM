@@ -42,8 +42,6 @@ public:
 
 	Credit& operator=(const Credit&) = delete;
 
-	// friend std::ostream& operator<<(std::ostream& os, const Credit& credit);
-
 private:
 	friend class CreditDAO;
 

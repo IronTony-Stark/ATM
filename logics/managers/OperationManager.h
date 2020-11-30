@@ -28,8 +28,6 @@ private:
     const Authorizer _authorizer;
     const Registrator _registrator;
 
-    const CreditDAO _creditDao;
-    const DepositDAO _depositDao;
     const PaymentDAO _paymentDao;
     const CustomerDAO _customerDao;
 
@@ -50,10 +48,8 @@ public:
 	// pinCode
     std::pair<QString, QString> registerCustomer(const CustomerVerificationData& verificationData);
 
-	//static void replenish(const QString& cardNumber, const Money&);
 	void replenish(uint);
 
-    //static void withdraw(const QString& cardNumber, const Money&);
 	void withdraw(unsigned int);
 
     static void transfer(const QString&, const QString&, const Money&);

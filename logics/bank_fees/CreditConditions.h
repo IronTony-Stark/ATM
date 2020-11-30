@@ -10,12 +10,10 @@
 
 typedef uint Month;
 typedef double Interest;
-typedef double MaxPaymentLimit;
 
 class CreditConditions {
 public:
 	static const QHash<Month, Interest> creditingOptions;
-	static const QHash<Month, MaxPaymentLimit> creditPaymentOptions;
 };
 
 

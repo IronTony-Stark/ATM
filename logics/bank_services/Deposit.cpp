@@ -44,17 +44,8 @@ const QDate& Deposit::endDate() const {
 	return _endDate;
 }
 
-QDate Deposit::timeRemaining() const {
-	return subtractDates(_endDate, QDate::currentDate());
-}
-
 const QString& Deposit::name() const {
 	return _name;
-}
-
-void Deposit::setName(QString newName) {
-	if (newName.isEmpty()) throw std::invalid_argument("new name is empty");
-	_name = std::move(newName);
 }
 
 const QString& Deposit::ownerCard() const {

@@ -137,16 +137,6 @@ void CustomerDataManager::cancelDeposit(uint depoId) {
     CardDAO::getInstance().updateCard(card());
 }
 
-QString CustomerDataManager::getPin() const {
-    return _bankCard->pin();
-}
-
-QString CustomerDataManager::changePin() {
-    _bankCard->regeneratePin();
-    CardDAO::getInstance().updateCard(*_bankCard);
-    return _bankCard->pin();
-}
-
 Card& CustomerDataManager::card() const {
     return *_bankCard;
 }
@@ -159,31 +149,8 @@ Customer* const CustomerDataManager::getCustomerByCardNumber(const QString& card
     return CustomerDAO::getInstance().getCustomerByCardId(cardNumber);
 }
 
-Customer* CustomerDataManager::getCustomerByCredit(uint creditId) const {
-    return CustomerDAO::getInstance().getCustomerByCredit(creditId);
-}
-
 Customer* CustomerDataManager::getCustomerByDepositId(uint depoId) {
     return CustomerDAO::getInstance().getCustomerByDepositId(depoId);
-}
-
-void CustomerDataManager::setCard(Card* card) {
-    _bankCard = card;
-}
-
-void CustomerDataManager::replenishByCardId(QString& cardId, Money amount) {
-    Card* card = CardDAO::getInstance().getById(cardId);
-    if (card == nullptr) throw NoSuchCardException(QString::number(-1), cardId);
-    card->replenish(amount);
-    CardDAO::getInstance().updateCard(*card);
-}
-
-void CustomerDataManager::withdrawByCardId(QString& cardId, Money amount) {
-    Card* card = CardDAO::getInstance().getById(cardId);
-    if (card == nullptr) throw NoSuchCardException(QString::number(-1), cardId);
-    if (!card->canWithdraw(amount)) throw NotEnoughMoneyException(card->balance(), amount);
-    card->withdraw(amount);
-    CardDAO::getInstance().updateCard(*card);
 }
 
 QList<RegularPayment*> CustomerDataManager::regularPayments() const {

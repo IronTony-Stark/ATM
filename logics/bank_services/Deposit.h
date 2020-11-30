@@ -19,27 +19,23 @@ public:
 
 	Deposit(const Deposit&);
 
-	[[nodiscard]] uint id() const;
+	uint id() const;
 
 	const QString& ownerCard() const;
 
 	void replenish(Money amount);
 
-	[[nodiscard]] Money sum() const;
+	Money sum() const;
 
 	const Money& initBalance() const;
 
-	[[nodiscard]] const QString& name() const;
+	const QString& name() const;
 
-	void setName(QString newName);
+	double interest() const;
 
-	[[nodiscard]] double interest() const;
+	const QDate& startDate() const;
 
-	[[nodiscard]] const QDate& startDate() const;
-
-	[[nodiscard]] const QDate& endDate() const;
-
-	[[nodiscard]] QDate timeRemaining() const;
+	const QDate& endDate() const;
 
 	Deposit& operator=(const Deposit&) = delete;
 

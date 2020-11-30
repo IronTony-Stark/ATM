@@ -12,7 +12,7 @@
 
 void Test_CustomerDAO::test() {
 	Customer* customer = new Customer("CustName", "taxNum", "phoneNum", Money(10.50));
-	Card* card = new Card(QString("testCardId"), ABankFee::CardType(0), QString("0000"));
+    Card* card = new Card(QString("47"), ABankFee::CardType(0), QString("0000"));
 	Credit* credit = new Credit("testCreditName", Money(50.23), 0.2, Money(4.90));
 	Deposit* deposit = new Deposit("depo owner", "test deposit name", Money(50.23),
 								   0.2, QDate::currentDate().addMonths(5));

@@ -17,13 +17,6 @@
 #include "data_access/PaymentDAO.h"
 
 int main(int argc, char* argv[]) {
-    // ! - HAVE TO BE DONE
-    //
-    // *Tony*
-    // General
-    // ! TODO Add info about commissions to the 'Info' tab
-
-
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
 	qDebug() << QApplication::style()->objectName();
@@ -49,15 +42,6 @@ int main(int argc, char* argv[]) {
 	QTest::qExec(new Test_CreditDAO, argc, argv);
     QTest::qExec(new Test_DepositDAO, argc, argv);
     QTest::qExec(new Test_CustomerDAO, argc, argv);
-
-	// tests/demo
-	/*
-	RegularPayment payment("important payment", 50, "Vasyl'", "Petro", 20);
-	PaymentDAO::getInstance().save(payment);
-	QList<RegularPayment*> col = PaymentDAO::getInstance().getAll();
-	auto* res = PaymentDAO::getInstance().getById(1);
-	PaymentDAO::getInstance().removePayment(1);
-	*/
 
 	return QApplication::exec();
 }
