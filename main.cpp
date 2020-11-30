@@ -19,13 +19,13 @@
 int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
 	QApplication::setStyle(QStyleFactory::create("Fusion"));
-	qDebug() << QApplication::style()->objectName();
     MainWindow w;
     w.setWindowTitle("ATM");
 	w.show();
 
+    qDebug()  <<  QSqlDatabase::drivers();
 	QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-	db.setDatabaseName("../MOOP_ATM/db_file/bank_database.sqlite");
+	db.setDatabaseName("../db_file/bank_database.sqlite");
 	if (!db.open()) {
 		qDebug() << db.lastError().text();
 		return -1;
@@ -38,11 +38,11 @@ int main(int argc, char* argv[]) {
 		PaymentDAO::getInstance();
 	}
 
-	freopen("testing.log", "w", stdout);
-	QTest::qExec(new Test_CardDAO, argc, argv);
-	QTest::qExec(new Test_CreditDAO, argc, argv);
-    QTest::qExec(new Test_DepositDAO, argc, argv);
-    QTest::qExec(new Test_CustomerDAO, argc, argv);
+//	freopen("testing.log", "w", stdout);
+//	QTest::qExec(new Test_CardDAO, argc, argv);
+//	QTest::qExec(new Test_CreditDAO, argc, argv);
+//    QTest::qExec(new Test_DepositDAO, argc, argv);
+//    QTest::qExec(new Test_CustomerDAO, argc, argv);
 
 	// tests/demo
 	/*

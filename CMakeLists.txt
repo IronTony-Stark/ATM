@@ -5,14 +5,22 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_PREFIX_PATH $ENV{QtPath}) # e.g. C:/Qt/5.15.1/mingw81_64/
-#set(Qt5Sql_DIR C:/Qt/5.15.1/mingw81_64/bin)
+
+set(Qt5Core_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Core)
+#set(Qt5Core_DIR $ENV{QtCore})
+set(Qt5Gui_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Gui)
+#set(Qt5Gui_DIR $ENV{QtGui})
+set(Qt5Widgets_DIR C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Widgets)
+#set(Qt5Widgets_DIR $ENV{QtWidgets})
+set(Qt5Sql_DIR "C:\\Qt\\5.15.1\\mingw81_64\\lib\\cmake\\Qt5Sql")
+#set(Qt5Sql_DIR $ENV{QtSql})
 
 
 find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
-find_package(Qt5Test REQUIRED)
+#find_package(Qt5Test REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -139,6 +147,7 @@ add_executable(MOOP_ATM
         logics/exceptions/CustomerRegistrationException.h
         logics/exceptions/DepositMaxSumReachedException.cpp
         logics/exceptions/DepositMaxSumReachedException.h
+        logics/exceptions/BlockedCardException.cpp
         logics/exceptions/BlockedCardException.h
         logics/managers/CustomerDataManager.cpp
         logics/managers/CustomerDataManager.h
@@ -159,10 +168,11 @@ add_executable(MOOP_ATM
         data_access/DepositDAO.h
         data_access/PaymentDAO.cpp
         data_access/PaymentDAO.h
-        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h logics/exceptions/BlockedCardException.cpp)
+#        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h
+)
 
 target_link_libraries(${PROJECT_NAME} Qt5::Core)
 target_link_libraries(${PROJECT_NAME} Qt5::Gui)
 target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
 target_link_libraries(${PROJECT_NAME} Qt5::Sql)
-target_link_libraries(${PROJECT_NAME} Qt5::Test)
+#target_link_libraries(${PROJECT_NAME} Qt5::Test)
