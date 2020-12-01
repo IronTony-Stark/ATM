@@ -16,7 +16,7 @@
 bool OperationManager::authorizeCustomer(const QString& cardNumber, const QString& pinCode) {
 	Customer* const customer = _customerDataManager.getCustomerByCardNumber(cardNumber);
 	if (customer == nullptr)
-		return false;
+        throw std::invalid_argument("No such card registered: " + cardNumber.toStdString() + "");
 	QList<Card*> cards = customer->cards();
 	for (int i = 0; i < cards.count(); ++i) {
 		if (cards[i]->number() == cardNumber) {
@@ -29,7 +29,7 @@ bool OperationManager::authorizeCustomer(const QString& cardNumber, const QStrin
 		}
 	}
 	delete customer;
-	return false;
+    return false;
 }
 
 void OperationManager::blockCustomer(const QString& cardNumber) {
@@ -62,7 +62,7 @@ void OperationManager::transfer(const QString& cardNumberFrom, const QString& ca
 
 	Customer* const customer = CustomerDAO::getInstance().getCustomerByCardId(cardNumberTo);
 	if (customer == nullptr)
-		throw std::invalid_argument("No such card registered: '" + cardNumberTo.toStdString() + "'");
+		throw std::invalid_argument("No such card registered: " + cardNumberTo.toStdString() + "");
 
 	Card* cardFrom = CardDAO::getInstance().getById(cardNumberFrom);
 	const std::pair<Money, Money>& pair = cardFrom->transfer(cardNumberTo, amount);

@@ -63,6 +63,7 @@ void StartWindow::onBtn1Clicked() {
 void StartWindow::onBtnCardClicked() {
     if (state() == START) {
         _ui->stackedWidget->setCurrentIndex(INSERT_CARD);
+        _ui->editCardNumber->setEnabled(true);
         _pinAttempts = 3;
         _ui->editCardNumber->setText("");
         _ui->editPin->setText("");
@@ -94,6 +95,7 @@ void StartWindow::onBtnEnterClicked() {
                 _ui->stackedWidget->setCurrentIndex(START);
             } else {
                 _ui->labelAttemptsRemaining->setText(QString::number(_pinAttempts) + " attempts remaining");
+                _ui->editCardNumber->setEnabled(false);
             }
         } catch (const std::exception& e) {
             QMessageBox::critical(this, "ATM", e.what());
@@ -103,8 +105,13 @@ void StartWindow::onBtnEnterClicked() {
 }
 
 void StartWindow::onBtnCancelClicked() {
-    _logicSettable->setLogic(this);
-    _ui->stackedWidget->setCurrentIndex(START);
+    if (cardLocked()) {
+        QMessageBox::critical(this, "ATM", "Card is locked. "
+                                           "Please provide the correct pin");
+    } else {
+        _logicSettable->setLogic(this);
+        _ui->stackedWidget->setCurrentIndex(START);
+    }
 }
 
 int StartWindow::state() {
@@ -113,4 +120,8 @@ int StartWindow::state() {
 
 void StartWindow::setClock(Clock* clock) {
     _operationManager.setClock(clock);
+}
+
+bool StartWindow::cardLocked() const {
+    return _pinAttempts != 3;
 }
