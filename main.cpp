@@ -18,7 +18,7 @@
 
 int main(int argc, char* argv[]) {
 	QApplication a(argc, argv);
-//	QApplication::setStyle(QStyleFactory::create("Fusion"));
+	QApplication::setStyle(QStyleFactory::create("Fusion"));
     MainWindow w;
     w.setWindowTitle("ATM");
 	w.show();
