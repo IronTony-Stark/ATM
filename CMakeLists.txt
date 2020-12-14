@@ -1,24 +1,21 @@
 cmake_minimum_required(VERSION 3.14)
+
 project(MOOP_ATM)
-
-set(CMAKE_INCLUDE_CURRENT_DIR ON)
-
-set(CMAKE_CXX_STANDARD 14)
-
-set(CMAKE_PREFIX_PATH $ENV{QtPath})
-# Environment variables: QtPath=C:/Qt/5.15.1/mingw81_64/;QT_QPA_PLATFORM_PLUGIN_PATH=C:/Qt/5.15.1/mingw81_64/plugins/platforms
-
-find_package(Qt5Core REQUIRED)
-find_package(Qt5Gui REQUIRED)
-find_package(Qt5Widgets REQUIRED)
-find_package(Qt5Sql REQUIRED)
-find_package(Qt5Test REQUIRED)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+
+set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+find_package(Qt5Core REQUIRED)
+find_package(Qt5Gui REQUIRED)
+find_package(Qt5Widgets REQUIRED)
+find_package(Qt5Sql REQUIRED)
+find_package(Qt5Test REQUIRED)
 
 add_executable(MOOP_ATM
         main.cpp
@@ -160,11 +157,22 @@ add_executable(MOOP_ATM
         data_access/DepositDAO.h
         data_access/PaymentDAO.cpp
         data_access/PaymentDAO.h
-        tests/Test_CardDAO.cpp tests/Test_CardDAO.h tests/Test_CreditDAO.cpp tests/Test_CreditDAO.h tests/Test_DepositDAO.cpp tests/Test_DepositDAO.h tests/Test_CustomerDAO.cpp tests/Test_CustomerDAO.h
-)
 
-target_link_libraries(${PROJECT_NAME} Qt5::Core)
-target_link_libraries(${PROJECT_NAME} Qt5::Gui)
-target_link_libraries(${PROJECT_NAME} Qt5::Widgets)
-target_link_libraries(${PROJECT_NAME} Qt5::Sql)
-target_link_libraries(${PROJECT_NAME} Qt5::Test)
+        # Tests
+        tests/Test_CardDAO.cpp
+        tests/Test_CardDAO.h
+        tests/Test_CreditDAO.cpp
+        tests/Test_CreditDAO.h
+        tests/Test_DepositDAO.cpp
+        tests/Test_DepositDAO.h
+        tests/Test_CustomerDAO.cpp
+        tests/Test_CustomerDAO.h
+        )
+
+target_link_libraries(${PROJECT_NAME}
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets
+        Qt5::Sql
+        Qt5::Test
+        )
