@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(MOOP_ATM)
+project(ATM)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -17,7 +17,7 @@ find_package(Qt5Widgets REQUIRED)
 find_package(Qt5Sql REQUIRED)
 find_package(Qt5Test REQUIRED)
 
-add_executable(MOOP_ATM
+add_executable(${PROJECT_NAME}
         main.cpp
 
         # Views

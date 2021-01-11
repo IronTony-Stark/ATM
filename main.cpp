@@ -38,11 +38,5 @@ int main(int argc, char* argv[]) {
 		PaymentDAO::getInstance();
 	}
 
-//	freopen("testing.log", "w", stdout);
-//	QTest::qExec(new Test_CardDAO, argc, argv);
-//	QTest::qExec(new Test_CreditDAO, argc, argv);
-//    QTest::qExec(new Test_DepositDAO, argc, argv);
-//    QTest::qExec(new Test_CustomerDAO, argc, argv);
-
 	return QApplication::exec();
 }
